@@ -10,6 +10,60 @@ var aws = require('aws-sdk');
 // our db model
 var Jar = require("../models/model.js");
 
+
+
+
+/*
+ * Load the S3 information from the environment variables.
+ http://aws.amazon.com/myBucket/myKey/moreKey.jpg
+ */
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
+aws.config.update({accessKeyId: AWS_ACCESS_KEY , secretAccessKey: AWS_SECRET_KEY });
+    var s3 = new aws.S3(); 
+    var s3_params = { 
+        Bucket: S3_BUCKET, 
+        
+        // Expires: 60,  
+    }; 
+
+
+/*
+ * Respond to GET requests to /sign_s3.
+ * Upon request, return JSON containing the temporarily-signed S3 request and the
+ * anticipated URL of the image.
+ */
+ 
+app.get('/sign_s3', function(req, res){
+    aws.config.update({accessKeyId: AWS_ACCESS_KEY , secretAccessKey: AWS_SECRET_KEY });
+    var s3 = new aws.S3(); 
+    var s3_params = { 
+        Bucket: S3_BUCKET, 
+        Key: req.query.file_name, 
+        Expires: 60, 
+        ContentType: req.query.file_type, 
+        ACL: 'public-read'
+    }; 
+    s3.getSignedUrl('putObject', s3_params, function(err, data){ 
+        if(err){ 
+            console.log(err); 
+        }
+        else{ 
+            var return_data = {
+                signed_request: data,
+                url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+req.query.file_name 
+            };
+            res.write(JSON.stringify(return_data));
+            res.end();
+        } 
+    });
+});
+
+
+
+
+
 /**
  * GET '/'
  * Default home route. Just relays a success message back.
@@ -19,7 +73,7 @@ var Jar = require("../models/model.js");
 router.get('/', function(req, res) {
   
   var jsonData = {
-  	'name': 'pets-of-nyc',
+  	'name': 'fireJar',
   	'api-status':'OK'
   }
 
@@ -27,10 +81,12 @@ router.get('/', function(req, res) {
   res.json(jsonData)
 });
 
-// simple route to show the pets html
+// simple routes to show the html pages
 router.get('/pets', function(req,res){
   res.render('pets.html');
 })
+
+
 router.get('/jars', function(req,res){
   res.render('jars.html');
 })
