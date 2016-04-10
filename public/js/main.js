@@ -14,13 +14,13 @@ function init() {
   // create the map and reference the div#map-canvas container
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   
-  // get the animals (ajax) 
+  // get the jars (ajax) 
   // and render them on the map
   renderPlaces();
 }
 
 // add form button event
-// when the form is submitted (with a new animal), the below runs
+// when the form is submitted (with a new jar), the below runs
 jQuery("#addForm").submit(function(e){
 
 	// first, let's pull out all the values
@@ -76,7 +76,7 @@ jQuery("#addForm").submit(function(e){
   return false;
 });
 
-// get Animals JSON from /api/get
+// get Jars JSON from /api/get
 // loop through and populate the map with markers
 var renderPlaces = function() {
 	var infowindow =  new google.maps.InfoWindow({
@@ -89,41 +89,41 @@ var renderPlaces = function() {
 		success : function(response) {
 
 			console.log(response);
-			animals = response.animals;
+			jars = response.jars;
 			// first clear any existing markers, because we will re-add below
 			clearMarkers();
 			markers = [];
 
-			// now, loop through the animals and add them as markers to the map
-			for(var i=0;i<animals.length;i++){
+			// now, loop through the jars and add them as markers to the map
+			for(var i=0;i<jars.length;i++){
 
 				var latLng = {
-					lat: animals[i].location.geo[1], 
-					lng: animals[i].location.geo[0]
+					lat: jars[i].location.geo[1], 
+					lng: jars[i].location.geo[0]
 				}
 
 				// make and place map maker.
 				var marker = new google.maps.Marker({
 				    map: map,
 				    position: latLng,
-				    title : animals[i].name + "<br>" + animals[i].breed + "<br>" + animals[i].location.name
+				    title : jars[i].name + "<br>" + jars[i].breed + "<br>" + jars[i].location.name
 				});
 
-				bindInfoWindow(marker, map, infowindow, '<b>'+animals[i].name + "</b> ("+animals[i].breed+") <br>" + animals[i].location.name);
+				bindInfoWindow(marker, map, infowindow, '<b>'+jars[i].name + "</b> ("+jars[i].breed+") <br>" + jars[i].location.name);
 				
 				// keep track of markers
 				markers.push(marker);
 			}
 
-			// now, render the animal image/data
-			renderAnimals(animals);
+			// now, render the jar image/data
+			renderJars(jars);
 
 		}
 	})
 };
 
 // edit form button event
-// when the form is submitted (with a new animal edit), the below runs
+// when the form is submitted (with a new jar edit), the below runs
 jQuery("#editForm").submit(function(e){
 
 	// first, let's pull out all the values
@@ -192,29 +192,29 @@ var bindInfoWindow = function(marker, map, infowindow, html) {
     });
 }
 
-function renderAnimals(animals){
+function renderJars(jars){
 
-	// first, make sure the #animal-holder is empty
-	jQuery('#animal-holder').empty();
+	// first, make sure the #jar-holder is empty
+	jQuery('#jar-holder').empty();
 
-	// loop through all the animals and add them in the animal-holder div
-	for(var i=0;i<animals.length;i++){
-		var htmlToAdd = '<div class="col-md-4 animal">'+
-			'<img class="url" src="'+animals[i].url+'">'+
-			'<h1 class="name">'+animals[i].name+'</h1>'+
+	// loop through all the jars and add them in the jar-holder div
+	for(var i=0;i<jars.length;i++){
+		var htmlToAdd = '<div class="col-md-4 jar">'+
+			'<img class="url" src="'+jars[i].url+'">'+
+			'<h1 class="name">'+jars[i].name+'</h1>'+
 			'<ul>'+
-				'<li>Location: <span class="location">'+animals[i].location.name+'</span></li>'+
-				'<li>Breed: <span class="breed">'+animals[i].breed+'</span></li>'+
-				'<li>Age: <span class="age">'+animals[i].age+'</span></li>'+
-				'<li>Weight: <span class="weight">'+animals[i].weight+'</span></li>'+
-				'<li>Tags: <span class="tags">'+animals[i].tags+'</span></li>'+
-				'<li class="hide id">'+animals[i]._id+'</li>'+
+				'<li>Location: <span class="location">'+jars[i].location.name+'</span></li>'+
+				'<li>Breed: <span class="breed">'+jars[i].breed+'</span></li>'+
+				'<li>Age: <span class="age">'+jars[i].age+'</span></li>'+
+				'<li>Weight: <span class="weight">'+jars[i].weight+'</span></li>'+
+				'<li>Tags: <span class="tags">'+jars[i].tags+'</span></li>'+
+				'<li class="hide id">'+jars[i]._id+'</li>'+
 			'</ul>'+
-			'<button type="button" id="'+animals[i]._id+'" onclick="deleteAnimal(event)">Delete Animal</button>'+
-			'<button type="button" data-toggle="modal" data-target="#editModal"">Edit Animal</button>'+
+			'<button type="button" id="'+jars[i]._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
+			'<button type="button" data-toggle="modal" data-target="#editModal"">Edit Jar</button>'+
 		'</div>';
 
-		jQuery('#animal-holder').prepend(htmlToAdd);
+		jQuery('#jar-holder').prepend(htmlToAdd);
 
 	}
 }
@@ -249,16 +249,16 @@ jQuery('#editModal').on('show.bs.modal', function (e) {
 })
 
 
-function deleteAnimal(event){
+function deleteJar(event){
 	var targetedId = event.target.id;
-	console.log('the animal to delete is ' + targetedId);
+	console.log('the jar to delete is ' + targetedId);
 
 	// now, let's call the delete route with AJAX
 	jQuery.ajax({
 		url : '/api/delete/'+targetedId,
 		dataType : 'json',
 		success : function(response) {
-			// now, let's re-render the animals
+			// now, let's re-render the jars
 
 			renderPlaces();
 
