@@ -35,7 +35,7 @@ aws.config.update({accessKeyId: AWS_ACCESS_KEY , secretAccessKey: AWS_SECRET_KEY
  * anticipated URL of the image.
  */
  
-app.get('/sign_s3', function(req, res){
+router.get('/sign_s3', function(req, res){
     aws.config.update({accessKeyId: AWS_ACCESS_KEY , secretAccessKey: AWS_SECRET_KEY });
     var s3 = new aws.S3(); 
     var s3_params = { 
