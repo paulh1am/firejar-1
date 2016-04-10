@@ -40,22 +40,34 @@
 
     <!-- JQuery validate -->
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+    
 
-    <script type="text/javascript">
-      $("form").validate({
-          rules: {
-            editWeight: {
-              required: true,
-              number: true // must be a number
-            },
-            weight: {
-              required: true,
-              number: true // must be a number
-            }
-          }
-      }); 
-    </script>    
+    <input type="file" id="file_input"/>
+    <p id="status">Please select a file</p>
+    <img style="border:1px solid gray;width:300px;"  id="preview" src="/images/default.png" />
 
-    <!-- CUSTOM JS -->
-    <script src="js/main.js"></script>
+    <h2>Your information</h2>
+
+    <form method="POST" action="#">
+        <input type="hidden" id="avatar_url" name="avatar_url" value="/images/default.png" />
+        <input type="text" name="username" placeholder="Username" /><br />
+        <input type="text" name="full_name" placeholder="Full name" /><br /><br />
+        
+        <hr />
+        <h2>Save changes</h2>
+
+        <!-- <input type="submit" value="Update profile" /> -->
+    </form>
+
+<!-- CUSTOM JS -->
+<script src="js/main.js"></script>
+
+<script>
+ (function() {
+  document.getElementById("file_input").onchange = init_upload;
+  })();
+</script>    
+
+    
+   
 </html>
