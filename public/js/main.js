@@ -225,7 +225,7 @@ jQuery('#editModal').on('show.bs.modal', function (e) {
   // now let's get its parent
 	var parent = jQuery(clickedButton).parent();
 
-  // now, let's get the values of the pet that we're wanting to edit
+  // now, let's get the values of the jar that we're wanting to edit
   // we do this by targeting specific spans within the parent and pulling out the text
   var name = $(parent).find('.name').text();
   var age = $(parent).find('.age').text();

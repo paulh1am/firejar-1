@@ -27,6 +27,9 @@ router.get('/', function(req, res) {
 router.get('/pets', function(req,res){
   res.render('pets.html');
 })
+router.get('/jars', function(req,res){
+  res.render('jars.html');
+})
 
 // /**
 //  * POST '/api/create'
