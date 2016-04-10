@@ -21,8 +21,7 @@ var options = {
 navigator.geolocation.getCurrentPosition(success, error, options);
 
 //connect socket
-
-// socket = io.connect('localhost:8088');
+socket = io.connect('localhost:3600');
 
 var marker = "~";
 
@@ -42,9 +41,9 @@ function success(pos) {
 
   mappzy = [crd.latitude,crd.longitude];
   
-  // console.log("DoMarker")
-  // socket.emit('mapmarker', mappzy);
-  // console.log("sentMarker")
+  console.log("DoMarker")
+  socket.emit('mapmarker', mappzy);
+  console.log("sentMarker")
 
 
 
