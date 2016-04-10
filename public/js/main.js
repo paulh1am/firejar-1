@@ -66,16 +66,17 @@ function error(err) {
 
   	// first, let's pull out all the values
   	// the name form field value
-  	var name = jQuery("#name").val();
-  	var age = jQuery("#age").val();
-  	var weight = jQuery("#weight").val();
+  	var title = jQuery("#title").val();
+  	
   	var tags = jQuery("#tags").val();
-  	var breed = jQuery("#breed").val();
-  	var url = jQuery("#url").val();
-  	var location = jQuery("#location").val();
+  	
+  	var SSID = "";//GRAB THE LOCATION Var
+    var UDID = "";//GRAB THE LOCATION Var
+    var url = jQuery("#url").val();//GRAB THE LOCATION Var
 
   	// make sure we have a location
-  	if(!location || location=="") return alert('We need a location!');
+
+  	// if(!location || location=="") return alert('We need a location!');
         
   	// POST the data from above to our API create route
     jQuery.ajax({
@@ -84,14 +85,15 @@ function error(err) {
     	type : 'POST',
     	// we send the data in a data object (with key/value pairs)
     	data : {
-    		name : name,
-    		age : age,
+    		title: title,
     		tags : tags,
-    		breed : breed,
-    		weight: weight,
-    		url : url,
-    		location : location
+        GPS : GPS,
+        SSID: SSID,
+        UDID: UDID,
+        url: url,
+    		
     	},
+      // ADD THE LOCATION DATA (from the webRTC)
     	success : function(response){
     		if(response.status=="OK"){
   	  		// success
@@ -159,65 +161,7 @@ function error(err) {
 
   // edit form button event
   // when the form is submitted (with a new jar edit), the below runs
-  jQuery("#editForm").submit(function(e){
-
-  	// first, let's pull out all the values
-  	// the name form field value
-  	var name = jQuery("#edit-name").val();
-  	var age = jQuery("#edit-age").val();
-  	var weight = jQuery("#editWeight").val();
-  	var tags = jQuery("#edit-tags").val();
-  	var breed = jQuery("#edit-breed").val();
-  	var url = jQuery("#edit-url").val();
-  	var location = jQuery("#edit-location").val();
-  	var id = jQuery("#edit-id").val();
-
-  	// make sure we have a location
-  	if(!location || location=="") return alert('We need a location!');
-       
-    console.log(id);
-        
-  	// POST the data from above to our API create route
-    jQuery.ajax({
-    	url : '/api/update/'+id,
-    	dataType : 'json',
-    	type : 'POST',
-    	// we send the data in a data object (with key/value pairs)
-    	data : {
-    		name : name,
-    		age : age,
-    		tags : tags,
-    		breed : breed,
-    		weight: weight,
-    		url : url,
-    		location : location
-    	},
-    	success : function(response){
-    		if(response.status=="OK"){
-  	  		// success
-  	  		console.log(response);
-  	  		// re-render the map
-  	  		renderPlaces();
-  	  		// now, close the modal
-  	  		$('#editModal').modal('hide')
-  	  		// now, clear the input fields
-  	  		jQuery("#editForm input").val('');
-    		}
-    		else {
-    			alert("something went wrong");
-    		}
-    	},
-    	error : function(err){
-    		// do error checking
-    		alert("something went wrong");
-    		console.error(err);
-    	}
-    }); 
-
-  	// prevents the form from submitting normally
-    e.preventDefault();
-    return false;
-  });
+  
 });
 // END DOCUMENT READY
 

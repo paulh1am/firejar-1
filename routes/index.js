@@ -117,75 +117,80 @@ router.post('/api/create', function(req, res){
     console.log(req.body);
 
     // pull out the information from the req.body
-    var name = req.body.name;
-    var age = req.body.age;
+    var title = req.body.title;
+    
     var tags = req.body.tags.split(","); // split string into array
-    var weight = req.body.weight;
-    var breed = req.body.breed;
+    
+    var GPS = req.body.GPS.split(",");
+
+    var SSID = req.body.SSID;
+
+    var UDID = req.body.UDID;
+
     var url = req.body.url;
-    var location = req.body.location;
 
     // hold all this data in an object
     // this object should be structured the same way as your db model
     var jarObj = {
-      name: name,
-      age: age,
-      tags: tags,
-      weight: weight,
-      breed: breed,
-      url: url
+      title: title,
+      tags : tags,
+      GPS : GPS,
+      SSID: SSID,
+      UDID: UDID,
+      url: url,
     };
 
     // if there is no location, return an error
-    if(!location) return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
+   
+    // if(!location) return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
 
     // now, let's geocode the location
-    geocoder.geocode(location, function (err,data) {
+    // geocoder.geocode(location, function (err,data) {
 
 
-      // if we get an error, or don't have any results, respond back with error
-      if (!data || data==null || err || data.status == 'ZERO_RESULTS'){
-        var error = {status:'ERROR', message: 'Error finding location'};
-        return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
-      }
+    //   // if we get an error, or don't have any results, respond back with error
+    //   if (!data || data==null || err || data.status == 'ZERO_RESULTS'){
+    //     var error = {status:'ERROR', message: 'Error finding location'};
+    //     return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
+    //   }
 
-      // else, let's pull put the lat lon from the results
-      var lon = data.results[0].geometry.location.lng;
-      var lat = data.results[0].geometry.location.lat;
+    //   // else, let's pull put the lat lon from the results
+    //   var lon = data.results[0].geometry.location.lng;
+    //   var lat = data.results[0].geometry.location.lat;
 
-      // now, let's add this to our jar object from above
-      jarObj.location = {
-        geo: [lon,lat], // need to put the geo co-ordinates in a lng-lat array for saving
-        name: data.results[0].formatted_address // the location name
-      }
+    //   // now, let's add this to our jar object from above
+    //   jarObj.location = {
+    //     geo: [lon,lat], // need to put the geo co-ordinates in a lng-lat array for saving
+    //     name: data.results[0].formatted_address // the location name
+    //   }
 
-      // now, let's save it to the database
-      // create a new jar model instance, passing in the object we've created
-      var jar = new Jar(jarObj);
+    //   // now, let's save it to the database
+    //   // create a new jar model instance, passing in the object we've created
+    //   var jar = new Jar(jarObj);
 
-      // now, save that jar instance to the database
-      // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
-      jar.save(function(err,data){
-        // if err saving, respond back with error
-        if (err){
-          var error = {status:'ERROR', message: 'Error saving jar'};
-          return res.json(error);
-        }
+    //   // now, save that jar instance to the database
+    //   // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
+    //   jar.save(function(err,data){
+    //     // if err saving, respond back with error
+    //     if (err){
+    //       var error = {status:'ERROR', message: 'Error saving jar'};
+    //       return res.json(error);
+    //     }
 
-        console.log('saved a new jar!');
-        console.log(data);
+    //     console.log('saved a new jar!');
+    //     console.log(data);
 
-        // now return the json data of the new jar
-        var jsonData = {
-          status: 'OK',
-          jar: data
-        }
+    //     // now return the json data of the new jar
+    //     var jsonData = {
+    //       status: 'OK',
+    //       jar: data
+    //     }
 
-        return res.json(jsonData);
+    //     return res.json(jsonData);
 
-      }) 
+    //   }) 
 
-    }); 
+    // }); 
 });
 
 // /**
