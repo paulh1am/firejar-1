@@ -64,7 +64,7 @@ jQuery("#addForm").submit(function(e){
 // loop through and populate the map with markers
 var renderPlaces = function() {
 	console.log('old render places');
-	};
+	
 
 	jQuery.ajax({
 		url : '/api/get',
