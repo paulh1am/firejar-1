@@ -334,3 +334,11 @@ function init_upload(){
 
 // when page is ready, initialize the map!
 google.maps.event.addDomListener(window, 'load', init);
+$(function(){
+  /*
+     Bind S3 upload listener when the page loads.
+  */
+  (function() {
+      document.getElementById("file_input").onchange = init_upload;
+  })();
+}
