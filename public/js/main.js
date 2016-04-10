@@ -63,13 +63,14 @@ function error(err) {
   // add form button event
   // when the form is submitted (with a new jar), the below runs
   jQuery("#addForm").submit(function(e){
-
+    e.preventDefault();
+    console.log('submitted');
   	// first, let's pull out all the values
   	// the name form field value
   	var title = jQuery("#title").val();
   	
   	var tags = jQuery("#tags").val();
-  	
+  	var GPS = {"lat":mappzy[0],"lon":mappzy[1]};
   	var SSID = "";//GRAB THE LOCATION Var
     var UDID = "";//GRAB THE LOCATION Var
     var url = jQuery("#url").val();//GRAB THE LOCATION Var
@@ -115,7 +116,7 @@ function error(err) {
     }); 
 
   	// prevents the form from submitting normally
-    e.preventDefault();
+    
     return false;
   });
 
