@@ -21,7 +21,7 @@ var options = {
 navigator.geolocation.getCurrentPosition(success, error, options);
 
 //connect socket
-socket = io.connect('localhost:3600');
+var socket = io.connect('http://localhost');
 
 var marker = "~";
 
