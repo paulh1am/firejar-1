@@ -1,166 +1,226 @@
 // CUSTOM JS FILE //
 
+$( document ).ready(function() {
+      crd = null;
+      var map = L.map('map').setView([40.75,-74.0059], 12);
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'ph1am.io3m04c0',
+    accessToken: 'pk.eyJ1IjoicGgxYW0iLCJhIjoiV01wMkVDQSJ9.HGSWGdj2lTGJLxMcg4C9mA'
+}).addTo(map);
 
 
-
-// add form button event
-// when the form is submitted (with a new jar), the below runs
-jQuery("#addForm").submit(function(e){
-
-	// first, let's pull out all the values
-	// the name form field value
-	var name = jQuery("#name").val();
-	var age = jQuery("#age").val();
-	var weight = jQuery("#weight").val();
-	var tags = jQuery("#tags").val();
-	var breed = jQuery("#breed").val();
-	var url = jQuery("#url").val();
-	var location = jQuery("#location").val();
-
-	// make sure we have a location
-	if(!location || location=="") return alert('We need a location!');
-      
-	// POST the data from above to our API create route
-  jQuery.ajax({
-  	url : '/api/create',
-  	dataType : 'json',
-  	type : 'POST',
-  	// we send the data in a data object (with key/value pairs)
-  	data : {
-  		name : name,
-  		age : age,
-  		tags : tags,
-  		breed : breed,
-  		weight: weight,
-  		url : url,
-  		location : location
-  	},
-  	success : function(response){
-  		if(response.status=="OK"){
-	  		// success
-	  		console.log(response);
-	  		// re-render the map
-	  		console.log('old map rerender');
-	  		// now, clear the input fields
-	  		jQuery("#addForm input").val('');
-  		}
-  		else {
-  			alert("something went wrong");
-  		}
-  	},
-  	error : function(err){
-  		// do error checking
-  		alert("something went wrong");
-  		console.error(err);
-  	}
-  }); 
-
-	// prevents the form from submitting normally
-  e.preventDefault();
-  return false;
-});
-
-// get Jars JSON from /api/get
-// loop through and populate the map with markers
-var renderPlaces = function() {
-	console.log('old render places');
-	
-
-	jQuery.ajax({
-		url : '/api/get',
-		dataType : 'json',
-		success : function(response) {
-
-			console.log(response);
-			jars = response.jars;
-			// first clear any existing markers, because we will re-add below
-			clearMarkers();
-			markers = [];
-
-			// now, loop through the jars and add them as markers to the map
-			for(var i=0;i<jars.length;i++){
-
-				var latLng = {
-					lat: jars[i].location.geo[1], 
-					lng: jars[i].location.geo[0]
-				}
-
-				// make and place map maker.
-				var marker = "map marker";
-
-				
-				// keep track of markers
-				markers.push(marker);
-			}
-
-			// now, render the jar image/data
-			renderJars(jars);
-
-		}
-	})
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
 };
 
-// edit form button event
-// when the form is submitted (with a new jar edit), the below runs
-jQuery("#editForm").submit(function(e){
+//get location
+navigator.geolocation.getCurrentPosition(success, error, options);
 
-	// first, let's pull out all the values
-	// the name form field value
-	var name = jQuery("#edit-name").val();
-	var age = jQuery("#edit-age").val();
-	var weight = jQuery("#editWeight").val();
-	var tags = jQuery("#edit-tags").val();
-	var breed = jQuery("#edit-breed").val();
-	var url = jQuery("#edit-url").val();
-	var location = jQuery("#edit-location").val();
-	var id = jQuery("#edit-id").val();
+//connect socket
 
-	// make sure we have a location
-	if(!location || location=="") return alert('We need a location!');
-     
-  console.log(id);
-      
-	// POST the data from above to our API create route
-  jQuery.ajax({
-  	url : '/api/update/'+id,
-  	dataType : 'json',
-  	type : 'POST',
-  	// we send the data in a data object (with key/value pairs)
-  	data : {
-  		name : name,
-  		age : age,
-  		tags : tags,
-  		breed : breed,
-  		weight: weight,
-  		url : url,
-  		location : location
-  	},
-  	success : function(response){
-  		if(response.status=="OK"){
-	  		// success
-	  		console.log(response);
-	  		// re-render the map
-	  		renderPlaces();
-	  		// now, close the modal
-	  		$('#editModal').modal('hide')
-	  		// now, clear the input fields
-	  		jQuery("#editForm input").val('');
+// socket = io.connect('localhost:8088');
+
+var marker = "~";
+
+function success(pos) {
+    crd = pos.coords;
+  $('#where').text(crd.latitude +", "+ crd.longitude);
+  console.log('Your current position is:');
+  console.log('Latitude : ' + crd.latitude);
+  console.log('Longitude: ' + crd.longitude);
+  console.log('More or less ' + crd.accuracy + ' meters.');
+  
+  
+
+
+   marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
+  //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
+
+  mappzy = [crd.latitude,crd.longitude];
+  
+  // console.log("DoMarker")
+  // socket.emit('mapmarker', mappzy);
+  // console.log("sentMarker")
+
+
+
+  
+};
+
+function error(err) {
+  console.warn('ERROR(' + err.code + '): ' + err.message);
+};
+
+
+
+
+
+
+
+  // add form button event
+  // when the form is submitted (with a new jar), the below runs
+  jQuery("#addForm").submit(function(e){
+
+  	// first, let's pull out all the values
+  	// the name form field value
+  	var name = jQuery("#name").val();
+  	var age = jQuery("#age").val();
+  	var weight = jQuery("#weight").val();
+  	var tags = jQuery("#tags").val();
+  	var breed = jQuery("#breed").val();
+  	var url = jQuery("#url").val();
+  	var location = jQuery("#location").val();
+
+  	// make sure we have a location
+  	if(!location || location=="") return alert('We need a location!');
+        
+  	// POST the data from above to our API create route
+    jQuery.ajax({
+    	url : '/api/create',
+    	dataType : 'json',
+    	type : 'POST',
+    	// we send the data in a data object (with key/value pairs)
+    	data : {
+    		name : name,
+    		age : age,
+    		tags : tags,
+    		breed : breed,
+    		weight: weight,
+    		url : url,
+    		location : location
+    	},
+    	success : function(response){
+    		if(response.status=="OK"){
+  	  		// success
+  	  		console.log(response);
+  	  		// re-render the map
+  	  		console.log('old map rerender');
+  	  		// now, clear the input fields
+  	  		jQuery("#addForm input").val('');
+    		}
+    		else {
+    			alert("something went wrong");
+    		}
+    	},
+    	error : function(err){
+    		// do error checking
+    		alert("something went wrong");
+    		console.error(err);
+    	}
+    }); 
+
+  	// prevents the form from submitting normally
+    e.preventDefault();
+    return false;
+  });
+
+  // get Jars JSON from /api/get
+  // loop through and populate the map with markers
+  var renderPlaces = function() {
+  	console.log('old render places');
+  	
+
+  	jQuery.ajax({
+  		url : '/api/get',
+  		dataType : 'json',
+  		success : function(response) {
+
+  			console.log(response);
+  			jars = response.jars;
+  			// first clear any existing markers, because we will re-add below
+  			clearMarkers();
+  			markers = [];
+
+  			// now, loop through the jars and add them as markers to the map
+  			for(var i=0;i<jars.length;i++){
+
+  				var latLng = {
+  					lat: jars[i].location.geo[1], 
+  					lng: jars[i].location.geo[0]
+  				}
+
+  				// make and place map maker.
+  				var marker = "map marker";
+
+  				
+  				// keep track of markers
+  				markers.push(marker);
+  			}
+
+  			// now, render the jar image/data
+  			renderJars(jars);
+
   		}
-  		else {
-  			alert("something went wrong");
-  		}
-  	},
-  	error : function(err){
-  		// do error checking
-  		alert("something went wrong");
-  		console.error(err);
-  	}
-  }); 
+  	})
+  };
 
-	// prevents the form from submitting normally
-  e.preventDefault();
-  return false;
+  // edit form button event
+  // when the form is submitted (with a new jar edit), the below runs
+  jQuery("#editForm").submit(function(e){
+
+  	// first, let's pull out all the values
+  	// the name form field value
+  	var name = jQuery("#edit-name").val();
+  	var age = jQuery("#edit-age").val();
+  	var weight = jQuery("#editWeight").val();
+  	var tags = jQuery("#edit-tags").val();
+  	var breed = jQuery("#edit-breed").val();
+  	var url = jQuery("#edit-url").val();
+  	var location = jQuery("#edit-location").val();
+  	var id = jQuery("#edit-id").val();
+
+  	// make sure we have a location
+  	if(!location || location=="") return alert('We need a location!');
+       
+    console.log(id);
+        
+  	// POST the data from above to our API create route
+    jQuery.ajax({
+    	url : '/api/update/'+id,
+    	dataType : 'json',
+    	type : 'POST',
+    	// we send the data in a data object (with key/value pairs)
+    	data : {
+    		name : name,
+    		age : age,
+    		tags : tags,
+    		breed : breed,
+    		weight: weight,
+    		url : url,
+    		location : location
+    	},
+    	success : function(response){
+    		if(response.status=="OK"){
+  	  		// success
+  	  		console.log(response);
+  	  		// re-render the map
+  	  		renderPlaces();
+  	  		// now, close the modal
+  	  		$('#editModal').modal('hide')
+  	  		// now, clear the input fields
+  	  		jQuery("#editForm input").val('');
+    		}
+    		else {
+    			alert("something went wrong");
+    		}
+    	},
+    	error : function(err){
+    		// do error checking
+    		alert("something went wrong");
+    		console.error(err);
+    	}
+    }); 
+
+  	// prevents the form from submitting normally
+    e.preventDefault();
+    return false;
+  });
 });
+// END DOCUMENT READY
 
 
 
