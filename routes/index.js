@@ -84,12 +84,12 @@ router.get('/', function(req, res) {
 // simple routes to show the html pages
 router.get('/pets', function(req,res){
   res.render('pets.html');
-})
+});
 
 
 router.get('/jars', function(req,res){
   res.render('jars.html');
-})
+});
 
 
 
@@ -113,7 +113,8 @@ router.get('/jars', function(req,res){
 
 router.post('/api/create', function(req, res){
 
-    console.log('the data we received is --> ')
+    console.log('the data we received is --> ');
+    
     console.log(req.body);
 
     // pull out the information from the req.body
@@ -140,57 +141,39 @@ router.post('/api/create', function(req, res){
       url: url,
     };
 
-    // if there is no location, return an error
+
+
+     
+      // now, let's add this to our jar object from above
+      
+
+      // now, let's save it to the database
+      // create a new jar model instance, passing in the object we've created
+      var jar = new Jar(jarObj);
+
+      // now, save that jar instance to the database
+      // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
+      jar.save(function(err,data){
+        // if err saving, respond back with error
+        if (err){
+          var error = {status:'ERROR', message: 'Error saving jar'};
+          return res.json(error);
+        }
+
+        console.log('saved a new jar!');
+        console.log(data);
+
+        // now return the json data of the new jar
+        var jsonData = {
+          status: 'OK',
+          jar: data
+        }
+
+        return res.json(jsonData);
+
+      }) 
+
    
-    // if(!location) return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
-
-    // now, let's geocode the location
-    // geocoder.geocode(location, function (err,data) {
-
-
-    //   // if we get an error, or don't have any results, respond back with error
-    //   if (!data || data==null || err || data.status == 'ZERO_RESULTS'){
-    //     var error = {status:'ERROR', message: 'Error finding location'};
-    //     return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
-    //   }
-
-    //   // else, let's pull put the lat lon from the results
-    //   var lon = data.results[0].geometry.location.lng;
-    //   var lat = data.results[0].geometry.location.lat;
-
-    //   // now, let's add this to our jar object from above
-    //   jarObj.location = {
-    //     geo: [lon,lat], // need to put the geo co-ordinates in a lng-lat array for saving
-    //     name: data.results[0].formatted_address // the location name
-    //   }
-
-    //   // now, let's save it to the database
-    //   // create a new jar model instance, passing in the object we've created
-    //   var jar = new Jar(jarObj);
-
-    //   // now, save that jar instance to the database
-    //   // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
-    //   jar.save(function(err,data){
-    //     // if err saving, respond back with error
-    //     if (err){
-    //       var error = {status:'ERROR', message: 'Error saving jar'};
-    //       return res.json(error);
-    //     }
-
-    //     console.log('saved a new jar!');
-    //     console.log(data);
-
-    //     // now return the json data of the new jar
-    //     var jsonData = {
-    //       status: 'OK',
-    //       jar: data
-    //     }
-
-    //     return res.json(jsonData);
-
-    //   }) 
-
-    // }); 
 });
 
 // /**
@@ -249,9 +232,9 @@ router.get('/api/get', function(req, res){
 
     res.json(jsonData);
 
-  })
+  });
 
-})
+});
 
 // /**
 //  * POST '/api/update/:id'
@@ -261,104 +244,104 @@ router.get('/api/get', function(req, res){
 //  * @return {Object} JSON
 //  */
 
-router.post('/api/update/:id', function(req, res){
+// router.post('/api/update/:id', function(req, res){
 
-   var requestedId = req.param('id');
+//    var requestedId = req.param('id');
 
-   var dataToUpdate = {}; // a blank object of data to update
+//    var dataToUpdate = {}; // a blank object of data to update
 
-    // pull out the information from the req.body and add it to the object to update
-    var name, age, weight, breed, url, location; 
+//     // pull out the information from the req.body and add it to the object to update
+//     var name, age, weight, breed, url, location; 
 
-    // we only want to update any field if it actually is contained within the req.body
-    // otherwise, leave it alone.
-    if(req.body.name) {
-      name = req.body.name;
-      // add to object that holds updated data
-      dataToUpdate['name'] = name;
-    }
-    if(req.body.age) {
-      age = req.body.age;
-      // add to object that holds updated data
-      dataToUpdate['age'] = age;
-    }
-    if(req.body.weight) {
-      weight = req.body.weight;
-      // add to object that holds updated data
-      dataToUpdate['weight'] = weight;
-    }
-    if(req.body.breed) {
-      breed = req.body.breed;
-      // add to object that holds updated data
-      dataToUpdate['breed'] = breed;
-    }
-    if(req.body.url) {
-      url = req.body.url;
-      // add to object that holds updated data
-      dataToUpdate['url'] = url;
-    }
+//     // we only want to update any field if it actually is contained within the req.body
+//     // otherwise, leave it alone.
+//     if(req.body.name) {
+//       name = req.body.name;
+//       // add to object that holds updated data
+//       dataToUpdate['name'] = name;
+//     }
+//     if(req.body.age) {
+//       age = req.body.age;
+//       // add to object that holds updated data
+//       dataToUpdate['age'] = age;
+//     }
+//     if(req.body.weight) {
+//       weight = req.body.weight;
+//       // add to object that holds updated data
+//       dataToUpdate['weight'] = weight;
+//     }
+//     if(req.body.breed) {
+//       breed = req.body.breed;
+//       // add to object that holds updated data
+//       dataToUpdate['breed'] = breed;
+//     }
+//     if(req.body.url) {
+//       url = req.body.url;
+//       // add to object that holds updated data
+//       dataToUpdate['url'] = url;
+//     }
 
-    var tags = []; // blank array to hold tags
-    if(req.body.tags){
-      tags = req.body.tags.split(","); // split string into array
-      // add to object that holds updated data
-      dataToUpdate['tags'] = tags;
-    }
+//     var tags = []; // blank array to hold tags
+//     if(req.body.tags){
+//       tags = req.body.tags.split(","); // split string into array
+//       // add to object that holds updated data
+//       dataToUpdate['tags'] = tags;
+//     }
 
-    if(req.body.location) {
-      location = req.body.location;
-    }
+//     if(req.body.location) {
+//       location = req.body.location;
+//     }
 
-    // if there is no location, return an error
-    if(!location) return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
+//     // if there is no location, return an error
+//     if(!location) return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
 
-    // now, let's geocode the location
-    geocoder.geocode(location, function (err,data) {
+//     // now, let's geocode the location
+//     geocoder.geocode(location, function (err,data) {
 
 
-      // if we get an error, or don't have any results, respond back with error
-      if (!data || data==null || err || data.status == 'ZERO_RESULTS'){
-        var error = {status:'ERROR', message: 'Error finding location'};
-        return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
-      }
+//       // if we get an error, or don't have any results, respond back with error
+//       if (!data || data==null || err || data.status == 'ZERO_RESULTS'){
+//         var error = {status:'ERROR', message: 'Error finding location'};
+//         return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
+//       }
 
-      // else, let's pull put the lat lon from the results
-      var lon = data.results[0].geometry.location.lng;
-      var lat = data.results[0].geometry.location.lat;
+//       // else, let's pull put the lat lon from the results
+//       var lon = data.results[0].geometry.location.lng;
+//       var lat = data.results[0].geometry.location.lat;
 
-      // now, let's add this to our jar object from above
-      dataToUpdate['location'] = {
-        geo: [lon,lat], // need to put the geo co-ordinates in a lng-lat array for saving
-        name: data.results[0].formatted_address // the location name
-      }
+//       // now, let's add this to our jar object from above
+//       dataToUpdate['location'] = {
+//         geo: [lon,lat], // need to put the geo co-ordinates in a lng-lat array for saving
+//         name: data.results[0].formatted_address // the location name
+//       }
 
-      console.log('the data to update is ' + JSON.stringify(dataToUpdate));
+//       console.log('the data to update is ' + JSON.stringify(dataToUpdate));
 
-      // now, update that jar
-      // mongoose method findByIdAndUpdate, see http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate  
-      Jar.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
-        // if err saving, respond back with error
-        if (err){
-          var error = {status:'ERROR', message: 'Error updating jar'};
-          return res.json(error);
-        }
+//       // now, update that jar
+//       // mongoose method findByIdAndUpdate, see http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate  
+//       Jar.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
+//         // if err saving, respond back with error
+//         if (err){
+//           var error = {status:'ERROR', message: 'Error updating jar'};
+//           return res.json(error);
+//         }
 
-        console.log('updated the jar!');
-        console.log(data);
+//         console.log('updated the jar!');
+//         console.log(data);
 
-        // now return the json data of the new person
-        var jsonData = {
-          status: 'OK',
-          jar: data
-        }
+//         // now return the json data of the new person
+//         var jsonData = {
+//           status: 'OK',
+//           jar: data
+//         }
 
-        return res.json(jsonData);
+//         return res.json(jsonData);
 
-      })
+//       })
 
-    });     
+//     });     
 
-})
+// })
 
 /**
  * GET '/api/delete/:id'
