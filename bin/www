@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('node-app:server');
 var http = require('http');
 
+
 /**
  * Get port from environment and store in Express.
  */
@@ -19,7 +20,8 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = app.listen(port);
+var io      = require('socket.io').listen(server);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -88,3 +90,34 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+// socket server
+
+io.sockets.on('connection', 
+  // We are given a websocket object in our function
+  function (socket) {
+  
+
+    console.log("We have a NEW client: " + socket.id);
+    
+
+
+    // socket.on('mapmarker', function(data) {
+    //  socket.broadcast.emit("mapmarker", data);
+    // });
+//
+    socket.on('mapmarker', function(data) {
+      console.log("got marker");
+
+      
+      //socket.broadcast.emit -- won't send to new connection --
+
+    });
+  }
+
+    
+
+
+);
+
+

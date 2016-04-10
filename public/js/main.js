@@ -21,7 +21,7 @@ var options = {
 navigator.geolocation.getCurrentPosition(success, error, options);
 
 //connect socket
-var socket = io.connect('http://localhost');
+socket = io.connect();
 
 var marker = "~";
 
@@ -131,7 +131,7 @@ function error(err) {
   			console.log(response);
   			jars = response.jars;
   			// first clear any existing markers, because we will re-add below
-  			clearMarkers();
+  			// clearMarkers();
   			markers = [];
 
   			// now, loop through the jars and add them as markers to the map
