@@ -114,16 +114,16 @@ router.get('/jars', function(req,res){
 router.post('/api/create', function(req, res){
 
     console.log('the data we received is --> ');
-    
+
     console.log(req.body);
 
     // pull out the information from the req.body
     var title = req.body.title;
     
-    var tags = req.body.tags.split(","); // split string into array
+    var tags = req.body.tags; // .split(",")split string into array
     
-    var GPS = req.body.GPS.split(",");
-
+    var GPS = req.body.GPS;//.split(",")
+    console.log('new obj?');
     var SSID = req.body.SSID;
 
     var UDID = req.body.UDID;
@@ -149,6 +149,7 @@ router.post('/api/create', function(req, res){
 
       // now, let's save it to the database
       // create a new jar model instance, passing in the object we've created
+
       var jar = new Jar(jarObj);
 
       // now, save that jar instance to the database
