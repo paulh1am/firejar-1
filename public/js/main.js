@@ -1,23 +1,7 @@
 // CUSTOM JS FILE //
-var map; // global map variable
-var markers = []; // array to hold map markers
 
-function init() {
-  
-  // set some default map details, initial center point, zoom and style
-  var mapOptions = {
-    center: new google.maps.LatLng(40.74649,-74.0094), // NYC
-    zoom: 10,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  
-  // create the map and reference the div#map-canvas container
-  map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-  
-  // get the jars (ajax) 
-  // and render them on the map
-  renderPlaces();
-}
+
+
 
 // add form button event
 // when the form is submitted (with a new jar), the below runs
@@ -56,7 +40,7 @@ jQuery("#addForm").submit(function(e){
 	  		// success
 	  		console.log(response);
 	  		// re-render the map
-	  		renderPlaces();
+	  		console.log('old map rerender');
 	  		// now, clear the input fields
 	  		jQuery("#addForm input").val('');
   		}
@@ -79,9 +63,8 @@ jQuery("#addForm").submit(function(e){
 // get Jars JSON from /api/get
 // loop through and populate the map with markers
 var renderPlaces = function() {
-	var infowindow =  new google.maps.InfoWindow({
-	    content: ''
-	});
+	console.log('old render places');
+	};
 
 	jQuery.ajax({
 		url : '/api/get',
@@ -103,13 +86,8 @@ var renderPlaces = function() {
 				}
 
 				// make and place map maker.
-				var marker = new google.maps.Marker({
-				    map: map,
-				    position: latLng,
-				    title : jars[i].name + "<br>" + jars[i].breed + "<br>" + jars[i].location.name
-				});
+				var marker = "map marker";
 
-				bindInfoWindow(marker, map, infowindow, '<b>'+jars[i].name + "</b> ("+jars[i].breed+") <br>" + jars[i].location.name);
 				
 				// keep track of markers
 				markers.push(marker);
@@ -184,13 +162,7 @@ jQuery("#editForm").submit(function(e){
   return false;
 });
 
-// binds a map marker and infoWindow together on click
-var bindInfoWindow = function(marker, map, infowindow, html) {
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(html);
-        infowindow.open(map, marker);
-    });
-}
+
 
 function renderJars(jars){
 
@@ -270,7 +242,7 @@ function deleteJar(event){
 
 function clearMarkers(){
   for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null); // clears the markers
+    console.log('clear markers out');// clears the markers
   }	
 }
 
@@ -331,14 +303,3 @@ function init_upload(){
 
 
 
-
-// when page is ready, initialize the map!
-google.maps.event.addDomListener(window, 'load', init);
-// $(function(){
-//   /*
-//      Bind S3 upload listener when the page loads. # now its in the view *
-//   */
-//   (function() {
-//       document.getElementById("file_input").onchange = init_upload;
-//   })();
-// }
