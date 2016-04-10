@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose'); // mongoDB library
 var geocoder = require('geocoder'); // geocoder library
+//S3 requires
+var http = require('http');
+var path = require('path');
+var aws = require('aws-sdk');
 
 // our db model
 var Jar = require("../models/model.js");
@@ -30,6 +34,19 @@ router.get('/pets', function(req,res){
 router.get('/jars', function(req,res){
   res.render('jars.html');
 })
+
+
+
+
+
+
+
+
+
+
+// *********** REST ***************** API ******************** ##
+// ***************** API ***************** REST ************** ##
+// *********** REST ***************** API ******************** ##
 
 // /**
 //  * POST '/api/create'
