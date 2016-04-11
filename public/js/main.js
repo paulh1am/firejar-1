@@ -25,7 +25,7 @@ socket = io.connect();
 
 var marker = "~";
  mappzy = [];
-
+GPS2 = [];
 function success(pos) {
     crd = pos.coords;
   $('#where').text(crd.latitude +", "+ crd.longitude);
@@ -45,7 +45,9 @@ function success(pos) {
   console.log("DoMarker")
   socket.emit('mapmarker', mappzy);
   console.log("sentMarker")
-
+  
+    GPS2.push(mappzy[0]).toString();
+     GPS2.push(mappzy[1]).toString();
 
 
   
@@ -58,23 +60,33 @@ function error(err) {
 
 // Doing S3 upload when it's added to the file_input form*
 
-(function() {
-  document.getElementById("file_input").onchange = init_upload;
-  })();
+// (function() {
+//   document.getElementById("file_input").onchange = init_upload;
+//   })();
 
 
 
   // add form button event
   // when the form is submitted (with a new jar), the below runs
   jQuery("#addForm").submit(function(e){
+
     e.preventDefault();
+
+    init_upload; // do the upload **
+    //then add the url to the Jar URL ..
+
     console.log('submitted');
   	// first, let's pull out all the values
   	// the name form field value
   	var title = jQuery("#title").val();
   	
   	var tags = jQuery("#tags").val();
-  	var GPS = {"lat":mappzy[0],"lon":mappzy[1]};
+  	 // GPS = {"lat":mappzy[0].toString(),"lon":mappzy[1].toString()};
+     
+     
+    GPS3 = GPS2.join();
+    console.log(GPS3);
+    var hello = ""
   	var SSID = "";//GRAB THE LOCATION Var
     var UDID = "";//GRAB THE LOCATION Var
     var url = jQuery("#url").val();//GRAB THE LOCATION Var
@@ -91,8 +103,8 @@ function error(err) {
     	// we send the data in a data object (with key/value pairs)
     	data : {
     		title: title,
-    		tags : tags,
-        GPS : GPS,
+    		tags: tags,
+        GPS: GPS3,
         SSID: SSID,
         UDID: UDID,
         url: url,

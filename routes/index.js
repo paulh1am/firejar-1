@@ -120,10 +120,14 @@ router.post('/api/create', function(req, res){
     // pull out the information from the req.body
     var title = req.body.title;
     
-    var tags = req.body.tags; // .split(",")split string into array
+    var tags = req.body.tags.split(',');
     
-    var GPS = req.body.GPS;//.split(",")
-    console.log('new obj?');
+    
+    var GPS = {"lat":"","lon":""};
+    var sGps = req.body.GPS.split(',');
+    GPS.lat = sGps[0];
+    GPS.lon = sGps[1];
+    
     var SSID = req.body.SSID;
 
     var UDID = req.body.UDID;
