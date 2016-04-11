@@ -8,71 +8,71 @@ $( document ).ready(function() {
     maxZoom: 18,
     id: 'ph1am.io3m04c0',
     accessToken: 'pk.eyJ1IjoicGgxYW0iLCJhIjoiV01wMkVDQSJ9.HGSWGdj2lTGJLxMcg4C9mA'
-}).addTo(map);
+  }).addTo(map);
 
 
-var options = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0
-};
+  var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
 
-//get location
-navigator.geolocation.getCurrentPosition(success, error, options);
+  //get location
+  navigator.geolocation.getCurrentPosition(success, error, options);
 
-//connect socket
-socket = io.connect();
+  //connect socket
+  socket = io.connect();
 
-var marker = "~";
- mappzy = [];
-GPS2 = [];
-function success(pos) {
-    crd = pos.coords;
-  $('#where').text(crd.latitude +", "+ crd.longitude);
-  console.log('Your current position is:');
-  console.log('Latitude : ' + crd.latitude);
-  console.log('Longitude: ' + crd.longitude);
-  console.log('More or less ' + crd.accuracy + ' meters.');
-  
-  
-
-
-   marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
-  //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
-
-  mappzy = [crd.latitude,crd.longitude];
-  
-  console.log("DoMarker")
-  socket.emit('mapmarker', mappzy);
-  console.log("sentMarker")
-  
-    GPS2.push(mappzy[0]).toString();
-     GPS2.push(mappzy[1]).toString();
+  var marker = "~";
+   mappzy = [];
+  GPS2 = [];
+  function success(pos) {
+      crd = pos.coords;
+    $('#where').text(crd.latitude +", "+ crd.longitude);
+    console.log('Your current position is:');
+    console.log('Latitude : ' + crd.latitude);
+    console.log('Longitude: ' + crd.longitude);
+    console.log('More or less ' + crd.accuracy + ' meters.');
+    
+    
 
 
-  
-};
+     marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
+    //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
 
-function error(err) {
-  console.warn('ERROR(' + err.code + '): ' + err.message);
-};
-
-
-// Doing S3 upload when it's added to the file_input form*
-
-// (function() {
-//   document.getElementById("file_input").onchange = init_upload;
-//   })();
+    mappzy = [crd.latitude,crd.longitude];
+    
+    console.log("DoMarker")
+    socket.emit('mapmarker', mappzy);
+    console.log("sentMarker")
+    
+      GPS2.push(mappzy[0]).toString();
+       GPS2.push(mappzy[1]).toString();
 
 
+    
+  };
 
-  // add form button event
-  // when the form is submitted (with a new jar), the below runs
+  function error(err) {
+    console.warn('ERROR(' + err.code + '): ' + err.message);
+  };
+
+
+  // Doing S3 upload when it's added to the file_input form*
+
+  // (function() {
+  //   document.getElementById("file_input").onchange = init_upload;
+  //   })();
+
+
+
+    // add form button event
+    // when the form is submitted (with a new jar), the below runs
   jQuery("#addForm").submit(function(e){
 
     e.preventDefault();
 
-    init_upload; // do the upload **
+    init_upload(); // do the upload **
     //then add the url to the Jar URL ..
 
     console.log('submitted');
