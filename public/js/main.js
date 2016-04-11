@@ -24,6 +24,7 @@ navigator.geolocation.getCurrentPosition(success, error, options);
 socket = io.connect();
 
 var marker = "~";
+var mappzy = [];
 
 function success(pos) {
     crd = pos.coords;
