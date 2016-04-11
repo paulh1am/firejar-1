@@ -199,11 +199,16 @@ loaded = false;
 socket.on('connect', function(data) {
       console.log("connect2");
     });
-socket.on('Jars', function(data) {
+socket.on('you', function(data) {
       console.log(data);
       
     });
-
+socket.on('Jars', function(data) {
+      jarr = data;
+      console.log(jarr);
+      console.log('jars');
+      
+    });
 
 });
 // END DOCUMENT READY

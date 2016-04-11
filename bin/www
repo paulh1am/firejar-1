@@ -5,6 +5,7 @@
  */
 
 var app = require('../app');
+var Jar = require("../models/model.js");
 var debug = require('debug')('node-app:server');
 var http = require('http');
 
@@ -113,9 +114,26 @@ io.sockets.on('connection',
       clientSockets[socket.id]="received";
       console.log(clientSockets);
 
-    io.sockets.connected[socky].emit('Jars',"you are"+socky);
-    console.log('sent?');
+      io.sockets.connected[socky].emit('you',"you are"+socky);
+      var jarz=""
+      Jar.find(function(err, data){
+      // if err or no jars found, respond with error 
+        if(err || data == null){
+          console.log('error'); 
+        }
+        // console.log(data);
+        jarz = data;
+        sendJars();
+
+      });
       
+
+      function sendJars(){
+      io.sockets.connected[socky].emit('Jars',jarz);
+
+      console.log('sent?');
+      console.log(jarz);
+      }
       //socket.broadcast.emit -- won't send to new connection --
 
     });
