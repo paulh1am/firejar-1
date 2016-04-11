@@ -2,6 +2,7 @@
 
 $( document ).ready(function() {
       crd = null;
+
       var map = L.map('map').setView([40.75,-74.0059], 12);
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -40,8 +41,9 @@ $( document ).ready(function() {
      marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
     //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
 
+
     mappzy = [crd.latitude,crd.longitude];
-    
+    map.setView(mappzy, 17);
     console.log("DoMarker")
     socket.emit('mapmarker', mappzy);
     console.log("sentMarker")
