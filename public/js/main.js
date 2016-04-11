@@ -58,13 +58,21 @@ $( document ).ready(function() {
   };
 
 
-  // Doing S3 upload when it's added to the file_input form*
+ 
 
-  // (function() {
-  //   document.getElementById("file_input").onchange = init_upload;
-  //   })();
+var file_name="";
 
 
+
+file_url = "";
+
+loaded = false;
+
+ // Doing S3 upload when it's added to the file_input form*
+
+  (function() {
+    document.getElementById("file_input").onchange = init_upload;
+    })();
 
     // add form button event
     // when the form is submitted (with a new jar), the below runs
@@ -72,24 +80,27 @@ $( document ).ready(function() {
 
     e.preventDefault();
 
-    init_upload(); // do the upload **
+    // init_upload(); // do the upload **
     //then add the url to the Jar URL ..
+
+    
 
     console.log('submitted');
   	// first, let's pull out all the values
   	// the name form field value
   	var title = jQuery("#title").val();
-  	
   	var tags = jQuery("#tags").val();
-  	 // GPS = {"lat":mappzy[0].toString(),"lon":mappzy[1].toString()};
-     
-     
-    GPS3 = GPS2.join();
-    console.log(GPS3);
-    var hello = ""
+    var GPS3 = GPS2.join();
   	var SSID = "";//GRAB THE LOCATION Var
     var UDID = "";//GRAB THE LOCATION Var
-    var url = jQuery("#url").val();//GRAB THE LOCATION Var
+
+    if (loaded){
+    
+      var url = "https://s3.amazonaws.com/jar-1/"+jQuery("#url").val();
+    } else{
+      var url = jQuery("#url").val();
+    }
+    
 
   	// make sure we have a location
 
@@ -119,6 +130,7 @@ $( document ).ready(function() {
   	  		console.log('old map rerender');
   	  		// now, clear the input fields
   	  		jQuery("#addForm input").val('');
+          document.getElementById("preview").src =''
     		}
     		else {
     			alert("something went wrong");
@@ -132,7 +144,7 @@ $( document ).ready(function() {
     }); 
 
   	// prevents the form from submitting normally
-    
+    loaded = false;
     return false;
   });
 
@@ -157,8 +169,8 @@ $( document ).ready(function() {
   			for(var i=0;i<jars.length;i++){
 
   				var latLng = {
-  					lat: jars[i].location.geo[1], 
-  					lng: jars[i].location.geo[0]
+  					lat: jars[i].GPS.lat, 
+  					lng: jars[i].GPS.lon
   				}
 
   				// make and place map maker.
@@ -206,39 +218,39 @@ function renderJars(jars){
 			'<button type="button" data-toggle="modal" data-target="#editModal"">Edit Jar</button>'+
 		'</div>';
 
-		jQuery('#jar-holder').prepend(htmlToAdd);
+		// jQuery('#jar-holder').prepend(htmlToAdd);
 
 	}
 }
 
-jQuery('#editModal').on('show.bs.modal', function (e) {
-  // let's get access to what we just clicked on
-  var clickedButton = e.relatedTarget;
-  // now let's get its parent
-	var parent = jQuery(clickedButton).parent();
+// jQuery('#editModal').on('show.bs.modal', function (e) {
+//   // let's get access to what we just clicked on
+//   var clickedButton = e.relatedTarget;
+//   // now let's get its parent
+// 	var parent = jQuery(clickedButton).parent();
 
-  // now, let's get the values of the jar that we're wanting to edit
-  // we do this by targeting specific spans within the parent and pulling out the text
-  var name = $(parent).find('.name').text();
-  var age = $(parent).find('.age').text();
-  var weight = $(parent).find('.weight').text();
-  var tags = $(parent).find('.tags').text();
-  var breed = $(parent).find('.breed').text();
-  var url = $(parent).find('.url').attr('src');
-  var location = $(parent).find('.location').text();
-  var id = $(parent).find('.id').text();
+//   // now, let's get the values of the jar that we're wanting to edit
+//   // we do this by targeting specific spans within the parent and pulling out the text
+//   var name = $(parent).find('.name').text();
+//   var age = $(parent).find('.age').text();
+//   var weight = $(parent).find('.weight').text();
+//   var tags = $(parent).find('.tags').text();
+//   var breed = $(parent).find('.breed').text();
+//   var url = $(parent).find('.url').attr('src');
+//   var location = $(parent).find('.location').text();
+//   var id = $(parent).find('.id').text();
 
-  // now let's set the value of the edit fields to those values
- 	jQuery("#edit-name").val(name);
-	jQuery("#edit-age").val(age);
-	jQuery("#editWeight").val(weight);
-	jQuery("#edit-tags").val(tags);
-	jQuery("#edit-breed").val(breed);
-	jQuery("#edit-url").val(url);
-	jQuery("#edit-location").val(location);
-	jQuery("#edit-id").val(id);
+//   // now let's set the value of the edit fields to those values
+//  	jQuery("#edit-name").val(name);
+// 	jQuery("#edit-age").val(age);
+// 	jQuery("#editWeight").val(weight);
+// 	jQuery("#edit-tags").val(tags);
+// 	jQuery("#edit-breed").val(breed);
+// 	jQuery("#edit-url").val(url);
+// 	jQuery("#edit-location").val(location);
+// 	jQuery("#edit-id").val(id);
 
-})
+// })
 
 
 function deleteJar(event){
@@ -276,7 +288,7 @@ function upload_file(file, signed_request, url){
     xhr.onload = function() {
         if (xhr.status === 200) {
             document.getElementById("preview").src = url;            
-            document.getElementById("avatar_url").value = url;
+            
         }
     };
     xhr.onerror = function() {
@@ -311,9 +323,14 @@ function get_signed_request(file){
    start upload procedure by asking for a signed request from the app.
 */
 function init_upload(){
+    loaded = true;
     console.log("here");
     var files = document.getElementById("file_input").files;
     var file = files[0];
+    file_name= file.name;
+    file_url = "https://s3.amazonaws.com/jar-1/"+ file_name;
+     document.getElementById("preview").src = file_url;
+    $('#url').val(file_name);
     if(file == null){
         alert("No file selected.");
         return;
