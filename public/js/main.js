@@ -56,8 +56,11 @@ function error(err) {
 };
 
 
+// Doing S3 upload when it's added to the file_input form*
 
-
+(function() {
+  document.getElementById("file_input").onchange = init_upload;
+  })();
 
 
 
