@@ -193,6 +193,18 @@ loaded = false;
   // edit form button event
   // when the form is submitted (with a new jar edit), the below runs
   
+
+//********// THE SOCKET PART //********//
+
+socket.on('connect', function(data) {
+      console.log("connect2");
+    });
+socket.on('Jars', function(data) {
+      console.log(data);
+      
+    });
+
+
 });
 // END DOCUMENT READY
 

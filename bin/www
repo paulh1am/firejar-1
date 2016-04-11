@@ -92,12 +92,13 @@ function onListening() {
 }
 
 // socket server
-
+clientSockets = {}
 io.sockets.on('connection', 
   // We are given a websocket object in our function
   function (socket) {
   
-
+    // clientSockets[socket.id]=[];
+    var socky = socket.id
     console.log("We have a NEW client: " + socket.id);
     
 
@@ -108,7 +109,12 @@ io.sockets.on('connection',
 //
     socket.on('mapmarker', function(data) {
       console.log("got marker");
+      console.log(data);
+      clientSockets[socket.id]="received";
+      console.log(clientSockets);
 
+    io.sockets.connected[socky].emit('Jars',"you are"+socky);
+    console.log('sent?');
       
       //socket.broadcast.emit -- won't send to new connection --
 
