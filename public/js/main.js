@@ -207,6 +207,7 @@ socket.on('Jars', function(data) {
       jarr = data;
       console.log(jarr);
       console.log('jars');
+      // REDO the CALL to get the JARS (do it actively*not on socket connect)
       
     });
 
@@ -222,57 +223,63 @@ function renderJars(jars){
 
 	// loop through all the jars and add them in the jar-holder div
 	for(var i=0;i<jars.length;i++){
+    var jar = jars[i];
+    console.log(jar.title);
+
 		var htmlToAdd = '<div class="col-md-4 jar">'+
 			'<img class="url" src="'+jars[i].url+'">'+
-			'<h1 class="name">'+jars[i].name+'</h1>'+
+			'<h1 class="name">'+jars[i].title+'</h1>'+
 			'<ul>'+
-				'<li>Location: <span class="location">'+jars[i].location.name+'</span></li>'+
-				'<li>Breed: <span class="breed">'+jars[i].breed+'</span></li>'+
-				'<li>Age: <span class="age">'+jars[i].age+'</span></li>'+
-				'<li>Weight: <span class="weight">'+jars[i].weight+'</span></li>'+
+				'<li>Location: <span class="location">'+jars[i].GPS+'</span></li>'+
+
 				'<li>Tags: <span class="tags">'+jars[i].tags+'</span></li>'+
-				'<li class="hide id">'+jars[i]._id+'</li>'+
+
+        '<li class="hide id">'+jars[i].id+'</li>'+
 			'</ul>'+
-			'<button type="button" id="'+jars[i]._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
+      
+
+			'<button type="button" id="'+jars[i].id+'" onclick="deleteJar('+jars+')">Delete Jar</button>'+
 			'<button type="button" data-toggle="modal" data-target="#editModal"">Edit Jar</button>'+
 		'</div>';
 
-		// jQuery('#jar-holder').prepend(htmlToAdd);
+		jQuery('#jar-holder').prepend(htmlToAdd);
 
 	}
 }
 
-// jQuery('#editModal').on('show.bs.modal', function (e) {
-//   // let's get access to what we just clicked on
-//   var clickedButton = e.relatedTarget;
-//   // now let's get its parent
-// 	var parent = jQuery(clickedButton).parent();
+jQuery('#editModal').on('show.bs.modal', function (e) {
+  // let's get access to what we just clicked on
+  var clickedButton = e.relatedTarget;
+  // now let's get its parent
+	var parent = jQuery(clickedButton).parent();
 
-//   // now, let's get the values of the jar that we're wanting to edit
-//   // we do this by targeting specific spans within the parent and pulling out the text
-//   var name = $(parent).find('.name').text();
-//   var age = $(parent).find('.age').text();
-//   var weight = $(parent).find('.weight').text();
-//   var tags = $(parent).find('.tags').text();
-//   var breed = $(parent).find('.breed').text();
-//   var url = $(parent).find('.url').attr('src');
-//   var location = $(parent).find('.location').text();
-//   var id = $(parent).find('.id').text();
+  // now, let's get the values of the jar that we're wanting to edit
+  // we do this by targeting specific spans within the parent and pulling out the text
 
-//   // now let's set the value of the edit fields to those values
-//  	jQuery("#edit-name").val(name);
-// 	jQuery("#edit-age").val(age);
-// 	jQuery("#editWeight").val(weight);
-// 	jQuery("#edit-tags").val(tags);
-// 	jQuery("#edit-breed").val(breed);
-// 	jQuery("#edit-url").val(url);
-// 	jQuery("#edit-location").val(location);
-// 	jQuery("#edit-id").val(id);
+  // var name = $(parent).find('.name').text();
+  // var age = $(parent).find('.age').text();
+  // var weight = $(parent).find('.weight').text();
+  // var tags = $(parent).find('.tags').text();
+  // var breed = $(parent).find('.breed').text();
+  // var url = $(parent).find('.url').attr('src');
+  // var location = $(parent).find('.location').text();
+  // var id = $(parent).find('.id').text();
 
-// })
+  // now let's set the value of the edit fields to those values
+ 
+ // 	jQuery("#edit-name").val(name);
+	// jQuery("#edit-age").val(age);
+	// jQuery("#editWeight").val(weight);
+	// jQuery("#edit-tags").val(tags);
+	// jQuery("#edit-breed").val(breed);
+	// jQuery("#edit-url").val(url);
+	// jQuery("#edit-location").val(location);
+	// jQuery("#edit-id").val(id);
+
+})
 
 
-function deleteJar(event){
+function deleteJar(renderjars){
 	var targetedId = event.target.id;
 	console.log('the jar to delete is ' + targetedId);
 
@@ -283,7 +290,7 @@ function deleteJar(event){
 		success : function(response) {
 			// now, let's re-render the jars
 
-			renderPlaces();
+			renderJars(renderjars);
 
 		}
 	})
