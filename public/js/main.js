@@ -1,5 +1,10 @@
 // CUSTOM JS FILE //
 
+// FOR cross domain (using heroku api) change ajax calls to include urlRoot and crossdomain*
+//  var urlRoot = https://fjar-off-land.herokuapp.com/
+//  crossDomain: true,
+//      dataType: 'jsonp',
+
 $( document ).ready(function() {
       crd = null;
 
@@ -133,6 +138,7 @@ $( document ).ready(function() {
   	  		// now, clear the input fields
   	  		jQuery("#addForm input").val('');
           document.getElementById("preview").src =''
+          socket.emit('fetch', "fetch");
     		}
     		else {
     			alert("something went wrong");
