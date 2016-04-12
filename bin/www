@@ -122,11 +122,11 @@ io.sockets.on('connection',
 
       //get location from fetch req 
       console.log("fetch for: " +data);
-      coords = data.split(',');
+      coords = data;
       fetch_lat = coords[0];
       fetch_long = coords[1];
 
-      var jarz=""
+      var jarz="";
 
       Jar.find(function(err, data){
       // if err or no jars found, respond with error 
@@ -135,8 +135,10 @@ io.sockets.on('connection',
         }
         // console.log(data);
         jarz = data;
-        console.log('sending fetch');
-        sendJars();
+        // console.log('sending fetch');
+        // sendJars(jarz);
+        console.log('sending fetchNEAR');
+        sendNearJars(jarz,fetch_lat,fetch_long,1);
 
       });
       
@@ -149,11 +151,32 @@ io.sockets.on('connection',
         return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
       }
 
-      function sendJars(){
-        io.sockets.connected[socky].emit('Jars',jarz);
+      function sendJars(jars){
+        io.sockets.connected[socky].emit('Jars',jars);
 
         console.log('sent?');
-        console.log(jarz);
+        console.log(jars);
+      }
+
+      function sendNearJars(arr,lat,lon,dist){
+        jars = []
+        for (var i = 0; i < arr.length; i++) {
+          var dbJar = arr[i];
+          
+          var jlat = dbJar.GPS.lat;
+          var jlon = dbJar.GPS.lon;
+
+         if(distance(jlat,jlon,lat,lon) < dist){
+          jars.push(dbJar);
+          console.log(dbJar);
+         }
+        }
+
+        
+
+        console.log('sent near?');
+        console.log(jars);
+        sendJars(jars);
       }
 
     });
