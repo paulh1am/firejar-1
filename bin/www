@@ -115,6 +115,11 @@ io.sockets.on('connection',
       console.log(clientSockets);
 
       io.sockets.connected[socky].emit('you',"you are"+socky);
+      
+    });
+    
+    socket.on('fetch', function(err) {
+      console.log('fetching');
       var jarz=""
       Jar.find(function(err, data){
       // if err or no jars found, respond with error 
@@ -123,24 +128,20 @@ io.sockets.on('connection',
         }
         // console.log(data);
         jarz = data;
+        console.log('sending fetch');
         sendJars();
 
       });
-      
 
       function sendJars(){
-      io.sockets.connected[socky].emit('Jars',jarz);
+        io.sockets.connected[socky].emit('Jars',jarz);
 
-      console.log('sent?');
-      console.log(jarz);
+        console.log('sent?');
+        console.log(jarz);
       }
-      //socket.broadcast.emit -- won't send to new connection --
 
     });
   }
-
-    
-
 
 );
 

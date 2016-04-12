@@ -62,13 +62,13 @@ $( document ).ready(function() {
 
  
 
-var file_name="";
+  var file_name="";
 
 
 
-file_url = "";
+  file_url = "";
 
-loaded = false;
+  loaded = false;
 
  // Doing S3 upload when it's added to the file_input form*
 
@@ -195,19 +195,22 @@ loaded = false;
   
 
 //********// THE SOCKET PART //********//
-
+function fetchJars(){
+  socket.emit('fetch', "fetch");
+}
 socket.on('connect', function(data) {
       console.log("connect2");
     });
 socket.on('you', function(data) {
       console.log(data);
-      
+      socket.emit('fetch', "fetch");
+      fetchJars();
     });
 socket.on('Jars', function(data) {
       jarr = data;
       console.log(jarr);
       console.log('jars');
-      // REDO the CALL to get the JARS (do it actively*not on socket connect)
+      renderJars(jarr);
       
     });
 
@@ -227,10 +230,11 @@ function renderJars(jars){
     console.log(jar.title);
 
 		var htmlToAdd = '<div class="col-md-4 jar">'+
-			'<img class="url" src="'+jars[i].url+'">'+
+			
 			'<h1 class="name">'+jars[i].title+'</h1>'+
+      '<img class="url" src="'+jars[i].url+'">'+
 			'<ul>'+
-				'<li>Location: <span class="location">'+jars[i].GPS+'</span></li>'+
+				'<li>Location: <span class="location">'+jars[i].GPS.lat+','+jars[i].GPS.lon+'</span></li>'+
 
 				'<li>Tags: <span class="tags">'+jars[i].tags+'</span></li>'+
 
@@ -238,7 +242,7 @@ function renderJars(jars){
 			'</ul>'+
       
 
-			'<button type="button" id="'+jars[i].id+'" onclick="deleteJar('+jars+')">Delete Jar</button>'+
+			'<button type="button" id="'+jars[i]._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
 			'<button type="button" data-toggle="modal" data-target="#editModal"">Edit Jar</button>'+
 		'</div>';
 
@@ -279,7 +283,7 @@ jQuery('#editModal').on('show.bs.modal', function (e) {
 })
 
 
-function deleteJar(renderjars){
+function deleteJar(event){
 	var targetedId = event.target.id;
 	console.log('the jar to delete is ' + targetedId);
 
@@ -290,7 +294,7 @@ function deleteJar(renderjars){
 		success : function(response) {
 			// now, let's re-render the jars
 
-			renderJars(renderjars);
+			socket.emit('fetch', "fetch");
 
 		}
 	})
