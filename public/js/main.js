@@ -301,7 +301,7 @@ function deleteJar(event){
 		success : function(response) {
 			// now, let's re-render the jars
 
-			socket.emit('fetch', "fetch");
+			socket.emit('fetch', mappzy);
 
 		}
 	})
