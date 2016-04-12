@@ -118,9 +118,16 @@ io.sockets.on('connection',
       
     });
     
-    socket.on('fetch', function(err) {
-      console.log('fetching');
+    socket.on('fetch', function(data) {
+
+      //get location from fetch req 
+      console.log("fetch for: " +data);
+      coords = data.split(',');
+      fetch_lat = coords[0];
+      fetch_long = coords[1];
+
       var jarz=""
+
       Jar.find(function(err, data){
       // if err or no jars found, respond with error 
         if(err || data == null){
@@ -132,6 +139,15 @@ io.sockets.on('connection',
         sendJars();
 
       });
+      
+      function distance(lat1, lon1, lat2, lon2) {
+        var p = 0.017453292519943295;    // Math.PI / 180
+        var c = Math.cos;
+        var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+                c(lat1 * p) * c(lat2 * p) * 
+                (1 - c((lon2 - lon1) * p))/2;
+        return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+      }
 
       function sendJars(){
         io.sockets.connected[socky].emit('Jars',jarz);

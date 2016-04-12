@@ -18,4 +18,13 @@ h1 {
     display: block;
     margin-left: 10%;
 }
+.jar{
+  width:270px;
+  min-height: 300px;
+  
+}
+.jar-image{
+  max-width: 250px;
+
+}
 

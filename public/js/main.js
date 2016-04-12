@@ -138,7 +138,7 @@ $( document ).ready(function() {
   	  		// now, clear the input fields
   	  		jQuery("#addForm input").val('');
           document.getElementById("preview").src =''
-          socket.emit('fetch', "fetch");
+          socket.emit('fetch', mappzy);
     		}
     		else {
     			alert("something went wrong");
@@ -201,16 +201,17 @@ $( document ).ready(function() {
   
 
 //********// THE SOCKET PART //********//
-function fetchJars(){
-  socket.emit('fetch', "fetch");
+function fetchJars(location){
+  socket.emit('fetch', location);
 }
+
 socket.on('connect', function(data) {
       console.log("connect2");
     });
 socket.on('you', function(data) {
       console.log(data);
-      socket.emit('fetch', "fetch");
-      fetchJars();
+      socket.emit('fetch', mappzy);
+      
     });
 socket.on('Jars', function(data) {
       jarr = data;
@@ -237,18 +238,18 @@ function renderJars(jars){
 
 		var htmlToAdd = '<div class="col-md-4 jar">'+
 			
-			'<h1 class="name">'+jars[i].title+'</h1>'+
-      '<img class="url" src="'+jars[i].url+'">'+
+			'<h1 class="name">'+jar.title+'</h1>'+
+      '<img class="jar-image" src="'+jar.url+'">'+
 			'<ul>'+
-				'<li>Location: <span class="location">'+jars[i].GPS.lat+','+jars[i].GPS.lon+'</span></li>'+
+				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
 
-				'<li>Tags: <span class="tags">'+jars[i].tags+'</span></li>'+
+				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
 
-        '<li class="hide id">'+jars[i].id+'</li>'+
+        '<li class="hide id">'+jar.id+'</li>'+
 			'</ul>'+
       
 
-			'<button type="button" id="'+jars[i]._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
+			'<button type="button" id="'+jar._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
 			'<button type="button" data-toggle="modal" data-target="#editModal"">Edit Jar</button>'+
 		'</div>';
 
