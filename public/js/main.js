@@ -230,20 +230,27 @@ function renderJars(jars){
 
 	// first, make sure the #jar-holder is empty
 	jQuery('#jar-holder').empty();
-  var fileExtension= "";
   
+ 
+ 
 	// loop through all the jars and add them in the jar-holder div
 	for(var i=0;i<jars.length;i++){
     var jar = jars[i];
-    console.log(jar.title);
+    var fileExtension = jar.url.replace(/^.*\./, '');
+    var file_type = '';
 
-    fileExtension = jar.url.replace(/^.*\./, '');
-    
+    console.log(jar);
     console.log (fileExtension);
+    if (fileExtension = 'jpg'){
+      file_type = 'image';
+    }else if (fileExtension = 'mp3'){
+      file_type = 'audio';
+    }
+    console.log (file_type);
 
 		var htmlToAdd = '<div class="col-md-4 jar">'+
 			
-			'<h1 class="name">'+jar.title+'</h1>'+
+			'<h1 class="name">'+jar.title+ jar.url+'</h1>'+
       '<img class="jar-image" src="'+jar.url+'">'+
 			'<ul>'+
 				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
