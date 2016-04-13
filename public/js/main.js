@@ -230,11 +230,16 @@ function renderJars(jars){
 
 	// first, make sure the #jar-holder is empty
 	jQuery('#jar-holder').empty();
-
+  var fileExtension= "";
+  
 	// loop through all the jars and add them in the jar-holder div
 	for(var i=0;i<jars.length;i++){
     var jar = jars[i];
     console.log(jar.title);
+
+    fileExtension = jar.url.replace(/^.*\./, '');
+    
+    console.log (fileExtension);
 
 		var htmlToAdd = '<div class="col-md-4 jar">'+
 			
