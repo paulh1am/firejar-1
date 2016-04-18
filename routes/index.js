@@ -9,7 +9,7 @@ var aws = require('aws-sdk');
 
 // our db model
 var Jar = require("../models/model.js");
-// var Account = require("../models/account.js");
+var Account = require("../models/account.js");
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -90,45 +90,45 @@ router.get('/jars', function(req,res){
 });
 
 
-// router.get('/register', function(req, res) {
-//     res.render('register', { });
-// });
+router.get('/register', function(req, res) {
+    res.render('register', { });
+});
 
-// router.post('/register', function(req, res) {
-//     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
-//         if (err) {
-//             return res.render('register', { account : account });
-//         }
+router.post('/register', function(req, res) {
+    Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+        if (err) {
+            return res.render('register', { account : account });
+        }
 
-//         passport.authenticate('local')(req, res, function () {
-//             res.redirect('/');
-//         });
-//     });
-// });
+        passport.authenticate('local')(req, res, function () {
+            res.redirect('/');
+        });
+    });
+});
 
-// router.get('/login', function(req, res) {
-//     res.render('login', { user : req.user });
-// });
+router.get('/login', function(req, res) {
+    res.render('login', { user : req.user });
+});
 
-// router.post('/login', passport.authenticate('local'), function(req, res) {
-//     res.redirect('/');
-// });
+router.post('/login', passport.authenticate('local'), function(req, res) {
+    res.redirect('/');
+});
 
-// router.get('/logout', function(req, res) {
-//     req.logout();
-//     res.redirect('/in');
-// });
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/in');
+});
 
-// router.get('/ping', function(req, res){
-//     res.status(200).send("pong!");
-// });
+router.get('/ping', function(req, res){
+    res.status(200).send("pong!");
+});
 
 
-// router.get('/in', function(req, res){
+router.get('/in', function(req, res){
     
-//     res.render('user', { user : req.user });
+    res.render('user', { user : req.user });
 
-// });
+});
 
 
 
