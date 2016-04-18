@@ -9,6 +9,11 @@ var env = require('node-env-file');
 
 var app = express();
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 

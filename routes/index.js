@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+var app = require('express');
+var router = app.Router();
 var mongoose = require('mongoose'); // mongoDB library
 var geocoder = require('geocoder'); // geocoder library
 //S3 requires
@@ -10,6 +10,7 @@ var aws = require('aws-sdk');
 // our db model
 var Jar = require("../models/model.js");
 
+var passport = require('passport');
 
 
 
@@ -81,10 +82,6 @@ router.get('/', function(req, res) {
   res.json(jsonData)
 });
 
-// simple routes to show the html pages
-router.get('/pets', function(req,res){
-  res.render('pets.html');
-});
 
 
 router.get('/jars', function(req,res){
@@ -92,7 +89,11 @@ router.get('/jars', function(req,res){
 });
 
 
-
+router.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 
 
