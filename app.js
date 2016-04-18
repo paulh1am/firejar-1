@@ -12,10 +12,23 @@ var app = express();
 var passport = require('passport');
 
 var LocalStrategy = require('passport-local').Strategy;
+var Account = require("./models/account.js");
 
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// passport.use(new LocalStrategy(
+//   function(username, password, done) {
+//     Account.findOne({ username: username }, function (err, user) {
+//       if (err) { return done(err); }
+//       if (!user) { return done(null, false); }
+//       if (!user.verifyPassword(password)) { return done(null, false); }
+//       return done(null, user);
+//     });
+//   }
+// ));
+
 
 
 
@@ -43,6 +56,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+
+// passport config
+var Account = require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+
+
+
 
 // our routes will be contained in routes/index.js
 var routes = require('./routes/index');
