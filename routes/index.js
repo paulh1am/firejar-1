@@ -116,7 +116,7 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 
 router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('/in');
 });
 
 router.get('/ping', function(req, res){
@@ -124,7 +124,11 @@ router.get('/ping', function(req, res){
 });
 
 
+router.get('/in', function(req, res){
+    
+    res.render('user', { user : req.user });
 
+});
 
 
 
