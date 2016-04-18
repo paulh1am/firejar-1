@@ -7,7 +7,6 @@
 var app = require('../app');
 var Jar = require("../models/model.js");
 var Account = require("../models/account.js");
-var LocalStrategy = require('passport-local').Strategy;
 var debug = require('debug')('node-app:server');
 var http = require('http');
 
