@@ -239,18 +239,19 @@ function renderJars(jars){
     var fileExtension = jar.url.replace(/^.*\./, '');
     var file_type = '';
 
-    console.log(jar);
+    console.log(jar.url);
     console.log (fileExtension);
-    if (fileExtension = 'jpg'){
+
+    if (fileExtension == 'jpg'){
       file_type = 'image';
-    }else if (fileExtension = 'mp3'){
+    }else if (fileExtension == 'mp3'){
       file_type = 'audio';
     }
     console.log (file_type);
 
 		var htmlToAdd = '<div class="col-md-4 jar">'+
 			
-			'<h1 class="name">'+jar.title+ jar.url+'</h1>'+
+			'<h1 class="name">'+jar.title+ '</h1>'+
       '<img class="jar-image" src="'+jar.url+'">'+
 			'<ul>'+
 				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
