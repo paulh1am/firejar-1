@@ -9,7 +9,7 @@ var aws = require('aws-sdk');
 
 // our db model
 var Jar = require("../models/model.js");
-var Accounf = require("../models/account.js");
+var Account = require("../models/account.js");
 
 var passport = require('passport');
 
