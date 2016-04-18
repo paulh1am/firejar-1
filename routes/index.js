@@ -12,8 +12,8 @@ var Jar = require("../models/model.js");
 var Account = require("../models/account.js");
 
 var passport = require('passport');
-
-
+var LocalStrategy = require('passport-local').Strategy;
+var passportLocalMongoose = require('passport-local-mongoose');
 
 /*
  * Load the S3 information from the environment variables.
