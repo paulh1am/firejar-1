@@ -12,18 +12,13 @@ var Jar = require("../models/model.js");
 var Account = require("../models/account.js");
 
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var passportLocalMongoose = require('passport-local-mongoose');
 
-passport.use(new LocalStrategy(
-  function(username, password, cb) {
-    Account.findByUsername(username, function(err, user) {
-      if (err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      if (user.password != password) { return cb(null, false); }
-      return cb(null, user);
-    });
-  }));
+var LocalStrategy = require('passport-local').Strategy;
+
+
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 
 
@@ -123,12 +118,12 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
+    res.redirect('/session');
 });
 
 router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/in');
+    res.redirect('/jars');
 });
 
 router.get('/ping', function(req, res){
@@ -136,7 +131,7 @@ router.get('/ping', function(req, res){
 });
 
 
-router.get('/in', function(req, res){
+router.get('/session', function(req, res){
     
     res.render('user', { user : req.user });
 

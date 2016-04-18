@@ -18,7 +18,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
 // if in development mode, load .env variables
 if (app.get("env") === "development") {
     env(__dirname + '/.env');
