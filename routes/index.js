@@ -15,6 +15,18 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var passportLocalMongoose = require('passport-local-mongoose');
 
+passport.use(new LocalStrategy(
+  function(username, password, cb) {
+    Account.findByUsername(username, function(err, user) {
+      if (err) { return cb(err); }
+      if (!user) { return cb(null, false); }
+      if (user.password != password) { return cb(null, false); }
+      return cb(null, user);
+    });
+  }));
+
+
+
 /*
  * Load the S3 information from the environment variables.
  http://aws.amazon.com/myBucket/myKey/moreKey.jpg

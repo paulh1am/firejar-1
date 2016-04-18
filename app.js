@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var env = require('node-env-file');
-
+var Account = require("./models/account.js");
 var app = express();
 
 var passport = require('passport');
@@ -19,14 +19,14 @@ app.use(passport.session());
 
 
 
-
 // if in development mode, load .env variables
 if (app.get("env") === "development") {
     env(__dirname + '/.env');
 }
 
 // connect to database
-app.db = mongoose.connect(process.env.MONGOLAB_URI);
+app.db = mongoose.connect("mongodb://fjarer:itp2016@ds011241.mlab.com:11241/heroku_0ck3glkx");
+
 
 // view engine setup - this app uses Hogan-Express
 // https://github.com/vol4ok/hogan-express
