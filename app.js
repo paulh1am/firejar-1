@@ -29,7 +29,7 @@ app.db = mongoose.connect(process.env.MONGOLAB_URI);
 // view engine setup - this app uses Hogan-Express
 // https://github.com/vol4ok/hogan-express
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
+app.set('view engine', 'jade');
 app.set('layout','layout');
 app.engine('html', require('hogan-express'));
 
