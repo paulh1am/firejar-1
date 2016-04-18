@@ -126,6 +126,7 @@ $( document ).ready(function() {
         SSID: SSID,
         UDID: UDID,
         url: url,
+        owner: "5714e0b0d5c65a85125ff476"
     		
     	},
       // ADD THE LOCATION DATA (from the webRTC)

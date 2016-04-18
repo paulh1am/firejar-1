@@ -16,6 +16,8 @@ var jarSchema = new Schema({
 	SSID:String,
 	UDID:String,
 	url: String,
+	owner:[{type: mongoose.Schema.Types.ObjectId,
+            ref: 'Account'}],
 	dateAdded : { type: Date, default: Date.now },
 });
 

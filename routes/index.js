@@ -8,7 +8,7 @@ var path = require('path');
 var aws = require('aws-sdk');
 
 // our db model
-var Jar = require("../models/model.js");
+var Jar = require("../models/jar.js");
 var Account = require("../models/account.js");
 
 var passport = require('passport');
@@ -173,6 +173,7 @@ router.post('/api/create', function(req, res){
     var UDID = req.body.UDID;
 
     var url = req.body.url;
+    var owner = req.body.owner;
 
     // hold all this data in an object
     // this object should be structured the same way as your db model
@@ -183,6 +184,7 @@ router.post('/api/create', function(req, res){
       SSID: SSID,
       UDID: UDID,
       url: url,
+      owner:owner
     };
 
 
