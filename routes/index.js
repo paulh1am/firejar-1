@@ -178,6 +178,7 @@ router.post('/api/create', function(req, res){
 
     var url = req.body.url;
     var owner = req.body.owner;
+    var project = req.body.project;
 
     // hold all this data in an object
     // this object should be structured the same way as your db model
@@ -188,7 +189,8 @@ router.post('/api/create', function(req, res){
       SSID: SSID,
       UDID: UDID,
       url: url,
-      owner:owner
+      owner:owner,
+      project:project
     };
 
 

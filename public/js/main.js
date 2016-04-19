@@ -126,7 +126,8 @@ $( document ).ready(function() {
         SSID: SSID,
         UDID: UDID,
         url: url,
-        owner: "5714e0b0d5c65a85125ff476"
+        owner: "5714e0b0d5c65a85125ff476",
+        project:"bridge"
     		
     	},
       // ADD THE LOCATION DATA (from the webRTC)
@@ -243,34 +244,54 @@ function renderJars(jars){
     console.log(jar.url);
     console.log (fileExtension);
 
-    if (fileExtension == 'jpg'){
+    if (fileExtension == 'jpg'|| fileExtension =='jpeg'|| fileExtension =='png'){
       file_type = 'image';
-    }else if (fileExtension == 'mp3'){
+    }else if (fileExtension == 'mp3'|| fileExtension =='ogg' || fileExtension == 'wav'){
       file_type = 'audio';
     }
     console.log (file_type);
+    if(file_type == 'image'){
+  		var htmlToAdd = '<div class="col-md-4 jar">'+
+  			
+  			'<h1 class="name">'+jar.title+ '</h1>'+
+        '<img class="jar-image" src="'+jar.url+'">'+
+  			'<ul>'+
+  				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
 
-		var htmlToAdd = '<div class="col-md-4 jar">'+
-			
-			'<h1 class="name">'+jar.title+ '</h1>'+
-      '<img class="jar-image" src="'+jar.url+'">'+
-			'<ul>'+
-				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
+  				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
+          '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
 
-				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-        '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
+          '<li class="hide id">'+jar.id+'</li>'+
+  			'</ul>'+
+        
 
-        '<li class="hide id">'+jar.id+'</li>'+
-			'</ul>'+
-      
+  			'<button type="button" id="'+jar._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
+  			'<button type="button" data-toggle="modal" data-target="#editModal"">Edit Jar</button>'+
+  		'</div>';
 
-			'<button type="button" id="'+jar._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
-			'<button type="button" data-toggle="modal" data-target="#editModal"">Edit Jar</button>'+
-		'</div>';
+  		
+    }else if(file_type == 'audio'){
+      var htmlToAdd = '<div class="col-md-4 jar">'+
+      '<h1 class="name">'+jar.title+ '</h1>'+
+      '<audio src="'+jar.url+'" controls autoplay loop>'+
+      'Your browser does not support the </audio>'+
+      // '<audio controls> <source src='+jar.url+ '"type="audio/ogg">
+        //<source src='+jar.url+ 
+      //   'type="audio/mpeg">
+      //   Your browser does not support the audio element.</audio>'+
+      // '<ul>'+
+          '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
 
-		jQuery('#jar-holder').prepend(htmlToAdd);
+          '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
+          '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
 
-	}
+          '<li class="hide id">'+jar.id+'</li>'+
+        '</ul>'
+
+
+	  }
+    jQuery('#jar-holder').prepend(htmlToAdd);
+  }
 }
 
 jQuery('#editModal').on('show.bs.modal', function (e) {

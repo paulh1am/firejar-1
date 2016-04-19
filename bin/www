@@ -194,7 +194,7 @@ io.sockets.on('connection',
 // Model.find({ 'some.value': 5 }, function (err, docs) {
 //   // docs is an array
 // });
-      Jar.find({"title": "brdg"},function(err, data){
+      Jar.find({"project": "bridge"},function(err, data){
       // if err or no jars found, respond with error 
         if(err || data == null){
           console.log('error'); 

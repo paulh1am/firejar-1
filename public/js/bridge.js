@@ -243,9 +243,9 @@ function renderJars(jars){
     console.log(jar.url);
     console.log (fileExtension);
 
-    if (fileExtension == 'jpg'){
+    if (fileExtension == 'jpg'|| fileExtension =='gif'|| fileExtension =='png'){
       file_type = 'image';
-    }else if (fileExtension == 'mp3'){
+    }else if (fileExtension == 'mp3'|| fileExtension =='ogg' || fileExtension == 'wav'){
       file_type = 'audio';
     }
     console.log (file_type);
