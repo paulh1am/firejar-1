@@ -278,7 +278,7 @@ socket.on('Jars', function(data) {
     console.log("custom gps");
     socket.emit('mapmarker', mappzy);
     console.log("sent custom gps");
-    
+      GPS2 =  [];
       GPS2.push(mappzy[0]).toString();
        GPS2.push(mappzy[1]).toString();
 
