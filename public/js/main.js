@@ -65,6 +65,9 @@ $( document ).ready(function() {
   };
 
 
+
+
+
  
 
   var file_name="";
@@ -224,6 +227,31 @@ socket.on('Jars', function(data) {
       
     });
 
+  map.on('click', addMarker);
+
+function addMarker(e){
+    // Add marker to map at click location; add popup window
+    console.log('CLLLLLICK??')
+    // var newMarker = new L.marker(e.latlng).addTo(map);
+    form_coords = e.latlng.lat+','+e.latlng.lng;
+    form_coords = form_coords.split(',');
+    console.log(form_coords);
+    $('#where').text(form_coords);
+    map.removeLayer(marker);
+    marker = L.marker([form_coords[0],form_coords[1]]).addTo(map);
+
+       mappzy = form_coords;
+       map.setView(mappzy, 17);
+    
+    console.log("custom gps");
+    socket.emit('mapmarker', mappzy);
+    console.log("sent custom gps");
+      GPS2 =  [];
+      GPS2.push(mappzy[0]).toString();
+       GPS2.push(mappzy[1]).toString();
+
+}
+
 });
 // END DOCUMENT READY
 
@@ -261,9 +289,17 @@ socket.on('Jars', function(data) {
     };
   });
 
-  jQuery("#submit_location").click(function(e){
 
-    e.preventDefault();
+
+
+  jQuery("#submit_location").click(function(e){
+    setLocation(e);
+
+
+  });
+
+function setLocation(e){
+  e.preventDefault();
     console.log('location form ..');
     console.log($('#gps').val());
     form_coords = $('#gps').val().split(',');
@@ -281,13 +317,7 @@ socket.on('Jars', function(data) {
       GPS2 =  [];
       GPS2.push(mappzy[0]).toString();
        GPS2.push(mappzy[1]).toString();
-
-
-  });
-
-
-
-
+}
 
 
 
@@ -381,14 +411,9 @@ function deleteJar(event){
 	event.preventDefault();
 }
 
-function clearMarkers(){
-  for (var i = 0; i < markers.length; i++) {
-    console.log('clear markers out');// clears the markers
-  }	
-}
+
 
 // Function to carry out the actual PUT request to S3 using the signed request from the app.
-
 
 function upload_file(file, signed_request, url){
     var xhr = new XMLHttpRequest();
