@@ -96,6 +96,10 @@ router.get('/jars', function(req,res){
   res.render('jars.html');
 });
 
+router.get('/bridge', function(req,res){
+  res.render('bridge.html');
+});
+
 
 router.get('/register', function(req, res) {
     res.render('register', { });

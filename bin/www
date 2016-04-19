@@ -139,7 +139,7 @@ io.sockets.on('connection',
         // console.log('sending fetch');
         // sendJars(jarz);
         console.log('sending fetchNEAR');
-        sendNearJars(jarz,fetch_lat,fetch_long,1000);
+        sendNearJars(jarz,fetch_lat,fetch_long,10);
 
       });
       
@@ -181,6 +181,72 @@ io.sockets.on('connection',
       }
 
     });
+    
+    socket.on('fetchBridge', function(data) {
+
+      //get location from fetch req 
+      console.log("fetch bridge for: " +data);
+      coords = data;
+      fetch_lat = coords[0];
+      fetch_long = coords[1];
+
+      var jarz="";
+// Model.find({ 'some.value': 5 }, function (err, docs) {
+//   // docs is an array
+// });
+      Jar.find({"title": "brdg"},function(err, data){
+      // if err or no jars found, respond with error 
+        if(err || data == null){
+          console.log('error'); 
+        }
+        // console.log(data);
+        jarz = data;
+        // console.log('sending fetch');
+        // sendJars(jarz);
+        console.log('sending fetchNEAR');
+        sendNearJars(jarz,fetch_lat,fetch_long,100);
+
+      });
+      
+      function distance(lat1, lon1, lat2, lon2) {
+        var p = 0.017453292519943295;    // Math.PI / 180
+        var c = Math.cos;
+        var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+                c(lat1 * p) * c(lat2 * p) * 
+                (1 - c((lon2 - lon1) * p))/2;
+        return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+      }
+
+      function sendJars(jars){
+        io.sockets.connected[socky].emit('Jars',jars);
+
+        console.log('sent?');
+        console.log(jars);
+      }
+
+      function sendNearJars(arr,lat,lon,dist){
+        jars = []
+        for (var i = 0; i < arr.length; i++) {
+          var dbJar = arr[i];
+          
+          var jlat = dbJar.GPS.lat;
+          var jlon = dbJar.GPS.lon;
+
+         if(distance(jlat,jlon,lat,lon) < dist){
+          jars.push(dbJar);
+          console.log(dbJar);
+         }
+        }
+
+        
+
+        console.log('sent near?');
+        console.log(jars);
+        sendJars(jars);
+      }
+
+    });
+  
   }
 
 );

@@ -8,13 +8,13 @@
 $( document ).ready(function() {
       crd = null;
 
-      var map = L.map('map').setView([40.75,-74.0059], 12);
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    id: 'ph1am.io3m04c0',
-    accessToken: 'pk.eyJ1IjoicGgxYW0iLCJhIjoiV01wMkVDQSJ9.HGSWGdj2lTGJLxMcg4C9mA'
-  }).addTo(map);
+  //     var map = L.map('map').setView([40.75,-74.0059], 12);
+  //           L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+  //   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+  //   maxZoom: 18,
+  //   id: 'ph1am.io3m04c0',
+  //   accessToken: 'pk.eyJ1IjoicGgxYW0iLCJhIjoiV01wMkVDQSJ9.HGSWGdj2lTGJLxMcg4C9mA'
+  // }).addTo(map);
 
 
   var options = {
@@ -43,12 +43,12 @@ $( document ).ready(function() {
     
 
 
-     marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
+     // marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
     //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
 
 
     mappzy = [crd.latitude,crd.longitude];
-    map.setView(mappzy, 17);
+    // map.setView(mappzy, 17);
     console.log("DoMarker")
     socket.emit('mapmarker', mappzy);
     console.log("sentMarker")
@@ -202,8 +202,8 @@ $( document ).ready(function() {
   
 
 //********// THE SOCKET PART //********//
-function fetchJars(location){
-  socket.emit('fetch', location);
+function fetchBridge(location){
+  socket.emit('fetchbridge', location);
 }
 
 socket.on('connect', function(data) {
@@ -211,7 +211,7 @@ socket.on('connect', function(data) {
     });
 socket.on('you', function(data) {
       console.log(data);
-      socket.emit('fetch', mappzy);
+      socket.emit('fetchBridge', mappzy);
       
     });
 socket.on('Jars', function(data) {
@@ -258,7 +258,6 @@ function renderJars(jars){
 				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
 
 				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-        '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
 
         '<li class="hide id">'+jar.id+'</li>'+
 			'</ul>'+
@@ -279,56 +278,30 @@ jQuery('#editModal').on('show.bs.modal', function (e) {
   // now let's get its parent
 	var parent = jQuery(clickedButton).parent();
 
-  // now, let's get the values of the jar that we're wanting to edit
-  // we do this by targeting specific spans within the parent and pulling out the text
-
-  // var name = $(parent).find('.name').text();
-  // var age = $(parent).find('.age').text();
-  // var weight = $(parent).find('.weight').text();
-  // var tags = $(parent).find('.tags').text();
-  // var breed = $(parent).find('.breed').text();
-  // var url = $(parent).find('.url').attr('src');
-  // var location = $(parent).find('.location').text();
-  // var id = $(parent).find('.id').text();
-
-  // now let's set the value of the edit fields to those values
- 
- // 	jQuery("#edit-name").val(name);
-	// jQuery("#edit-age").val(age);
-	// jQuery("#editWeight").val(weight);
-	// jQuery("#edit-tags").val(tags);
-	// jQuery("#edit-breed").val(breed);
-	// jQuery("#edit-url").val(url);
-	// jQuery("#edit-location").val(location);
-	// jQuery("#edit-id").val(id);
 
 })
 
 
-function deleteJar(event){
-	var targetedId = event.target.id;
-	console.log('the jar to delete is ' + targetedId);
+// function deleteJar(event){
+// 	var targetedId = event.target.id;
+// 	console.log('the jar to delete is ' + targetedId);
 
-	// now, let's call the delete route with AJAX
-	jQuery.ajax({
-		url : '/api/delete/'+targetedId,
-		dataType : 'json',
-		success : function(response) {
-			// now, let's re-render the jars
+// 	// now, let's call the delete route with AJAX
+// 	jQuery.ajax({
+// 		url : '/api/delete/'+targetedId,
+// 		dataType : 'json',
+// 		success : function(response) {
+// 			// now, let's re-render the jars
 
-			socket.emit('fetch', mappzy);
+// 			socket.emit('fetch', mappzy);
 
-		}
-	})
+// 		}
+// 	})
 
-	event.preventDefault();
-}
+// 	event.preventDefault();
+// }
 
-function clearMarkers(){
-  for (var i = 0; i < markers.length; i++) {
-    console.log('clear markers out');// clears the markers
-  }	
-}
+
 
 // Function to carry out the actual PUT request to S3 using the signed request from the app.
 

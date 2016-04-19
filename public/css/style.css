@@ -8,13 +8,13 @@ body{
 }
 
 h1 {
-	color: #f25a4f;
+	color: #222222;
 }
 
 
 #map{
-    height: 380px;
-    width:70%;
+    height: 280px;
+    width:40%;
     display: block;
     margin-left: 10%;
 }
