@@ -8,7 +8,7 @@
 $( document ).ready(function() {
       crd = null;
 
-      var map = L.map('map').setView([40.75,-74.0059], 12);
+       map = L.map('map').setView([40.75,-74.0059], 12);
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
@@ -29,7 +29,7 @@ $( document ).ready(function() {
   //connect socket
   socket = io.connect();
 
-  var marker = "~";
+   marker = "~";
    mappzy = [];
   GPS2 = [];
   function success(pos) {
@@ -268,10 +268,12 @@ socket.on('Jars', function(data) {
     console.log($('#gps').val());
     form_coords = $('#gps').val().split(',');
 
-    $('#where').text(crd.latitude +", "+ crd.longitude);
-    marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
+    $('#where').text(form_coords);
+    map.removeLayer(marker);
+    marker = L.marker([form_coords[0],form_coords[1]]).addTo(map);
 
-       mappzy = [form_coords[0],form_coords[1]];
+       mappzy = form_coords;
+       map.setView(mappzy, 17);
     
     console.log("custom gps");
     socket.emit('mapmarker', mappzy);
