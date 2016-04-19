@@ -245,7 +245,7 @@ function renderJars(jars){
 
     if (fileExtension == 'jpg'|| fileExtension =='jpeg'|| fileExtension =='png'){
       file_type = 'image';
-    }else if (fileExtension == 'mp3'|| fileExtension =='ogg' || fileExtension == 'wav'){
+    }else if (fileExtension == 'mp3'|| fileExtension =='m4a' || fileExtension == 'wav'|| fileExtension =='ogg' ){
       file_type = 'audio';
     }
     console.log (file_type);
