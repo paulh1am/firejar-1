@@ -275,11 +275,7 @@ function renderJars(jars){
       '<h1 class="name">'+jar.title+ '</h1>'+
       '<audio src="'+jar.url+'" controls autoplay loop>'+
       'Your browser does not support the </audio>'+
-      // '<audio controls> <source src='+jar.url+ '"type="audio/ogg">
-        //<source src='+jar.url+ 
-      //   'type="audio/mpeg">
-      //   Your browser does not support the audio element.</audio>'+
-      // '<ul>'+
+      
           '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
 
           '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
