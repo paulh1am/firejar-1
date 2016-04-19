@@ -139,7 +139,7 @@ io.sockets.on('connection',
         // console.log('sending fetch');
         // sendJars(jarz);
         console.log('sending fetchNEAR');
-        sendNearJars(jarz,fetch_lat,fetch_long,10);
+        sendNearJars(jarz,fetch_lat,fetch_long,100);
 
       });
       

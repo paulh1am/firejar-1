@@ -77,85 +77,85 @@ $( document ).ready(function() {
 
  // Doing S3 upload when it's added to the file_input form*
 
-  (function() {
-    document.getElementById("file_input").onchange = init_upload;
-    })();
+  // (function() {
+  //   document.getElementById("file_input").onchange = init_upload;
+  //   })();
 
     // add form button event
     // when the form is submitted (with a new jar), the below runs
-  jQuery("#addForm").submit(function(e){
+  // jQuery("#addForm").submit(function(e){
 
-    e.preventDefault();
+  //   e.preventDefault();
 
-    // init_upload(); // do the upload **
-    //then add the url to the Jar URL ..
+  //   // init_upload(); // do the upload **
+  //   //then add the url to the Jar URL ..
 
     
 
-    console.log('submitted');
-  	// first, let's pull out all the values
-  	// the name form field value
-  	var title = jQuery("#title").val();
-  	var tags = jQuery("#tags").val();
-    var GPS3 = GPS2.join();
-  	var SSID = "";//GRAB THE LOCATION Var
-    var UDID = "";//GRAB THE LOCATION Var
+  //   console.log('submitted');
+  // 	// first, let's pull out all the values
+  // 	// the name form field value
+  // 	var title = jQuery("#title").val();
+  // 	var tags = jQuery("#tags").val();
+  //   var GPS3 = GPS2.join();
+  // 	var SSID = "";//GRAB THE LOCATION Var
+  //   var UDID = "";//GRAB THE LOCATION Var
 
-    if (loaded){
+  //   if (loaded){
     
-      var url = "https://s3.amazonaws.com/jar-1/"+jQuery("#url").val();
-    } else{
-      var url = jQuery("#url").val();
-    }
+  //     var url = "https://s3.amazonaws.com/jar-1/"+jQuery("#url").val();
+  //   } else{
+  //     var url = jQuery("#url").val();
+  //   }
     
 
-  	// make sure we have a location
+  // 	// make sure we have a location
 
-  	// if(!location || location=="") return alert('We need a location!');
+  // 	// if(!location || location=="") return alert('We need a location!');
         
-  	// POST the data from above to our API create route
-    jQuery.ajax({
-    	url : '/api/create',
-    	dataType : 'json',
-    	type : 'POST',
-    	// we send the data in a data object (with key/value pairs)
-    	data : {
-    		title: title,
-    		tags: tags,
-        GPS: GPS3,
-        SSID: SSID,
-        UDID: UDID,
-        url: url,
-        owner: "5714e0b0d5c65a85125ff476"
+  // 	// POST the data from above to our API create route
+  //   jQuery.ajax({
+  //   	url : '/api/create',
+  //   	dataType : 'json',
+  //   	type : 'POST',
+  //   	// we send the data in a data object (with key/value pairs)
+  //   	data : {
+  //   		title: title,
+  //   		tags: tags,
+  //       GPS: GPS3,
+  //       SSID: SSID,
+  //       UDID: UDID,
+  //       url: url,
+  //       owner: "5714e0b0d5c65a85125ff476"
     		
-    	},
-      // ADD THE LOCATION DATA (from the webRTC)
-    	success : function(response){
-    		if(response.status=="OK"){
-  	  		// success
-  	  		console.log(response);
-  	  		// re-render the map
-  	  		console.log('old map rerender');
-  	  		// now, clear the input fields
-  	  		jQuery("#addForm input").val('');
-          document.getElementById("preview").src =''
-          socket.emit('fetch', mappzy);
-    		}
-    		else {
-    			alert("something went wrong");
-    		}
-    	},
-    	error : function(err){
-    		// do error checking
-    		alert("something went wrong");
-    		console.error(err);
-    	}
-    }); 
+  //   	},
+  //     // ADD THE LOCATION DATA (from the webRTC)
+  //   	success : function(response){
+  //   		if(response.status=="OK"){
+  // 	  		// success
+  // 	  		console.log(response);
+  // 	  		// re-render the map
+  // 	  		console.log('old map rerender');
+  // 	  		// now, clear the input fields
+  // 	  		jQuery("#addForm input").val('');
+  //         document.getElementById("preview").src =''
+  //         socket.emit('fetch', mappzy);
+  //   		}
+  //   		else {
+  //   			alert("something went wrong");
+  //   		}
+  //   	},
+  //   	error : function(err){
+  //   		// do error checking
+  //   		alert("something went wrong");
+  //   		console.error(err);
+  //   	}
+  //   }); 
 
-  	// prevents the form from submitting normally
-    loaded = false;
-    return false;
-  });
+  // 	// prevents the form from submitting normally
+  //   loaded = false;
+  //   return false;
+  // });
 
   // get Jars JSON from /api/get
   // loop through and populate the map with markers
@@ -272,7 +272,7 @@ function renderJars(jars){
     }else if(file_type == 'audio'){
       var htmlToAdd = '<div class="col-md-4 jar">'+
       '<h1 class="name">'+jar.title+ '</h1>'+
-      '<audio src="'+jar.url+'" controls autoplay loop>'+
+      '<audio src="'+jar.url+'" controls >'+
       'Your browser does not support the </audio>'+
       
           '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
@@ -281,7 +281,7 @@ function renderJars(jars){
           '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
 
           '<li class="hide id">'+jar.id+'</li>'+
-        '</ul>'
+        '</ul>';
 
 
     }

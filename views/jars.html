@@ -31,11 +31,11 @@
   </head>
   <body>
     <h2 id="where">...</h2>
-  <div id="map"></div>
+    <div id="map"></div>
 
   
 
-  </body>
+
 
     <!-- JQuery script -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -46,63 +46,92 @@
 
     <!-- JQuery validate -->
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+    <br/><hr>
+    <div class="container" id="gps_hack">
+      <div class="row">
+        <div class="col-md-4">
 
-
-
-    <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <h1>Add a New firejar</h1>
-        <form class="form-horizontal" id="addForm">
+        
           <div class="form-group">
-            <label for="title" class="col-sm-2 control-label">Title</label>
+            <label for="new location" class="col-sm-2 control-label" id="custom_gps">GPS hack</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="title" placeholder="Title" name="title" required>
+              <input type="text" class="form-control" id="gps" placeholder="GPS" name="title" >
             </div>
           </div>
-
-          <div class="form-group">
-            <label for="tags" class="col-sm-2 control-label">Tags</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="tags" placeholder="Tags (separated by comma)" name="tags" >
-            </div>
-          </div> 
-          <div class="form-group">
-            <label for="url" class="col-sm-2 control-label">URL</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="url" placeholder="skip for uploads" name="url" >
-            </div>
-          </div>
-
-           <input type="file" id="file_input"/>
-            <p id="status">Please select a file</p>
-            <img style="border:1px solid gray;width:200px;"  id="preview" src="/images/default.png" />
-
-
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-default">Submit</button>
+              <button type="" class="btn btn-default "id="current">Get current</button>
             </div>
           </div>
-        </form>        
+
+          
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default" id="submit_location">Submit</button>
+            </div>
+          </div>
         
-      </div>
-      <div class="col-md-8" id="jar-holder">
-        
+        </div>
       </div>
     </div>
-  </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h1>Add a New firejar</h1>
+          <form class="form-horizontal" id="addForm">
+            <div class="form-group">
+              <label for="title" class="col-sm-2 control-label">Title</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" placeholder="Title" name="title" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="tags" class="col-sm-2 control-label">Tags</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="tags" placeholder="Tags (separated by comma)" name="tags" >
+              </div>
+            </div> 
+            <div class="form-group">
+              <label for="url" class="col-sm-2 control-label">URL</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="url" placeholder="skip for uploads" name="url" >
+              </div>
+            </div>
+
+             <input type="file" id="file_input"/>
+              <p id="status">Please select a file</p>
+              <img style="border:1px solid gray;width:200px;"  id="preview" src="/images/default.png" />
+
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+              </div>
+            </div>
+          </form>        
+          
+        </div>
+      
+
+        
+        <div class="col-md-8" id="jar-holder">
+          
+        </div>
+      </div>
+    </div>
 
 
    <!--  <input type="file" id="file_input"/>
     <p id="status">Please select a file</p>
     <img style="border:1px solid gray;width:300px;"  id="preview" src="/images/default.png" /> -->
 
-<hr><hr/><br/>
+
     
 <!-- CUSTOM JS -->
 <script src="js/main.js"></script>
- 
+ </body>
 
     
    

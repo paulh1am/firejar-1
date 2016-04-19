@@ -226,6 +226,69 @@ socket.on('Jars', function(data) {
 });
 // END DOCUMENT READY
 
+  jQuery("#current").click(function(e){
+
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+      
+
+      console.log('submitted location');
+      navigator.geolocation.getCurrentPosition(success, error, options);
+
+
+   
+    function success(pos) {
+        var crd = pos.coords;
+      $('#gps').val(crd.latitude +", "+ crd.longitude);
+      console.log('Your current position is:');
+      console.log('Latitude : ' + crd.latitude);
+      console.log('Longitude: ' + crd.longitude);
+      console.log('More or less ' + crd.accuracy + ' meters.');
+      
+      //*do this on click #submit_location *
+      // mappzy = [crd.latitude,crd.longitude];
+      //   GPS2.push(mappzy[0]).toString();
+      //    GPS2.push(mappzy[1]).toString();
+
+    };
+
+    function error(err) {
+      console.warn('ERROR(' + err.code + '): ' + err.message);
+    };
+  });
+
+  jQuery("#submit_location").click(function(e){
+
+    e.preventDefault();
+    console.log('location form ..');
+    console.log($('#gps').val());
+    form_coords = $('#gps').val().split(',');
+
+    $('#where').text(crd.latitude +", "+ crd.longitude);
+    marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
+
+       mappzy = [form_coords[0],form_coords[1]];
+    
+    console.log("custom gps");
+    socket.emit('mapmarker', mappzy);
+    console.log("sent custom gps");
+    
+      GPS2.push(mappzy[0]).toString();
+       GPS2.push(mappzy[1]).toString();
+
+
+  });
+
+
+
+
+
+
+
+
 
 
 function renderJars(jars){
@@ -273,7 +336,7 @@ function renderJars(jars){
     }else if(file_type == 'audio'){
       var htmlToAdd = '<div class="col-md-4 jar">'+
       '<h1 class="name">'+jar.title+ '</h1>'+
-      '<audio src="'+jar.url+'" controls autoplay loop>'+
+      '<audio src="'+jar.url+'" controls >'+
       'Your browser does not support the </audio>'+
       
           '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
@@ -282,7 +345,10 @@ function renderJars(jars){
           '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
 
           '<li class="hide id">'+jar.id+'</li>'+
-        '</ul>'
+        '</ul>'+
+        '<button type="button" id="'+jar._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
+        '<button type="button" data-toggle="modal" data-target="#editModal">Edit Jar</button>'+
+      '</div>';
 
 
 	  }
@@ -290,36 +356,7 @@ function renderJars(jars){
   }
 }
 
-jQuery('#editModal').on('show.bs.modal', function (e) {
-  // let's get access to what we just clicked on
-  var clickedButton = e.relatedTarget;
-  // now let's get its parent
-	var parent = jQuery(clickedButton).parent();
 
-  // now, let's get the values of the jar that we're wanting to edit
-  // we do this by targeting specific spans within the parent and pulling out the text
-
-  // var name = $(parent).find('.name').text();
-  // var age = $(parent).find('.age').text();
-  // var weight = $(parent).find('.weight').text();
-  // var tags = $(parent).find('.tags').text();
-  // var breed = $(parent).find('.breed').text();
-  // var url = $(parent).find('.url').attr('src');
-  // var location = $(parent).find('.location').text();
-  // var id = $(parent).find('.id').text();
-
-  // now let's set the value of the edit fields to those values
- 
- // 	jQuery("#edit-name").val(name);
-	// jQuery("#edit-age").val(age);
-	// jQuery("#editWeight").val(weight);
-	// jQuery("#edit-tags").val(tags);
-	// jQuery("#edit-breed").val(breed);
-	// jQuery("#edit-url").val(url);
-	// jQuery("#edit-location").val(location);
-	// jQuery("#edit-id").val(id);
-
-})
 
 
 function deleteJar(event){
