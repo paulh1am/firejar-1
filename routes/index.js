@@ -189,8 +189,8 @@ router.post('/api/create', function(req, res){
       SSID: SSID,
       UDID: UDID,
       url: url,
-      owner:owner,
-      project:project
+      owner: owner,
+      project: project
     };
 
 

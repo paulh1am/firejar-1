@@ -97,6 +97,7 @@ $( document ).ready(function() {
   	// the name form field value
   	var title = jQuery("#title").val();
   	var tags = jQuery("#tags").val();
+    var project = jQuery("#project").val();
     var GPS3 = GPS2.join();
   	var SSID = "";//GRAB THE LOCATION Var
     var UDID = "";//GRAB THE LOCATION Var
@@ -127,7 +128,7 @@ $( document ).ready(function() {
         UDID: UDID,
         url: url,
         owner: "5714e0b0d5c65a85125ff476",
-        project:"bridge"
+        project: project
     		
     	},
       // ADD THE LOCATION DATA (from the webRTC)
