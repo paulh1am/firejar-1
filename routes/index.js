@@ -229,6 +229,12 @@ router.post('/api/create', function(req, res){
           return res.json(error);
 
         }
+        // Jar.find({})
+        //   .populate('owner')
+        //   .exec(function(error, posts) {
+        //         console.log(JSON.stringify(posts, null, "\t"))
+        //   })
+
 
         console.log('saved a new jar!');
         console.log(data);
