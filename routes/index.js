@@ -209,12 +209,10 @@ router.post('/api/create', function(req, res){
       project: project
     };
 
-
-
+      console.log('received this all gooood');
      
       // now, let's add this to our jar object from above
       
-
       // now, let's save it to the database
       // create a new jar model instance, passing in the object we've created
 
@@ -226,7 +224,10 @@ router.post('/api/create', function(req, res){
         // if err saving, respond back with error
         if (err){
           var error = {status:'ERROR', message: 'Error saving jar'};
+          console.log('shit');
+          console.log(error);
           return res.json(error);
+
         }
 
         console.log('saved a new jar!');
@@ -240,7 +241,15 @@ router.post('/api/create', function(req, res){
 
         return res.json(jsonData);
 
-      }) 
+      });
+      // jar
+      // .populate('_owner')
+      // .exec(function (err, jar) {
+      //   if (err) return handleError(err);
+      //   console.log('The creator is %s', jar._owner.username);
+      //   // prints "The creator is Aaron"
+      // });
+
 
    
 });

@@ -5,7 +5,7 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var Account = new Schema({
     username: String,
     password: String,
-     jars: [{type: mongoose.Schema.Types.ObjectId, ref: 'Jars'}]
+     jars: [{ type: Schema.Types.ObjectId, ref: 'Jar' }]
 });
 
 Account.plugin(passportLocalMongoose);

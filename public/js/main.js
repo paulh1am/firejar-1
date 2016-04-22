@@ -104,6 +104,7 @@ $( document ).ready(function() {
     var GPS3 = GPS2.join();
   	var SSID = "";//GRAB THE LOCATION Var
     var UDID = "";//GRAB THE LOCATION Var
+    var owner = usersession._id;
 
     if (loaded){
     
@@ -130,7 +131,7 @@ $( document ).ready(function() {
         SSID: SSID,
         UDID: UDID,
         url: url,
-        owner: "5714e0b0d5c65a85125ff476",
+        owner: owner,
         project: project
     		
     	},
