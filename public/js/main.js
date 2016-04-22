@@ -163,6 +163,77 @@ $( document ).ready(function() {
     return false;
   });
 
+jQuery("#addProjectForm").submit(function(e){
+
+    e.preventDefault();
+
+    // init_upload(); // do the upload **
+    //then add the url to the Jar URL ..
+
+    
+
+    console.log('submitted');
+    // first, let's pull out all the values
+    // the name form field value
+    var title = jQuery("#proj_title").val();
+    var tags = jQuery("#proj_tags").val();
+    var owner = usersession._id;
+    
+    
+
+    // if (loaded){
+    
+    //   var url = "https://s3.amazonaws.com/jar-1/"+jQuery("#url").val();
+    // } else{
+    //   var url = jQuery("#url").val();
+    // }
+    
+
+    // make sure we have a location
+
+    // if(!location || location=="") return alert('We need a location!');
+        
+    // POST the data from above to our API create route
+    jQuery.ajax({
+      url : '/api/createProj',
+      dataType : 'json',
+      type : 'POST',
+      // we send the data in a data object (with key/value pairs)
+      data : {
+        title: title,
+        tags: tags,
+        owner: owner
+        
+        
+      },
+      // ADD THE LOCATION DATA (from the webRTC)
+      success : function(response){
+        if(response.status=="OK"){
+          // success
+          console.log(response);
+          // re-render the map
+          console.log('PROJECT IN!');
+          // now, clear the input fields
+          jQuery("#addProjectForm input").val('');
+          // document.getElementById("preview").src =''
+          // socket.emit('fetch', mappzy);
+        }
+        else {
+          alert("something went wrong");
+        }
+      },
+      error : function(err){
+        // do error checking
+        alert("something went wrong");
+        console.error(err);
+      }
+    }); 
+
+    // prevents the form from submitting normally
+    loaded = false;
+    return false;
+  });
+
   // get Jars JSON from /api/get
   // loop through and populate the map with markers
   var renderPlaces = function() {

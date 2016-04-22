@@ -5,11 +5,13 @@
  */
 
 var app = require('../app');
-var Jar = require("../models/jar.js");
-var Account = require("../models/account.js");
+
 var debug = require('debug')('node-app:server');
 var http = require('http');
 
+var Jar = require("../models/jar.js");
+var Account = require("../models/account.js");
+var Project = require("../models/project.js");
 
 /**
  * Get port from environment and store in Express.

@@ -10,6 +10,7 @@ var aws = require('aws-sdk');
 // our db model
 var Jar = require("../models/jar.js");
 var Account = require("../models/account.js");
+var Project = require("../models/project.js");
 
 var passport = require('passport');
 
@@ -149,6 +150,7 @@ router.get('/ping', function(req, res){
 
 
 router.get('/session', function(req, res){
+
     console.log("and the user is:");
     console.log(req.user.username);
     res.render('user', { user : req.user });
@@ -237,6 +239,76 @@ router.post('/api/create', function(req, res){
 
 
         console.log('saved a new jar!');
+        console.log(data);
+
+        // now return the json data of the new jar
+        var jsonData = {
+          status: 'OK',
+          jar: data
+        }
+
+        return res.json(jsonData);
+
+      });
+      // jar
+      // .populate('_owner')
+      // .exec(function (err, jar) {
+      //   if (err) return handleError(err);
+      //   console.log('The creator is %s', jar._owner.username);
+     
+      // });
+
+
+   
+});
+router.post('/api/createProj', function(req, res){
+
+    console.log('the data we received is --> ');
+
+    console.log(req.body);
+
+    // pull out the information from the req.body
+    var title = req.body.title;
+    
+    var tags = req.body.tags.split(',');
+    
+    var owner = req.body.owner;
+
+    // hold all this data in an object
+    // this object should be structured the same way as your db model
+    var projObj = {
+      title: title,
+      tags : tags,
+      url: "dummy_url",
+      owner: owner,
+      
+    };
+
+      console.log('received PROJ all gooood');
+     
+    
+
+      var proj = new Project(projObj);
+
+      // now, save that  instance to the database
+      // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
+      proj.save(function(err,data){
+        // if err saving, respond back with error
+        if (err){
+          var error = {status:'ERROR', message: 'Error saving jar'};
+          console.log('shit');
+          console.log(error);
+          return res.json(error);
+
+        }
+        Project.find({})
+          .populate('owner')
+          .exec(function(error, projs) {
+                console.log(JSON.stringify(projs, null, "\t"))
+          })
+
+
+        console.log('saved a new proj!');
         console.log(data);
 
         // now return the json data of the new jar
