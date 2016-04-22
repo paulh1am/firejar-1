@@ -11,6 +11,8 @@ block content
     p You are currently logged in as #{user.username}
     a(href="/logout") Logout
     script.
+      var userProjects = "!{user_projects}"
+      var userJars= !{JSON.stringify(user_jars)}
       var usersession = !{JSON.stringify(user)}
       console.log(usersession)
     include jars.html
