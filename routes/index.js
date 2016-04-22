@@ -149,41 +149,27 @@ router.get('/ping', function(req, res){
 });
 
 
-function retrieveUserJars(id, callback) {
-  Jar.find({"owner": id}, function(err, jars) {
-    if (err) {
-      callback(err, null);
-    } else {
-      callback(null, jars);
-    }
-  });
-};
-
 router.get('/session', function(req, res){
-
 
 
     console.log("and the user is:");
     console.log(req.user.username);
 
-
-    var userProjects = "testp";
-    retrieveUserJars(req.user._id, function(err, data){
-      if (err) {
-        console.log(err);
-        res.render('user', { user : req.user, user_projects : userProjects, user_jars : "userJars" });
-      }
-      console.log('this should be the JARZZ');
-      console.log(data);
-      var userJars = data;
-      res.render('user', { user : req.user, user_projects : userProjects, user_jars : userJars });
-    })
+    // Jar.find({"owner": req.user._id },function(err, data){
+    //   // if err or no jars found, respond with error 
+    //     if(err || data == null){
+    //       console.log('error'); 
+    //     }
+    //     console.log(data);
+    //     userJars = data;
+        
+    //   });
 
 
 
-    
+     // var userProjects = "testp";
      
-    // res.render('user', { user : req.user, user_projects : userProjects, user_jars : userJars });
+    res.render('user', { user : req.user});
 
 
 
