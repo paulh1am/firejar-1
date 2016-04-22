@@ -17,9 +17,19 @@ var LocalStrategy = require('passport-local').Strategy;
 
 
 passport.use(new LocalStrategy(Account.authenticate()));
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
 
+// passport.serializeUser(Account.serializeUser());
+// passport.deserializeUser(Account.deserializeUser());
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  Account.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
 
 
 /*
@@ -94,6 +104,7 @@ router.get('/', function(req, res) {
 
 router.get('/jars', function(req,res){
   res.render('jars.html');
+
 });
 
 router.get('/bridge', function(req,res){
@@ -122,7 +133,9 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
+    // console.log(req.user);
     res.redirect('/session');
+
 });
 
 router.get('/logout', function(req, res) {
@@ -136,8 +149,11 @@ router.get('/ping', function(req, res){
 
 
 router.get('/session', function(req, res){
-    
+    console.log("and the user is:");
+    console.log(req.user.username);
     res.render('user', { user : req.user });
+
+
 
 });
 

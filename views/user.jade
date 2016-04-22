@@ -1,5 +1,7 @@
 extends layout
 
+
+
 block content
   if (!user)
     a(href="/login") Login
@@ -8,3 +10,8 @@ block content
   if (user)
     p You are currently logged in as #{user.username}
     a(href="/logout") Logout
+    script.
+      var usersession = !{JSON.stringify(user)}
+      console.log(usersession)
+    include jars.html
+
