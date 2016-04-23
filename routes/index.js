@@ -188,10 +188,10 @@ router.get('/session', function(req, res){
         console.log(data2);
         console.log('this should be the JARRRRZZ');
         console.log(data1);
-        // userJars = data1
-        // userProjects = data2;
+        userJars = JSON.stringify(data1);
+        userProjects = JSON.stringify(data2);
         
-        res.render('user', { user : req.user, user_projects : data2, user_jars : data1});
+        res.render('user', { user : req.user, user_projects : userProjects, user_jars : userJars});
       });
 
 
