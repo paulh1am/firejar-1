@@ -6,6 +6,7 @@
 //      dataType: 'jsonp',
 
 $( document ).ready(function() {
+  console.log(local_data);
       crd = null;
 
        map = L.map('map').setView([40.75,-74.0059], 12);
@@ -234,49 +235,7 @@ jQuery("#addProjectForm").submit(function(e){
     return false;
   });
 
-  // get Jars JSON from /api/get
-  // loop through and populate the map with markers
-  var renderPlaces = function() {
-  	console.log('old render places');
-  	
 
-  	jQuery.ajax({
-  		url : '/api/get',
-  		dataType : 'json',
-  		success : function(response) {
-
-  			console.log(response);
-  			jars = response.jars;
-  			// first clear any existing markers, because we will re-add below
-  			// clearMarkers();
-  			markers = [];
-
-  			// now, loop through the jars and add them as markers to the map
-  			for(var i=0;i<jars.length;i++){
-
-  				var latLng = {
-  					lat: jars[i].GPS.lat, 
-  					lng: jars[i].GPS.lon
-  				}
-
-  				// make and place map maker.
-  				var marker = "map marker";
-
-  				
-  				// keep track of markers
-  				markers.push(marker);
-  			}
-
-  			// now, render the jar image/data
-  			renderJars(jars);
-
-  		}
-  	})
-  };
-
-  // edit form button event
-  // when the form is submitted (with a new jar edit), the below runs
-  
 
 //********// THE SOCKET PART //********//
 function fetchJars(location){

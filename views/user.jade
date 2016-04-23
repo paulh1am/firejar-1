@@ -3,11 +3,16 @@ extends layout
 
 
 block content
+
   if (!user)
     a(href="/login") Login
     br
     a(href="/register") Register
   if (user)
+    usersession = !{JSON.stringify(user)}
+    userProjects = !{JSON.stringify(user_projects)}
+    userJars = !{JSON.stringify(user_jars)}
+    
     p You are currently logged in as #{user.username}
     - each jar in JSON.parse(user_jars)
       p #{jar.title}
@@ -15,9 +20,6 @@ block content
     - each project in JSON.parse(user_projects)
       p #{project.title}
 
-    
-      
-    
     a(href="/logout") Logout
 
     h2#where ...
@@ -85,11 +87,5 @@ block content
               .col-sm-offset-2.col-sm-10
                 button.btn.btn-default(type='submit') Submit
 
+
     
-    script(src='js/main.js')
-   
-      
-      
-      
-      
-      console.log("im ready")
