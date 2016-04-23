@@ -9,11 +9,16 @@ block content
     a(href="/register") Register
   if (user)
     p You are currently logged in as #{user.username}
+    p #{user_projects}
     a(href="/logout") Logout
-    script.
-      var userProjects = "!{user_projects}"
-      var userJars= !{JSON.stringify(user_jars)}
-      var usersession = !{JSON.stringify(user)}
-      console.log(usersession)
+
     include jars.html
 
+    script.
+      
+      usersession = !{JSON.stringify(user)}
+      userProjects = !{JSON.stringify(user_projects)}
+      userJars = !{JSON.stringify(user_jars)}
+      
+      
+      console.log("im ready")

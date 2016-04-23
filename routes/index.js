@@ -158,6 +158,15 @@ function retrieveUserJars(id, callback) {
     }
   });
 };
+function retrieveUserProjects(id, callback) {
+  Project.find({"owner": id}, function(err, jars2) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, jars2);
+    }
+  });
+};
 
 router.get('/session', function(req, res){
 
@@ -167,17 +176,30 @@ router.get('/session', function(req, res){
     console.log(req.user.username);
 
 
-    var userProjects = "testp";
-    retrieveUserJars(req.user._id, function(err, data){
-      if (err) {
-        console.log(err);
-        res.render('user', { user : req.user, user_projects : userProjects, user_jars : "userJars" });
-      }
-      console.log('this should be the JARZZ');
-      console.log(data);
-      var userJars = data;
-      res.render('user', { user : req.user, user_projects : userProjects, user_jars : userJars });
-    })
+    
+
+    retrieveUserJars(req.user._id, function(err, data1){
+      
+      retrieveUserProjects(req.user._id, function(err, data2){
+        if (err) {
+          
+        }
+        console.log('this should be the Projectzz');
+        console.log(data2);
+        console.log('this should be the JARRRRZZ');
+        console.log(data1);
+        // userJars = data1
+        // userProjects = data2;
+        
+        res.render('user', { user : req.user, user_projects : data2, user_jars : data1});
+      });
+
+
+      // console.log('this should be the JARZZ');
+      // console.log(data);
+      // var userJars = data1;
+      // res.render('user', { user : req.user, user_projects : userProjects, user_jars : userJars });
+    });
 
 
 
