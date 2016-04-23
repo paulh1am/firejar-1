@@ -1,26 +1,10 @@
-extends layout
+extends user_layout
 
 
 
 block content
 
-  if (!user)
-    a(href="/login") Login
-    br
-    a(href="/register") Register
-  if (user)
-    usersession = !{JSON.stringify(user)}
-    userProjects = !{JSON.stringify(user_projects)}
-    userJars = !{JSON.stringify(user_jars)}
-    
-    p You are currently logged in as #{user.username}
-    - each jar in JSON.parse(user_jars)
-      p #{jar.title}
-    p PROJECTS
-    - each project in JSON.parse(user_projects)
-      p #{project.title}
-
-    a(href="/logout") Logout
+  
 
     h2#where ...
     #map
@@ -86,6 +70,7 @@ block content
             .form-group
               .col-sm-offset-2.col-sm-10
                 button.btn.btn-default(type='submit') Submit
-
+script(type='text/javascript').
+  var local_data = "TESSSSSSTTTT
 
     

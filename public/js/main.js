@@ -6,7 +6,8 @@
 //      dataType: 'jsonp',
 
 $( document ).ready(function() {
-  console.log(local_data);
+  console.log(usersession);
+
       crd = null;
 
        map = L.map('map').setView([40.75,-74.0059], 12);
