@@ -7,6 +7,9 @@
 
 $( document ).ready(function() {
   console.log(usersession);
+  userr = usersession[0];
+  console.log(userprojects);
+  console.log(userjars);
 
       crd = null;
 
