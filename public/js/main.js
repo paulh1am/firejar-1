@@ -64,16 +64,65 @@ $( document ).ready(function() {
       GPS2.push(mappzy[0]).toString();
        GPS2.push(mappzy[1]).toString();
 
-
     
+       
   };
 
   function error(err) {
     console.warn('ERROR(' + err.code + '): ' + err.message);
   };
+//END INITIAL LOCATION AJAXE
+
+//**BEGIN WATCHLOCATION CODE
+
+var watchID;
+var geoLoc;
+ getLocationUpdate();
+ function showLocation(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    console.log("WATCHING : Latitude : " + latitude + " Longitude: " + longitude);
+ }
+ 
+ function errorHandler(err) {
+    if(err.code == 1) {
+       alert("Error: Access is denied!");
+    }
+    
+    else if( err.code == 2) {
+       alert("Error: Position is unavailable!");
+    }
+ }
+ 
+ function getLocationUpdate(){
+  console.log('trying');
+    if(navigator.geolocation){
+      console.log('got GEO and trying');
+       // timeout at 60000 milliseconds (60 seconds)
+       var options2 = {timeout:10000};
+       geoLoc = navigator.geolocation;
+       watchID = geoLoc.watchPosition(showLocation, errorHandler, options2);
+       console.log('assigned watchID');
+    }
+    
+    else{
+       alert("Sorry, browser does not support geolocation!");
+    }
+ }
 
 
+  // function watchPosition(){
+  //   var watchID = navigator.geolocation.watchPosition(function(position) {
 
+  //     updateUserSession(position.coords.latitude, position.coords.longitude);
+
+  //   });
+
+  // }
+
+  function updateUserSession(lat, lon){
+    console.log("streaming user location")
+  }
 
 
  
@@ -250,7 +299,7 @@ function fetchJars(location){
 }
 
 socket.on('connect', function(data) {
-      console.log("connect2");
+      console.log("connected . . ");
     });
 socket.on('you', function(data) {
       console.log(data);
@@ -282,8 +331,8 @@ function addMarker(e){
        map.setView(mappzy, 17);
     
     console.log("custom gps");
-    socket.emit('mapmarker', mappzy);
-    console.log("sent custom gps");
+    // socket.emit('mapmarker', mappzy);
+    // console.log("sent custom gps");
       GPS2 =  [];
       GPS2.push(mappzy[0]).toString();
        GPS2.push(mappzy[1]).toString();
