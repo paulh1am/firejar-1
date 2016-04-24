@@ -43,12 +43,15 @@ block content
             .form-group
               // <label for="project" class="col-sm-2 control-label">project</label>
               .col-sm-10
-                // <input type="text" class="form-control" id="project" placeholder="..." name="project" >
+               
                 fieldset.ui-field-contain
                   label(for='project') project
                   select#project(name='project')
-                    // <option value="test">test</option>
-                    option none
+                    option(value="" disabled selected hidden) no  project
+                    - each project in JSON.parse(user_projects)
+                      option #{project.title}
+
+
             input#file_input(type='file')
             p#status Please select a file
             img#preview(style='border:1px solid gray;width:200px;', src='/images/default.png')

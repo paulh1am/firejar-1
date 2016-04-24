@@ -375,7 +375,7 @@ router.post('/api/createProj', function(req, res){
         // now return the json data of the new jar
         var jsonData = {
           status: 'OK',
-          jar: data
+          project: data
         }
 
         return res.json(jsonData);

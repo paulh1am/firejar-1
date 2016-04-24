@@ -7,7 +7,7 @@
 
 $( document ).ready(function() {
   console.log(usersession);
-  userr = usersession[0];
+  current_user = usersession[0];
 
   console.log(user_projects);
   console.log(user_jars);
@@ -112,7 +112,7 @@ $( document ).ready(function() {
     var GPS3 = GPS2.join();
   	var SSID = "";//GRAB THE LOCATION Var
     var UDID = "";//GRAB THE LOCATION Var
-    var owner = usersession._id;
+    var owner = current_user._id;
 
     if (loaded){
     
@@ -180,12 +180,12 @@ jQuery("#addProjectForm").submit(function(e){
 
     
 
-    console.log('submitted');
+    console.log('submitted PROJ');
     // first, let's pull out all the values
     // the name form field value
     var title = jQuery("#proj_title").val();
     var tags = jQuery("#proj_tags").val();
-    var owner = usersession._id;
+    var owner = current_user._id;
     
     
 
