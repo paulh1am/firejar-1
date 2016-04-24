@@ -8,8 +8,11 @@
 $( document ).ready(function() {
   console.log(usersession);
   userr = usersession[0];
-  console.log(userprojects);
-  console.log(userjars);
+
+  console.log(user_projects);
+  console.log(user_jars);
+  
+
 
       crd = null;
 
