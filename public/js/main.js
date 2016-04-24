@@ -32,28 +32,26 @@ $( document ).ready(function() {
   };
 
   //get location
-  navigator.geolocation.getCurrentPosition(success, error, options);
+  
 
   //connect socket
   socket = io.connect();
 
-   marker = "~";
-   mappzy = [];
+  marker = "~";
+  mappzy = [];
   GPS2 = [];
-  function success(pos) {
-      crd = pos.coords;
+
+  function updateUserSession(pos){
+    console.log("setting location");
+    crd = pos.coords;
     $('#where').text(crd.latitude +", "+ crd.longitude);
     console.log('Your current position is:');
     console.log('Latitude : ' + crd.latitude);
     console.log('Longitude: ' + crd.longitude);
     console.log('More or less ' + crd.accuracy + ' meters.');
-    
-    
-
 
      marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
     //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
-
 
     mappzy = [crd.latitude,crd.longitude];
     map.setView(mappzy, 17);
@@ -62,7 +60,36 @@ $( document ).ready(function() {
     console.log("sentMarker")
     
       GPS2.push(mappzy[0]).toString();
-       GPS2.push(mappzy[1]).toString();
+      GPS2.push(mappzy[1]).toString();
+  }
+
+
+  navigator.geolocation.getCurrentPosition(success, error, options);
+  
+  function success(pos) {
+    updateUserSession(pos);
+    // crd = pos.coords;
+    // $('#where').text(crd.latitude +", "+ crd.longitude);
+    // console.log('Your current position is:');
+    // console.log('Latitude : ' + crd.latitude);
+    // console.log('Longitude: ' + crd.longitude);
+    // console.log('More or less ' + crd.accuracy + ' meters.');
+    
+    
+
+
+    //  marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
+    // //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
+
+
+    // mappzy = [crd.latitude,crd.longitude];
+    // map.setView(mappzy, 17);
+    // console.log("DoMarker")
+    // socket.emit('mapmarker', mappzy);
+    // console.log("sentMarker")
+    
+    //   GPS2.push(mappzy[0]).toString();
+    //    GPS2.push(mappzy[1]).toString();
 
     
        
@@ -91,6 +118,7 @@ var geoLoc;
     
     else if( err.code == 2) {
        alert("Error: Position is unavailable!");
+       navigator.geolocation.getCurrentPosition(success, error, options);
     }
  }
  
@@ -120,10 +148,7 @@ var geoLoc;
 
   // }
 
-  function updateUserSession(lat, lon){
-    console.log("streaming user location")
-  }
-
+  
 
  
 
