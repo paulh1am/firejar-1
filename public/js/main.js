@@ -64,7 +64,7 @@ $( document ).ready(function() {
   }
 
 
-  navigator.geolocation.getCurrentPosition(success, error, options);
+  // navigator.geolocation.getCurrentPosition(success, error, options);
   
   function success(pos) {
     updateUserSession(pos);
@@ -109,6 +109,7 @@ var geoLoc;
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
     console.log("WATCHING : Latitude : " + latitude + " Longitude: " + longitude);
+    updateUserSession(position);
  }
  
  function errorHandler(err) {
