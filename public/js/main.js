@@ -94,7 +94,7 @@ var geoLoc;
     }
     
     else if( err.code == 2) {
-       alert("Error: Position is unavailable!");
+       // alert("Error: Position is unavailable!");
        navigator.geolocation.getCurrentPosition(success, error, options);
     }
  }

@@ -19,8 +19,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 passport.use(new LocalStrategy(Account.authenticate()));
 
-// passport.serializeUser(Account.serializeUser());
-// passport.deserializeUser(Account.deserializeUser());
+
 passport.serializeUser(function(user, cb) {
   cb(null, user.id);
 });
