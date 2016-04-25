@@ -447,7 +447,7 @@ function renderJars(jars){
 	// loop through all the jars and add them in the jar-holder div
 	for(var i=0;i<jars.length;i++){
     var jar = jars[i];
-    var fileExtension = jar.url.replace(/^.*\./, '');
+    var fileExtension = jar.url.replace(/^.*\./, '').toLowerCase();
     var file_type = '';
 
     console.log(jar.url);
@@ -455,10 +455,13 @@ function renderJars(jars){
 
     if (fileExtension == 'jpg'|| fileExtension =='jpeg'|| fileExtension =='png'){
       file_type = 'image';
-    }else if (fileExtension == 'mp3' || fileExtension =='m4a'|| fileExtension =='ogg' || fileExtension == 'wav'){
+    }else if (fileExtension == 'mp3' || fileExtension =='m4a'|| fileExtension == 'wav'){
       file_type = 'audio';
+    }else if (fileExtension == 'mov' || fileExtension =='ogg'|| fileExtension =='m4a' || fileExtension == '3gp'){
+      file_type = 'video';
     }
     console.log (file_type);
+
     if(file_type == 'image'){
   		var htmlToAdd = '<div class="col-md-4 jar">'+
   			
@@ -497,7 +500,25 @@ function renderJars(jars){
       '</div>';
 
 
-	  }
+	  }else if(file_type == 'video'){
+      var htmlToAdd = '<div class="col-md-4 jar">'+
+      '<h1 class="name">'+jar.title+ '</h1>'+
+      '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
+      'Your browser does not support the </video>'+
+      
+          '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
+
+          '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
+          '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
+
+          '<li class="hide id">'+jar.id+'</li>'+
+        '</ul>'+
+        '<button type="button" id="'+jar._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
+        '<button type="button" data-toggle="modal" data-target="#editModal">Edit Jar</button>'+
+      '</div>';
+
+
+    }
     jQuery('#jar-holder').prepend(htmlToAdd);
   }
 }
