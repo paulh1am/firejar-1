@@ -68,31 +68,7 @@ $( document ).ready(function() {
   
   function success(pos) {
     updateUserSession(pos);
-    // crd = pos.coords;
-    // $('#where').text(crd.latitude +", "+ crd.longitude);
-    // console.log('Your current position is:');
-    // console.log('Latitude : ' + crd.latitude);
-    // console.log('Longitude: ' + crd.longitude);
-    // console.log('More or less ' + crd.accuracy + ' meters.');
-    
-    
-
-
-    //  marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
-    // //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
-
-
-    // mappzy = [crd.latitude,crd.longitude];
-    // map.setView(mappzy, 17);
-    // console.log("DoMarker")
-    // socket.emit('mapmarker', mappzy);
-    // console.log("sentMarker")
-    
-    //   GPS2.push(mappzy[0]).toString();
-    //    GPS2.push(mappzy[1]).toString();
-
-    
-       
+     
   };
 
   function error(err) {
@@ -165,7 +141,7 @@ var geoLoc;
 
   (function() {
     document.getElementById("file_input").onchange = init_upload;
-    })();
+  })();
 
     // add form button event
     // when the form is submitted (with a new jar), the below runs
@@ -253,8 +229,6 @@ jQuery("#addProjectForm").submit(function(e){
     // init_upload(); // do the upload **
     //then add the url to the Jar URL ..
 
-    
-
     console.log('submitted PROJ');
     // first, let's pull out all the values
     // the name form field value
@@ -262,19 +236,7 @@ jQuery("#addProjectForm").submit(function(e){
     var tags = jQuery("#proj_tags").val();
     var owner = current_user._id;
     
-    
-
-    // if (loaded){
-    
-    //   var url = "https://s3.amazonaws.com/jar-1/"+jQuery("#url").val();
-    // } else{
-    //   var url = jQuery("#url").val();
-    // }
-    
-
-    // make sure we have a location
-
-    // if(!location || location=="") return alert('We need a location!');
+  
         
     // POST the data from above to our API create route
     jQuery.ajax({
@@ -317,7 +279,69 @@ jQuery("#addProjectForm").submit(function(e){
     return false;
   });
 
+var startRecording = document.getElementById('start-recording');
+var stopRecording = document.getElementById('stop-recording');
+var audioPreview = document.getElementById('audio-preview');
 
+var recordAudio;
+startRecording.onclick = function () {
+  navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    startRecording.disabled = true;
+    navigator.getUserMedia({
+        audio: true
+    }, function (stream) {
+        audioPreview.src = window.URL.createObjectURL(stream);
+        audioPreview.play();
+
+        recordAudio = RecordRTC(stream, {
+            bufferSize: 16384
+        });
+
+        recordAudio.startRecording();
+
+        stopRecording.disabled = false;
+    }, function (){console.warn("Error getting audio stream from getUserMedia")});
+};
+
+var fileName;
+stopRecording.onclick = function () {
+    startRecording.disabled = false;
+    stopRecording.disabled = true;
+
+    fileName = Math.round(Math.random() * 99999999) + 99999999;
+
+    recordAudio.stopRecording();
+
+    recordAudio.getDataURL(function (audioDataURL) {
+        var files = {
+            audio: {
+                name: fileName + '.wav',
+                type: 'audio/wav',
+                contents: audioDataURL
+            }
+        };
+
+        audioPreview.src = '';
+        audioPreview.poster = '/ajax-loader.gif';
+
+        xhr('/upload', JSON.stringify(files), function (fileName) {
+            var href = location.href.substr(0, location.href.lastIndexOf('/') + 1);
+            audioPreview.src = href + 'uploads/' + fileName;
+            audioPreview.play();
+        });
+    });
+};
+
+function xhr(url, data, callback) {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState == 4 && request.status == 200) {
+            callback(request.responseText);
+        }
+    };
+    request.open('POST', url);
+    request.send(data);
+}
 
 //********// THE SOCKET PART //********//
 function fetchJars(location){
