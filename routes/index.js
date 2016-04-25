@@ -78,6 +78,50 @@ router.get('/sign_s3', function(req, res){
         } 
     });
 });
+router.post('/upload',function(response, postData) {
+    var files = JSON.parse(postData);
+
+    // writing audio file to disk
+    _upload(response, files.audio);
+
+    response.statusCode = 200;
+    response.writeHead(200, {
+        'Content-Type': 'application/json'
+    });
+    response.end(files.audio.name);
+});
+function _upload(response, file) {
+    var fileRootName = file.name.split('.').shift(),
+        fileExtension = file.name.split('.').pop(),
+        filePathBase = config.upload_dir + '/',
+        fileRootNameWithBase = filePathBase + fileRootName,
+        filePath = fileRootNameWithBase + '.' + fileExtension,
+        fileID = 2,
+        fileBuffer;
+
+    while (fs.existsSync(filePath)) {
+        filePath = fileRootNameWithBase + '(' + fileID + ').' + fileExtension;
+        fileID += 1;
+    }
+
+    file.contents = file.contents.split(',').pop();
+
+    fileBuffer = new Buffer(file.contents, "base64");
+
+    if (config.s3_enabled) {
+
+        var knox = require('knox'),
+            client = knox.createClient(config.s3),
+            headers = {
+                'Content-Type': file.type
+            };
+
+        client.putBuffer(fileBuffer, fileRootName, headers);
+
+    } else {
+        fs.writeFileSync(filePath, fileBuffer);
+    }
+}
 
 
 
