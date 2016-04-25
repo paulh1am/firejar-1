@@ -279,71 +279,7 @@ jQuery("#addProjectForm").submit(function(e){
     return false;
   });
 
-var startRecording = document.getElementById('start-recording');
-var stopRecording = document.getElementById('stop-recording');
-var audioPreview = document.getElementById('audio-preview');
 
-var recordAudio;
-startRecording.onclick = function () {
-  
-    startRecording.disabled = true;
-    navigator.getUserMedia({
-        audio: true
-    }, function (stream) {
-        audioPreview.src = window.URL.createObjectURL(stream);
-        // audioPreview.play();
-
-        recordAudio = RecordRTC(stream, {
-            bufferSize: 16384
-        });
-
-        recordAudio.startRecording();
-
-        stopRecording.disabled = false;
-    }, function (){console.warn("Error getting audio stream from getUserMedia")});
-};
-
-var fileName;
-stopRecording.onclick = function () {
-    startRecording.disabled = false;
-    stopRecording.disabled = true;
-
-    fileName = Math.round(Math.random() * 99999999) + 99999999;
-
-    recordAudio.stopRecording();
-
-    recordAudio.getDataURL(function (audioDataURL) {
-        var files = {
-            audio: {
-                name: fileName + '.wav',
-                type: 'audio/wav',
-                contents: audioDataURL
-            }
-        };
-
-        audioPreview.src = '';
-        audioPreview.poster = '/ajax-loader.gif';
-        console.log('send post');
-        audio_files = files;
-        // xhr('/upload', JSON.stringify(files), function (fileName) {
-        //     var href = location.href.substr(0, location.href.lastIndexOf('/') + 1);
-        //     audioPreview.src = href + 'uploads/' + fileName;
-        //     audioPreview.play();
-        // });
-    //SEND audio upload init get s3 header*
-    });
-};
-
-function xhr(url, data, callback) {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (request.readyState == 4 && request.status == 200) {
-            callback(request.responseText);
-        }
-    };
-    request.open('POST', url);
-    request.send(data);
-}
 
 //********// THE SOCKET PART //********//
 function fetchJars(location){
@@ -633,21 +569,7 @@ function init_upload(){
     }
     get_signed_request(file);
 }
-function init_audio_upload(rec){
-    loaded = true;
-    console.log("here");
-    var files = rec.files;
-    var file = files[0];
-    file_name= file.name;
-    file_url = "https://s3.amazonaws.com/jar-1/"+ file_name;
-     document.getElementById("preview").src = file_url;
-    $('#url').val(file_name);
-    if(file == null){
-        alert("No file selected.");
-        return;
-    }
-    get_signed_request(file);
-}
+
 
 
 
