@@ -285,13 +285,13 @@ var audioPreview = document.getElementById('audio-preview');
 
 var recordAudio;
 startRecording.onclick = function () {
-  navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+  
     startRecording.disabled = true;
     navigator.getUserMedia({
         audio: true
     }, function (stream) {
         audioPreview.src = window.URL.createObjectURL(stream);
-        audioPreview.play();
+        // audioPreview.play();
 
         recordAudio = RecordRTC(stream, {
             bufferSize: 16384
