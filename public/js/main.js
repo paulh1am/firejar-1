@@ -501,7 +501,7 @@ function renderJars(jars){
 
 
 	  }else if(file_type == 'video'){
-      var htmlToAdd = '<div class="col-md-4 jar">'+
+      var htmlToAdd = '<div class="col-md-6 pull-right jar">'+
       '<h1 class="name">'+jar.title+ '</h1>'+
       '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
       'Your browser does not support the </video>'+
