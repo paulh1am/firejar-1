@@ -140,8 +140,12 @@ var geoLoc;
  // Doing S3 upload when it's added to the file_input form*
 
   (function() {
-    document.getElementById("file_input").onchange = init_upload;
+    $("#file_input").change(function(){
+      var prefix = current_user._id + Date.now().toString();
+      init_upload(prefix);
+    })
   })();
+
 
     // add form button event
     // when the form is submitted (with a new jar), the below runs
@@ -533,9 +537,10 @@ function upload_file(file, signed_request, url){
     If request successful, continue to upload the file using this signed
     request.
 */
-function get_signed_request(file){
+function get_signed_request(file, prefix){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
+    var file_name = prefix+file.name;
+    xhr.open("GET", "/sign_s3?file_name="+file_name+"&file_type="+file.type);
     xhr.onreadystatechange = function(){
         if(xhr.readyState === 4){
             if(xhr.status === 200){
@@ -553,13 +558,13 @@ function get_signed_request(file){
    Function called when file input updated. If there is a file selected, then
    start upload procedure by asking for a signed request from the app.
 */
-function init_upload(){
+function init_upload(prefix){
     loaded = true;
     console.log("here");
-     files = document.getElementById("file_input").files;
+     var files = document.getElementById("file_input").files;
      console.log(files);
     var file = files[0];
-    file_name= file.name;
+    file_name= prefix + file.name;
     file_url = "https://s3.amazonaws.com/jar-1/"+ file_name;
      document.getElementById("preview").src = file_url;
     $('#url').val(file_name);
@@ -567,7 +572,7 @@ function init_upload(){
         alert("No file selected.");
         return;
     }
-    get_signed_request(file);
+    get_signed_request(file, prefix);
 }
 
 
