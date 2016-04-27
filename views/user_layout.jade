@@ -30,10 +30,10 @@ html
     script(src='js/main.js')
     
     p You are currently logged in as #{user.username}
-    - each jar in JSON.parse(user_jars)
+    //- each jar in JSON.parse(user_jars)
       p #{jar.title}
     p PROJECTS
-    - each project in JSON.parse(user_projects)
+    //- each project in JSON.parse(user_projects)
       p #{project.title}
 
     a(href="/logout") Logout
