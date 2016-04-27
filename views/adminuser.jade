@@ -1,0 +1,81 @@
+extends user_layout
+
+
+
+block content
+
+  
+
+    h2#where ...
+    #map
+    br
+    hr
+    #gps_hack.container
+      .row
+        .col-md-4
+          .form-group
+            label#custom_gps.col-sm-2.control-label(for='new location') GPS hack
+            .col-sm-10
+              input#gps.form-control(type='text', placeholder='GPS', name='title')
+          .form-group
+            .col-sm-offset-2.col-sm-10
+              button#current.btn.btn-default(type='') Get current
+          .form-group
+            .col-sm-offset-2.col-sm-10
+              button#submit_location.btn.btn-default(type='submit') Submit
+    .container
+      .row
+        .col-md-4
+          h1 Add Message
+          form#addForm.form-horizontal
+            .form-group
+              label.col-sm-2.control-label(for='title') Title
+              .col-sm-10
+                input#title.form-control(type='text', placeholder='Title', name='title', required='')
+            .form-group
+              label.col-sm-2.control-label(for='tags') Tags
+              .col-sm-10
+                input#tags.form-control(type='text', placeholder='Tags (separated by comma)', name='tags')
+            .form-group
+              label.col-sm-2.control-label(for='url') URL
+              .col-sm-10
+                input#url.form-control(type='text', placeholder='skip for uploads', name='url')
+            .form-group
+              // <label for="project" class="col-sm-2 control-label">project</label>
+              .col-sm-10
+               
+                fieldset.ui-field-contain
+                  label(for='project') project
+                  select#project(name='project')
+                    option(value="" disabled selected hidden) no  project
+                    - each project in JSON.parse(user_projects)
+                      option #{project.title}
+
+
+            input#file_input(type='file')
+            p#status Please select a file
+            img#preview(style='border:1px solid gray;width:200px;', src='/images/default.png')
+            .form-group
+              .col-sm-offset-2.col-sm-10
+                button.btn.btn-default(type='submit') Submit
+        #jar-holder.col-md-8
+      
+        .col-md-4
+          h1 New Project
+          
+          form#addProjectForm.form-horizontal
+            .form-group
+              label.col-sm-2.control-label(for='title') Title
+              .col-sm-10
+                input#proj_title.form-control(type='text', placeholder='Title', name='title', required='')
+            .form-group
+              label.col-sm-2.control-label(for='tags') Tags
+              .col-sm-10
+                input#proj_tags.form-control(type='text', placeholder='Tags (separated by comma)', name='tags')
+            .form-group
+              .col-sm-offset-2.col-sm-10
+                button.btn.btn-default(type='submit') Submit
+script(type='text/javascript').
+  var local_data = "TESSSSSSTTTT
+
+    

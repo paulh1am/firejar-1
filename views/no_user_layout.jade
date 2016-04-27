@@ -1,0 +1,53 @@
+doctype html
+html
+  head
+    title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', rel='stylesheet', media='screen')
+    script(src='https://cdn.socket.io/socket.io-1.0.0.js')
+    link(rel='stylesheet' href='css/style.css')
+    link(rel='stylesheet' href='/leaflet/leaflet.css')
+    script(src='/leaflet/leaflet.js')
+    
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js')
+    script(src='http://code.jquery.com/jquery.js')
+    //script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+
+
+  body
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+    script(type='text/javascript').
+
+      
+      
+      
+    script(src='js/main.js')
+    block content
+  if (user)
+
+    script(type='text/javascript').
+
+      var usersession = !{user}
+      var user_projects = !{user_projects}
+      var user_jars = !{user_jars}
+    
+    
+    script(src='js/main.js')
+    
+    p You are currently logged in as #{user.username}
+    //- each jar in JSON.parse(user_jars)
+      p #{jar.title}
+    p PROJECTS
+    //- each project in JSON.parse(user_projects)
+      p #{project.title}
+
+    a(href="/logout") Logout
+    block content
+
+
+  
+  
