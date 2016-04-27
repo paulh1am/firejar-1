@@ -90,21 +90,21 @@ router.get('/sign_s3', function(req, res){
  * @param  {Object} req
  * @return {Object} json
  */
-router.get('/', function(req, res) {
+// router.get('/', function(req, res) {
   
-  var jsonData = {
-  	'name': 'fireJar',
-  	'api-status':'OK'
-  }
+//   var jsonData = {
+//   	'name': 'fireJar',
+//   	'api-status':'OK'
+//   }
 
-  // respond with json data
-  res.json(jsonData)
-});
+//   // respond with json data
+//   res.json(jsonData)
+// });
 
 
 
-router.get('/jars', function(req,res){
-  res.render('jars.html');
+router.get('/', function(req,res){
+  res.render('landing.jade');
 
 });
 
@@ -124,7 +124,7 @@ router.post('/register', function(req, res) {
         }
 
         passport.authenticate('local')(req, res, function () {
-            res.redirect('/');
+            res.redirect('/session');
         });
     });
 });
@@ -141,7 +141,7 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 
 router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/jars');
+    res.redirect('/');
 });
 
 router.get('/ping', function(req, res){
@@ -180,12 +180,8 @@ function retrieveUser(id, callback) {
 
 router.get('/session', function(req, res){
 
-
-
     console.log("and the user is:");
     console.log(req.user.username);
-
-
     
   retrieveUser(req.user._id, function(err, data){
     if (err) {
@@ -209,16 +205,35 @@ router.get('/session', function(req, res){
     });
   });
 
+});
+router.get('/adminuser', function(req, res){
 
-
+    console.log("and the user is:");
+    console.log(req.user.username);
     
-     
-    // res.render('user', { user : req.user, user_projects : userProjects, user_jars : userJars });
+  retrieveUser(req.user._id, function(err, data){
+    if (err) {
+          console.log(err);
+        }
+    retrieveUserJars(req.user._id, function(err, data1){
+      if (err) {
+          console.log(err);
+        }
+      retrieveUserProjects(req.user._id, function(err, data2){
+        if (err) {
+          console.log(err);
+        }
+        dataUser = JSON.stringify(data);
+        userJars = JSON.stringify(data1);
+        userProjects = JSON.stringify(data2);
+        
+        res.render('adminuser', { user : dataUser, user_projects : userProjects, user_jars : userJars});
+      });
 
-
+    });
+  });
 
 });
-
 
 
 

@@ -8,6 +8,7 @@ html
     link(rel='stylesheet' href='css/style.css')
     link(rel='stylesheet' href='/leaflet/leaflet.css')
     script(src='/leaflet/leaflet.js')
+    script(src='http://code.jquery.com/jquery.js')
     
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js')
@@ -25,14 +26,15 @@ html
       var usersession = !{user}
       var user_projects = !{user_projects}
       var user_jars = !{user_jars}
+
     
     
-    script(src='js/main.js')
+    script(src='js/session_main.js')
     
-    p You are currently logged in as #{user.username}
+    p You are currently logged in as #{(JSON.parse(user))[0].username}
     //- each jar in JSON.parse(user_jars)
       p #{jar.title}
-    p PROJECTS
+    //p PROJECTS
     //- each project in JSON.parse(user_projects)
       p #{project.title}
 
@@ -40,6 +42,5 @@ html
     block content
 
 
-  script(src='http://code.jquery.com/jquery.js')
-  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+  
   
