@@ -3,19 +3,26 @@ extends no_user_layout
 
 
 block content
+  #top_ribbon.ribbon
+    h2#title FireJar
+    #buttons
+      a(href="/login") 
+        button.btn.btn-primary(type="button") Login
 
-  
-
-    h2#where ...
-    #map
-    br
-    hr
-    .container
-      .row
-        .col-md-4
-          
-        #jar-holder.col-md-8
       
+      a(href="/register") 
+        button.btn.btn-primary(type="button") Join
+
+  h4#where ...
+  #map
+  br
+    
+  .container
+    .row
+      .col-md-4
+        
+      #jar-holder.col-md-8
+    
         
 
   

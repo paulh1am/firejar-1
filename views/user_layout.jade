@@ -31,14 +31,7 @@ html
     
     script(src='js/session_main.js')
     
-    p You are currently logged in as #{(JSON.parse(user))[0].username}
-    //- each jar in JSON.parse(user_jars)
-      p #{jar.title}
-    //p PROJECTS
-    //- each project in JSON.parse(user_projects)
-      p #{project.title}
-
-    a(href="/logout") Logout
+    
     block content
 
 
