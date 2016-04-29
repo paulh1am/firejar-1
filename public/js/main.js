@@ -302,7 +302,7 @@ function renderJars(jars){
           
         '</ul>'+
         '<button type="button" class="view_jar" id="'+jar._id+'">Open</button>'+
-        '<button type="button" class="collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
+        '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button></a>'+
         
   		'</div>';
 
@@ -341,7 +341,9 @@ function renderJars(jars){
 
     }
     jQuery('#jar-holder').prepend(htmlToAdd);
+   
 
+    $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
     $('.view_jar').click(function(){
 
       // console.log('whatever');
