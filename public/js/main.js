@@ -14,7 +14,7 @@ $( document ).ready(function() {
 
        map = L.map('map').setView([40.75,-74.0059], 12);
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    maxZoom: 18,
+    maxZoom: 15,
     id: 'ph1am.pppj01g0',
     accessToken: 'pk.eyJ1IjoicGgxYW0iLCJhIjoiV01wMkVDQSJ9.HGSWGdj2lTGJLxMcg4C9mA'
   }).addTo(map);
