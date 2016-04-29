@@ -301,8 +301,9 @@ function renderJars(jars){
           '<li class="hide id">'+jar.id+'</li>'+
           
         '</ul>'+
-        '<button type="button" class="view_jar" id="'+jar._id+'">Open</button>'+
-        '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button></a>'+
+        '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="view_jar" id="'+jar._id+'">Open</button></a>'+
+        '<button type="button" class="collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
+        
         
   		'</div>';
 
@@ -343,19 +344,8 @@ function renderJars(jars){
     jQuery('#jar-holder').prepend(htmlToAdd);
    
 
-    $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-    $('.view_jar').click(function(){
-
-      // console.log('whatever');
-       notee= $(this);
-      //  jarDiv= notee.parent().parent();
-      jar_id= notee.attr('id');
-      location.href = "/view_jar/"+jar_id;
-      // noteform = $($('#add_note_form')[0]).html();
-      // jarDiv.append(noteform);
-
-
-    })
+    $(".iframe").colorbox({iframe:true, width:"85%", height:"80%"});
+    
 
 
   }
