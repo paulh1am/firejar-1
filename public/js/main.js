@@ -296,11 +296,11 @@ function renderJars(jars){
   				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
 
   				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-          '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
+          '<li>Tags: <span class="owner">'+jar.owner[0]+'</span></li>'+
 
           '<li class="hide id">'+jar.id+'</li>'+
-          '<button type="button" id="'+jar._id+'" onclick="addNote(event)">add a note</button>'+
-  			'</ul>'+
+          '<button type="button" class="add_note" id="'+'note_'+jar._id+'">add a note</button>'+
+        '</ul>'+
         
   		'</div>';
 
@@ -339,6 +339,20 @@ function renderJars(jars){
 
     }
     jQuery('#jar-holder').prepend(htmlToAdd);
+
+    $('.add_note').click(function(){
+      console.log('whatever');
+       notee= $(this);
+       jarDiv= notee.parent().parent();
+      note_jar_id= notee.attr('id').split('_')[1];
+
+      noteform = $($('#add_note_form')[0]).html();
+      jarDiv.append(noteform);
+
+
+    })
+
+
   }
 }
 

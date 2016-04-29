@@ -147,6 +147,8 @@ var geoLoc;
   })();
 
 
+  
+
     // add form button event
     // when the form is submitted (with a new jar), the below runs
   jQuery("#addForm").submit(function(e){
