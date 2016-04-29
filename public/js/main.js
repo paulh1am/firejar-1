@@ -348,7 +348,7 @@ function renderJars(jars){
     jQuery('#jar-holder').prepend(htmlToAdd);
    
 
-    $(".iframe").colorbox({iframe:true, width:"85%", height:"80%"});
+    $(".iframe").colorbox({iframe:true, width:"95%", height:"80%"});
     
 
 

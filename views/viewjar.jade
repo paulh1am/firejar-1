@@ -22,12 +22,30 @@ html
       filetype = !{file_type}
 
   body
+  .col-sm-12.view_jar
     h1 #{(JSON.parse(jar)).title}
     h3 #{(JSON.parse(jar)).dateAdded.slice(0,10)}
     .contents
       //#{(JSON.parse(jar)).notes[0]}
       -if (file_type == 'image' )
-      p #{file_type} YEA
+
+      img.jar-image(src='#{(JSON.parse(jar)).url}')
+      ul
+        
+        li
+          | Tags: 
+          span.tags
+        li
+          | Tags: 
+          span.owner
+        
+      button.btn-primary(type='button') Add Note
+      button.btn-primary(type='button') Appreciate
+
+      
+        
+     
+
       //-else is (file_type == 'video')
         p #{file_type} YEAVIDEO
 
