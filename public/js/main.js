@@ -321,6 +321,8 @@ function renderJars(jars){
 
           '<li class="hide id">'+jar.id+'</li>'+
         '</ul>'+
+        '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="view_jar" id="'+jar._id+'">Open</button></a>'+
+        '<button type="button" class="collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
       '</div>';
 
 
@@ -336,7 +338,9 @@ function renderJars(jars){
           '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
 
           '<li class="hide id">'+jar.id+'</li>'+
-        '</ul>'+
+        '</ul>'+ 
+        '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="view_jar" id="'+jar._id+'">Open</button></a>'+
+        '<button type="button" class="collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
       '</div>';
 
 

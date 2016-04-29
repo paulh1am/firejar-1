@@ -258,20 +258,27 @@ router.get('/view_jar/:id', function(req, res){
     console.log("THE URL ***");
     console.log(data.url);
     var fileExtension = data.url.replace(/^.*\./, '').toLowerCase();
-    var file_type = '';
+    file_type = '';
     console.log (fileExtension);
 
-    if (fileExtension == 'jpg'|| fileExtension =='jpeg'|| fileExtension =='png'){
-      file_type = 'image';
-    }else if (fileExtension == 'mp3' || fileExtension =='m4a'|| fileExtension == 'wav'){
-      file_type = 'audio';
-    }else if (fileExtension == 'mov' || fileExtension =='ogg'|| fileExtension =='m4a' || fileExtension == '3gp'){
-      file_type = 'video';
+    function getExtension(cb){
+      if (fileExtension == 'jpg'|| fileExtension =='jpeg'|| fileExtension =='png'){
+        file_type = 'image';
+      }else if (fileExtension == 'mp3' || fileExtension =='m4a'|| fileExtension == 'wav'){
+        file_type = 'audio';
+      }else if (fileExtension == 'mov' || fileExtension =='ogg'|| fileExtension =='m4a' || fileExtension == '3gp'){
+        file_type = 'video';
+      }
+      file_type = JSON.stringify(file_type);
+      cb();
+
+    } 
+    //++========+++
+    function sendRes(){
+      res.render('viewjar', {jar : reqJar, filetype : file_type});
     }
 
-    //++========+++
-
-    res.render('viewjar', {jar : reqJar, filetype : file_type});
+    getExtension(sendRes);
   
   })
 })

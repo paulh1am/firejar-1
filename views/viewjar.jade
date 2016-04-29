@@ -26,10 +26,10 @@ html
     h3 #{(JSON.parse(jar)).dateAdded.slice(0,10)}
     .contents
       //#{(JSON.parse(jar)).notes[0]}
-      -if (JSON.parse(jar).url == 'ii' )
-        p there
-      -else
-        p here
+      -if (file_type == 'image' )
+      p #{file_type} YEA
+      //-else is (file_type == 'video')
+        p #{file_type} YEAVIDEO
 
 
    
