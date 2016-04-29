@@ -80,4 +80,7 @@ h2#banner{
   max-width: 250px;
 
 }
+button.view_jar{
+  margin-right: 1em;
+}
 
