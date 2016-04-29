@@ -265,7 +265,8 @@ function setLocation(e){
 function renderJars(jars){
 
 	// first, make sure the #jar-holder is empty
-	jQuery('#jar-holder').empty();
+	
+  // jQuery('#jar-holder').empty();
   
  
  
@@ -286,72 +287,77 @@ function renderJars(jars){
       file_type = 'video';
     }
     console.log (file_type);
+    if(jar.project=="" || jar.project== null ){
+      if(file_type == 'image'){
+    		var htmlToAdd = '<div class="col-md-4 jar">'+
+    			
+    			'<h1 class="name">'+jar.title+ '</h1>'+
+          '<img class="jar-image" src="'+jar.url+'">'+
+    			'<ul>'+
+    				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
 
-    if(file_type == 'image'){
-  		var htmlToAdd = '<div class="col-md-4 jar">'+
-  			
-  			'<h1 class="name">'+jar.title+ '</h1>'+
-        '<img class="jar-image" src="'+jar.url+'">'+
-  			'<ul>'+
-  				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
+    				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
+            '<li>Tags: <span class="owner">'+jar.owner[0]+'</span></li>'+
 
-  				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-          '<li>Tags: <span class="owner">'+jar.owner[0]+'</span></li>'+
-
-          '<li class="hide id">'+jar.id+'</li>'+
+            '<li class="hide id">'+jar.id+'</li>'+
+            
+          '</ul>'+
+          '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
+          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
           
-        '</ul>'+
-        '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-        '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
+          
+    		'</div>';
+
+    		
+      }else if(file_type == 'audio'){
+        var htmlToAdd = '<div class="col-md-4 jar">'+
+        '<h1 class="name">'+jar.title+ '</h1>'+
+        '<audio src="'+jar.url+'" controls >'+
+        'Your browser does not support the </audio>'+
         
+            '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
+
+            '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
+            '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
+
+            '<li class="hide id">'+jar.id+'</li>'+
+          '</ul>'+
+          '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
+          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
+        '</div>';
+
+
+  	  }else if(file_type == 'video'){
+        var htmlToAdd = '<div class="col-md-4 jar">'+
+        '<h1 class="name">'+jar.title+ '</h1>'+
+        '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
+        'Your browser does not support the </video>'+
         
-  		'</div>';
+            '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
 
-  		
-    }else if(file_type == 'audio'){
-      var htmlToAdd = '<div class="col-md-4 jar">'+
-      '<h1 class="name">'+jar.title+ '</h1>'+
-      '<audio src="'+jar.url+'" controls >'+
-      'Your browser does not support the </audio>'+
-      
-          '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
+            '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
+            '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
 
-          '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-          '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
-
-          '<li class="hide id">'+jar.id+'</li>'+
-        '</ul>'+
-        '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-        '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
-      '</div>';
+            '<li class="hide id">'+jar.id+'</li>'+
+          '</ul>'+ 
+          '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
+          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
+        '</div>';
 
 
-	  }else if(file_type == 'video'){
-      var htmlToAdd = '<div class="col-md-4 jar">'+
-      '<h1 class="name">'+jar.title+ '</h1>'+
-      '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
-      'Your browser does not support the </video>'+
-      
-          '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
+      }else{
 
-          '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-          '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
-
-          '<li class="hide id">'+jar.id+'</li>'+
-        '</ul>'+ 
-        '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-        '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
-      '</div>';
-
-
-    }
-    jQuery('#jar-holder').prepend(htmlToAdd);
+      }
+      jQuery('#jar-holder').prepend(htmlToAdd);
    
 
-    $(".iframe").colorbox({iframe:true, width:"95%", height:"80%"});
+      $(".iframe").colorbox({iframe:true, width:"95%", height:"80%"});
+    }else if(jar.project.length > 1){
+      var htmlToAdd = '<div class="col-md-4 jar project">'+
+        '<h1 class="name">PROJECT'+jar.project+ '</h1></div>'
+      jQuery('#project-holder').prepend(htmlToAdd);
+    }
     
-
-
   }
 }
 
