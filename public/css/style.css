@@ -21,11 +21,12 @@ body {
     height: 100%;
     margin: 0;
     background-repeat: no-repeat;
-    
+    color: lightgray;
+ 
 }
 
 h1 {
-	color: #222222;
+	color: orangered;
 }
 /*TOP*/
 

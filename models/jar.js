@@ -19,6 +19,7 @@ var jarSchema = new Schema({
 	// owner: { type: Number, ref: 'Account' },
 	owner:[{type: mongoose.Schema.Types.ObjectId, ref: 'Account'}],
   project:String,
+  notes: [{ type: Schema.Types.ObjectId, ref: 'Note' }],
 	dateAdded : { type: Date, default: Date.now },
 });
 

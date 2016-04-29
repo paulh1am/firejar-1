@@ -44,7 +44,7 @@ $( document ).ready(function() {
     console.log('Latitude : ' + crd.latitude);
     console.log('Longitude: ' + crd.longitude);
     console.log('More or less ' + crd.accuracy + ' meters.');
-
+    map.removeLayer(marker);
      marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
     //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
 
@@ -140,143 +140,6 @@ var geoLoc;
       init_upload(prefix);
     })
   })();
-
-
-    // add form button event
-    // when the form is submitted (with a new jar), the below runs
-  // jQuery("#addForm").submit(function(e){
-
-  //   e.preventDefault();
-
-  //   // init_upload(); // do the upload **
-  //   //then add the url to the Jar URL ..
-
-    
-
-  //   console.log('submitted');
-  // 	// first, let's pull out all the values
-  // 	// the name form field value
-  // 	var title = jQuery("#title").val();
-  // 	var tags = jQuery("#tags").val();
-  //   var project = jQuery("#project").val();
-  //   var GPS3 = GPS2.join();
-  // 	var SSID = "";//GRAB THE LOCATION Var
-  //   var UDID = "";//GRAB THE LOCATION Var
-  //   var owner = current_user._id;
-
-  //   if (loaded){
-    
-  //     var url = "https://s3.amazonaws.com/jar-1/"+jQuery("#url").val();
-  //   } else{
-  //     var url = jQuery("#url").val();
-  //   }
-    
-
-  // 	// make sure we have a location
-
-  // 	// if(!location || location=="") return alert('We need a location!');
-        
-  // 	// POST the data from above to our API create route
-  //   jQuery.ajax({
-  //   	url : '/api/create',
-  //   	dataType : 'json',
-  //   	type : 'POST',
-  //   	// we send the data in a data object (with key/value pairs)
-  //   	data : {
-  //   		title: title,
-  //   		tags: tags,
-  //       GPS: GPS3,
-  //       SSID: SSID,
-  //       UDID: UDID,
-  //       url: url,
-  //       owner: owner,
-  //       project: project
-    		
-  //   	},
-  //     // ADD THE LOCATION DATA (from the webRTC)
-  //   	success : function(response){
-  //   		if(response.status=="OK"){
-  // 	  		// success
-  // 	  		console.log(response);
-  // 	  		// re-render the map
-  // 	  		console.log('old map rerender');
-  // 	  		// now, clear the input fields
-  // 	  		jQuery("#addForm input").val('');
-  //         document.getElementById("preview").src =''
-  //         socket.emit('fetch', mappzy);
-  //   		}
-  //   		else {
-  //   			alert("something went wrong");
-  //   		}
-  //   	},
-  //   	error : function(err){
-  //   		// do error checking
-  //   		alert("something went wrong");
-  //   		console.error(err);
-  //   	}
-  //   }); 
-
-  // 	// prevents the form from submitting normally
-  //   loaded = false;
-  //   return false;
-  // });
-
-  // jQuery("#addProjectForm").submit(function(e){
-
-  //   e.preventDefault();
-
-  //   // init_upload(); // do the upload **
-  //   //then add the url to the Jar URL ..
-
-  //   console.log('submitted PROJ');
-  //   // first, let's pull out all the values
-  //   // the name form field value
-  //   var title = jQuery("#proj_title").val();
-  //   var tags = jQuery("#proj_tags").val();
-  //   var owner = current_user._id;
-    
-  
-        
-  //   // POST the data from above to our API create route
-  //   jQuery.ajax({
-  //     url : '/api/createProj',
-  //     dataType : 'json',
-  //     type : 'POST',
-  //     // we send the data in a data object (with key/value pairs)
-  //     data : {
-  //       title: title,
-  //       tags: tags,
-  //       owner: owner
-        
-        
-  //     },
-  //     // ADD THE LOCATION DATA (from the webRTC)
-  //     success : function(response){
-  //       if(response.status=="OK"){
-  //         // success
-  //         console.log(response);
-  //         // re-render the map
-  //         console.log('PROJECT IN!');
-  //         // now, clear the input fields
-  //         jQuery("#addProjectForm input").val('');
-  //         // document.getElementById("preview").src =''
-  //         // socket.emit('fetch', mappzy);
-  //       }
-  //       else {
-  //         alert("something went wrong");
-  //       }
-  //     },
-  //     error : function(err){
-  //       // do error checking
-  //       alert("something went wrong");
-  //       console.error(err);
-  //     }
-  //   }); 
-
-  //   // prevents the form from submitting normally
-  //   loaded = false;
-  //   return false;
-  // });
 
 
 
@@ -436,11 +299,9 @@ function renderJars(jars){
           '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
 
           '<li class="hide id">'+jar.id+'</li>'+
+          '<button type="button" id="'+jar._id+'" onclick="addNote(event)">add a note</button>'+
   			'</ul>'+
         
-
-  			'<button type="button" id="'+jar._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
-  			'<button type="button" data-toggle="modal" data-target="#editModal"">Edit Jar</button>'+
   		'</div>';
 
   		
@@ -457,8 +318,6 @@ function renderJars(jars){
 
           '<li class="hide id">'+jar.id+'</li>'+
         '</ul>'+
-        '<button type="button" id="'+jar._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
-        '<button type="button" data-toggle="modal" data-target="#editModal">Edit Jar</button>'+
       '</div>';
 
 
@@ -475,8 +334,6 @@ function renderJars(jars){
 
           '<li class="hide id">'+jar.id+'</li>'+
         '</ul>'+
-        '<button type="button" id="'+jar._id+'" onclick="deleteJar(event)">Delete Jar</button>'+
-        '<button type="button" data-toggle="modal" data-target="#editModal">Edit Jar</button>'+
       '</div>';
 
 
