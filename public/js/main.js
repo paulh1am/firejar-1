@@ -299,8 +299,10 @@ function renderJars(jars){
           '<li>Tags: <span class="owner">'+jar.owner[0]+'</span></li>'+
 
           '<li class="hide id">'+jar.id+'</li>'+
-          '<button type="button" class="add_note" id="'+'note_'+jar._id+'">add a note</button>'+
+          
         '</ul>'+
+        '<button type="button" class="view_jar" id="'+jar._id+'">Open</button>'+
+        '<button type="button" class="collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
         
   		'</div>';
 
@@ -340,14 +342,15 @@ function renderJars(jars){
     }
     jQuery('#jar-holder').prepend(htmlToAdd);
 
-    $('.add_note').click(function(){
-      console.log('whatever');
-       notee= $(this);
-       jarDiv= notee.parent().parent();
-      note_jar_id= notee.attr('id').split('_')[1];
+    $('.view_jar').click(function(){
 
-      noteform = $($('#add_note_form')[0]).html();
-      jarDiv.append(noteform);
+      // console.log('whatever');
+       notee= $(this);
+      //  jarDiv= notee.parent().parent();
+      jar_id= notee.attr('id');
+      location.href = "/view_jar/"+jar_id;
+      // noteform = $($('#add_note_form')[0]).html();
+      // jarDiv.append(noteform);
 
 
     })

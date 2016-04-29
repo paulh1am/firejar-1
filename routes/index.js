@@ -108,6 +108,27 @@ router.get('/', function(req,res){
 
 });
 
+router.get('/view_jar/:id', function(req, res){
+
+  var requestedId = req.param('id');
+
+  // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model.findById
+  Jar.findById(requestedId, function(err,data){
+
+    // if err or no user found, respond with error 
+    if(err || data == null){
+      var error = {status:'ERROR', message: 'Could not find that jar'};
+       return res.json(error);
+    }
+
+    // otherwise respond with JSON data of the jar
+    reqJar = JSON.stringify(data);
+
+    res.render('viewjar', {jar : reqJar});
+  
+  })
+})
+
 router.get('/bridge', function(req,res){
   res.render('bridge.html');
 });
@@ -124,7 +145,7 @@ router.post('/register', function(req, res) {
         }
 
         passport.authenticate('local')(req, res, function () {
-            res.redirect('/session');
+            res.redirect('/');
         });
     });
 });
@@ -141,7 +162,7 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 
 router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('/jars');
 });
 
 router.get('/ping', function(req, res){
@@ -415,7 +436,7 @@ router.post('/api/createProj', function(req, res){
 //  * @return {Object} JSON
 //  */
 
-router.get('/api/view/:id', function(req, res){
+router.get('/api/get/:id', function(req, res){
 
   var requestedId = req.param('id');
 
@@ -429,9 +450,12 @@ router.get('/api/view/:id', function(req, res){
     }
 
     // otherwise respond with JSON data of the jar
-    
+    var jsonData = {
+      status: 'OK',
+      jar: data
+    }
 
-    res.render('viewjar', {jar : data});
+    return res.json(jsonData);
   
   })
 })

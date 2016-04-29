@@ -26,7 +26,7 @@ body {
 }
 
 h1 {
-	color: orangered;
+	color: yellow;
 }
 /*TOP*/
 
@@ -40,7 +40,7 @@ h2#title{
   float: left;
   margin-top: 0.2em;
   margin-left: 0.1em;
-  color: orangered;
+  color: yellow;
 }
 #buttons{
   float:right;
@@ -50,7 +50,7 @@ h2#title{
 .btn-primary{
   background-color: #2B2B2B;
   border:none;
-  color: red;
+  color: turquoise;
 
 }
 

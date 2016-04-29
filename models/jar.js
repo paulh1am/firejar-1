@@ -17,10 +17,11 @@ var jarSchema = new Schema({
 	UDID:String,
 	url: String,
 	// owner: { type: Number, ref: 'Account' },
-	owner:[{type: mongoose.Schema.Types.ObjectId, ref: 'Account'}],
+	owner:{type: mongoose.Schema.Types.ObjectId, ref: 'Account'},
   project:String,
   isNote: Boolean,
   notes: [{ type: Schema.Types.ObjectId, ref: 'Jar' }],
+  parent: { type: Schema.Types.ObjectId, ref: 'Jar' },
 	dateAdded : { type: Date, default: Date.now },
 });
 

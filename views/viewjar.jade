@@ -15,27 +15,6 @@ html
 
 
   body
-  if (!user)
-  
-    script(src='js/main.js')
-    
-    
-    block content
-  if (user)
-
+    #{jar}
     script(type='text/javascript').
-
-      var usersession = !{user}
-      var user_projects = !{user_projects}
-      var user_jars = !{user_jars}
-
-    
-    
-    script(src='js/session_main.js')
-    
-    
-    block content
-
-
-  
-  
+      theJar = !{jar}
