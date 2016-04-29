@@ -441,7 +441,7 @@ router.get('/api/get/:id', function(req, res){
   var requestedId = req.param('id');
 
   // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model.findById
-  Jar.findById(requestedId, function(err,data){
+  Jar.findById(requestedId).populate('notes', function(err,data){
 
     // if err or no user found, respond with error 
     if(err || data == null){
