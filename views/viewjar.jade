@@ -19,8 +19,18 @@ html
       }
     script(type='text/javascript').
       theJar = !{jar}
+      filetype = !{file_type}
 
   body
-    p Hello #{(JSON.parse(jar)).title}!
+    h1 #{(JSON.parse(jar)).title}
+    h3 #{(JSON.parse(jar)).dateAdded.slice(0,10)}
+    .contents
+      //#{(JSON.parse(jar)).notes[0]}
+      -if (JSON.parse(jar).url == 'ii' )
+        p there
+      -else
+        p here
+
+
    
     
