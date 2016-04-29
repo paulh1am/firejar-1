@@ -415,7 +415,7 @@ router.post('/api/createProj', function(req, res){
 //  * @return {Object} JSON
 //  */
 
-router.get('/api/get/:id', function(req, res){
+router.get('/api/view/:id', function(req, res){
 
   var requestedId = req.param('id');
 
@@ -429,12 +429,9 @@ router.get('/api/get/:id', function(req, res){
     }
 
     // otherwise respond with JSON data of the jar
-    var jsonData = {
-      status: 'OK',
-      jar: data
-    }
+    
 
-    return res.json(jsonData);
+    res.render('viewjar', {jar : data});
   
   })
 })
