@@ -29,7 +29,7 @@ html
       
       test = "test"
 
-  body
+  body#crossing
   .wrapper
     .col-md-8.view_jar
       h1 #{(JSON.parse(jar)).title}
@@ -48,7 +48,8 @@ html
 
 
       else if(filetype.indexOf('audio')> -1)
-        p audio
+        audio(src='#{(JSON.parse(jar)).url}')
+        audio(src='#{(JSON.parse(jar)).url}', controls='') Your browser does not support the element
       else
         .jarText
           p #{(JSON.parse(jar)).text[0]}
