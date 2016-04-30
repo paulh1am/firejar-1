@@ -141,6 +141,13 @@ var geoLoc;
       init_upload(prefix);
     })
   })();
+  (function() {
+    $("#p_file_input").change(function(){
+      var prefix = ((Math.random() * 60).toString() + 1) + Date.now().toString();
+      console.log('DO Proj img UPLOAD');
+      // init_upload(prefix);
+    })
+  })();
 
 
 
@@ -338,7 +345,7 @@ function renderJars(jars){
 
             '<li class="hide id">'+jar.id+'</li>'+
           '</ul>'+
-          '<a class= "Niframe Ncboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
+          '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
           '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
         '</div>';
 
@@ -392,10 +399,12 @@ function renderJars(jars){
 
       $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
     }else if(jar.project.length > 1){
-      proj_id = '#'+jar.project.replace(' ','_');
+      var proj_id = '#'+jar.project.replace(' ','_');
+      var project_url = jar.project_url || ''
+
       if ($(proj_id).length==0){
-        var htmlToAdd = '<div class="col-md-4 jar project" id="'+jar.project.replace(' ','_')+'" >'+
-          '<h1 class="name">project: '+jar.project+ '</h1></div>'
+        var htmlToAdd = '<a href="/projects/'+ jar.project.replace(' ','_')+'"><div class="col-md-4 jar project" id="'+jar.project.replace(' ','_')+'" style="background-image:url('+ project_url +')" >'+
+          '<h2 class="name">'+jar.project+ '</h1> <p>FireJar project</p></div></a>'
         jQuery('#project-holder').prepend(htmlToAdd);
       }
     }

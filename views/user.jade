@@ -81,6 +81,11 @@ block content
             label.col-sm-2.control-label(for='tags') Tags
             .col-sm-10
               input#proj_tags.form-control(type='text', placeholder='Tags (separated by comma)', name='tags')
+
+          input#p_file_input(type='file')
+          p#status Please select a file
+          img#p_preview(style='border:1px solid gray;width:200px;', src='/images/default.png')
+
           .form-group
             .col-sm-offset-2.col-sm-10
               button.btn.btn-default(type='submit') Submit

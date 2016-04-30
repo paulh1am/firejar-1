@@ -110,8 +110,8 @@ router.get('/', function(req,res){
 
 
 
-router.get('/bridge', function(req,res){
-  res.render('bridge.html');
+router.get('/projects/bridge', function(req,res){
+  res.render('crossing.jade');
 });
 
 
