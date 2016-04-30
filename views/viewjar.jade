@@ -79,11 +79,13 @@ html
               button.btn.btn-default(type='submit') Submit
     br
     hr         
-    .col-md-4.notes
+    .col-md-4.notesdiv
       h3 Notes
-      - each note in (JSON.parse(notes))
-        h4 #{note.title}
-        img.note-image.jar-image(src="#{note.url}")
+      .notes
+        - each note in (JSON.parse(notes))
+          .noteJar
+            h4 #{note.title}
+            img.note-image.jar-image(src="#{note.url}")
 
       
         

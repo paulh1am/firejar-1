@@ -17,6 +17,12 @@ $( document ).ready(function() {
   jQuery("#addNoteForm").submit(function(e){
 
     e.preventDefault();
+
+
+
+
+
+
     noteParent = theJar._id;
 
 
@@ -38,7 +44,10 @@ $( document ).ready(function() {
       var url = jQuery("#url").val();
     }
     
-
+    var htmlToAdd = '<div class="noteJar">'+'<h3>'+title+'</h3>'+
+      '<image class="note-image jar-image" src="'+url+ '"></div>'
+    console.log(htmlToAdd);
+    $('.notes').prepend(htmlToAdd);
     // make sure we have a location
 
     // if(!location || location=="") return alert('We need a location!');
