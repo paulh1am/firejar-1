@@ -65,6 +65,7 @@ $( document ).ready(function() {
   	// the name form field value
   	var title = jQuery("#title").val();
   	var tags = jQuery("#tags").val();
+    var text = jQuery("#text").val();
     var project = jQuery("#project").val();
     var GPS3 = GPS2.join();
   	var SSID = "";//GRAB THE LOCATION Var
@@ -91,6 +92,7 @@ $( document ).ready(function() {
     	// we send the data in a data object (with key/value pairs)
     	data : {
     		title: title,
+        text: text,
     		tags: tags,
         GPS: GPS3,
         SSID: SSID,
@@ -109,6 +111,7 @@ $( document ).ready(function() {
   	  		console.log('old map rerender');
   	  		// now, clear the input fields
   	  		jQuery("#addForm input").val('');
+          jQuery("#addForm textarea").val('');
           document.getElementById("preview").src =''
           socket.emit('fetch', mappzy);
     		}
@@ -139,6 +142,7 @@ jQuery("#addProjectForm").submit(function(e){
     // first, let's pull out all the values
     // the name form field value
     var title = jQuery("#proj_title").val();
+    var text = jQuery("#proj_text").val();
     var tags = jQuery("#proj_tags").val();
     var owner = current_user._id;
     
@@ -152,6 +156,7 @@ jQuery("#addProjectForm").submit(function(e){
       // we send the data in a data object (with key/value pairs)
       data : {
         title: title,
+        text: text,
         tags: tags,
         owner: owner
         

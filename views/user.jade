@@ -37,6 +37,10 @@ block content
             .col-sm-10
               input#title.form-control(type='text', placeholder='Title', name='title', required='')
           .form-group
+            label.col-sm-2.control-label(for='text') Message
+            .col-sm-10
+              textarea#text(name="text", cols="46", rows="5")
+          .form-group
             label.col-sm-2.control-label(for='tags') Tags
             .col-sm-10
               input#tags.form-control(type='text', placeholder='Tags (separated by comma)', name='tags')

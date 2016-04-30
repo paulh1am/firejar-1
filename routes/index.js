@@ -325,6 +325,7 @@ router.post('/api/create', function(req, res){
 
     // pull out the information from the req.body
     var title = req.body.title;
+    var text = req.body.text;
     
     var tags = req.body.tags.split(',');
     
@@ -346,6 +347,7 @@ router.post('/api/create', function(req, res){
     // this object should be structured the same way as your db model
     var jarObj = {
       title: title,
+      text: text,
       tags : tags,
       GPS : GPS,
       SSID: SSID,
@@ -413,6 +415,7 @@ router.post('/api/createProj', function(req, res){
 
     // pull out the information from the req.body
     var title = req.body.title;
+    var text = req.body.text;
     
     var tags = req.body.tags.split(',');
     
@@ -422,6 +425,7 @@ router.post('/api/createProj', function(req, res){
     // this object should be structured the same way as your db model
     var projObj = {
       title: title,
+      text : text,
       tags : tags,
       url: "dummy_url",
       owner: owner,
@@ -484,6 +488,7 @@ router.post('/api/createNote', function(req, res){
 
     // pull out the information from the req.body
     var title = req.body.title;
+    var text = req.body.text;
   
     var url = req.body.url;
     var parent = req.body.parent;
@@ -492,7 +497,7 @@ router.post('/api/createNote', function(req, res){
     // this object should be structured the same way as your db model
     var jarObj = {
       title: title,
-      
+      text: text,
       url: url,
       parent: parent
     };

@@ -9,6 +9,7 @@ var jarSchema = new Schema({
 	// name: {type: String, unique: true}, // this version requires this field to be unique in the db
 	title: String,
 	tags: [String],
+  text: [String],
 	GPS: {
 		lat: Number,
 		lon: Number
