@@ -165,7 +165,7 @@ var geoLoc;
       
     });
 
-  map.on('click', addMarker);
+  //map.on('click', addMarker);
 
   function addMarker(e){
       // Add marker to map at click location; add popup window
