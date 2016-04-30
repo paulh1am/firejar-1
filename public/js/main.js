@@ -14,7 +14,7 @@ $( document ).ready(function() {
 
        map = L.map('map').setView([40.75,-74.0059], 12);
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    maxZoom: 15,
+    maxZoom: 18,
     id: 'ph1am.pppj01g0',
     accessToken: 'pk.eyJ1IjoicGgxYW0iLCJhIjoiV01wMkVDQSJ9.HGSWGdj2lTGJLxMcg4C9mA'
   }).addTo(map);
@@ -266,7 +266,7 @@ function renderJars(jars){
 
 	// first, make sure the #jar-holder is empty
 	
-  // jQuery('#jar-holder').empty();
+  jQuery('.jar_clear').remove();
   
  
  
@@ -287,9 +287,9 @@ function renderJars(jars){
       file_type = 'video';
     }
     console.log (file_type);
-    if(jar.project=="" || jar.project== null ){
+    if(jar.project=="Bunnies" || jar.project== null ){
       if(file_type == 'image'){
-    		var htmlToAdd = '<div class="col-md-4 jar">'+
+    		var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
     			
     			'<h1 class="name">'+jar.title+ '</h1>'+
           '<img class="jar-image" src="'+jar.url+'">'+
@@ -310,7 +310,7 @@ function renderJars(jars){
 
     		
       }else if(file_type == 'audio'){
-        var htmlToAdd = '<div class="col-md-4 jar">'+
+        var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
         '<h1 class="name">'+jar.title+ '</h1>'+
         '<audio src="'+jar.url+'" controls >'+
         'Your browser does not support the </audio>'+
@@ -328,7 +328,7 @@ function renderJars(jars){
 
 
   	  }else if(file_type == 'video'){
-        var htmlToAdd = '<div class="col-md-4 jar">'+
+        var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
         '<h1 class="name">'+jar.title+ '</h1>'+
         '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
         'Your browser does not support the </video>'+

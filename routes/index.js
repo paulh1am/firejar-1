@@ -270,6 +270,7 @@ router.get('/view_jar/:id', function(req, res){
         file_type = 'video';
       }
       file_type = JSON.stringify(file_type);
+      console.log(file_type);
       cb();
 
     } 

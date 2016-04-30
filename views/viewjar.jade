@@ -13,41 +13,52 @@ html
     
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js')
+    
+    //script(src='/js/main.js')
     style.
       body{
       min-height: 800px;
       }
+
+    
     script(type='text/javascript').
       theJar = !{jar}
-      filetype = !{file_type}
+      
+      test = "test"
 
   body
   .col-sm-12.view_jar
     h1 #{(JSON.parse(jar)).title}
     h3 #{(JSON.parse(jar)).dateAdded.slice(0,10)}
     .contents
+
       //#{(JSON.parse(jar)).notes[0]}
-      -if (file_type == 'image' )
+
+    
+    -if(filetype.indexOf('image')> -1)
+      p #{filetype}
 
       img.jar-image(src='#{(JSON.parse(jar)).url}')
-      ul
-        
-        li
-          | Tags: 
-          span.tags
-        li
-          | Tags: 
-          span.owner
-        
-      button.btn-primary(type='button') Add Note
-      button.btn-primary(type='button') Appreciate
+    -else if(filetype.indexOf('video')> -1)
+      p #{filetype}
+
+    ul
+      
+      li
+        | Tags: 
+        span.tags
+      li
+        | Tags: 
+        span.owner
+      
+    button.btn-primary(type='button') Add Note
+    button.btn-primary(type='button') Appreciate
 
       
         
      
 
-      //-else is (file_type == 'video')
-        p #{file_type} YEAVIDEO
+      
 
 
    
