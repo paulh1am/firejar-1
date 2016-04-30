@@ -39,11 +39,14 @@ html
 
     
     -if(filetype.indexOf('image')> -1)
-      p #{filetype}
-
+      
       img.jar-image(src='#{(JSON.parse(jar)).url}')
+
     -else if(filetype.indexOf('video')> -1)
-      p #{filetype}
+      video(width='95%', height='auto', src='https://s3.amazonaws.com/jar-1/capturedvideo.MOV', preload='', controls='') Your browser does not support the 
+
+
+    -else if(filetype.indexOf('audio')> -1)
 
     ul
       
