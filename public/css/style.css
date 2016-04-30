@@ -2,7 +2,7 @@
 /* Custom CSS */
 /**************/
 
-/*body{
+body{
 
 	background: rgba(250,82,82,1);
 background: -moz-linear-gradient(-45deg, rgba(250,82,82,1) 0%, rgba(32,18,87,1) 41%, rgba(24,10,71,1) 60%, rgba(5,5,5,1) 95%, rgba(5,5,5,1) 100%);
@@ -12,21 +12,12 @@ background: -o-linear-gradient(-45deg, rgba(250,82,82,1) 0%, rgba(32,18,87,1) 41
 background: -ms-linear-gradient(-45deg, rgba(250,82,82,1) 0%, rgba(32,18,87,1) 41%, rgba(24,10,71,1) 60%, rgba(5,5,5,1) 95%, rgba(5,5,5,1) 100%);
 background: linear-gradient(135deg, rgba(250,82,82,1) 0%, rgba(32,18,87,1) 41%, rgba(24,10,71,1) 60%, rgba(5,5,5,1) 95%, rgba(5,5,5,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa5252', endColorstr='#050505', GradientType=1 );
-/*background-attachment: fixed;*/
-/*background-image: url('/images/light.jpg');
+background-attachment: fixed;
+background-image: url('/images/light.jpg');
 background-size: cover;
-background-position-x:80%;*/
-}*/
- #main {
-          background: url('/images/light.jpg') no-repeat center center fixed;
-          -webkit-background-size: cover;
-          -moz-background-size: cover;
-          -o-background-size: cover;
-          background-size: cover;
-          background-position-x:80%;
-          width: 100%;
-          overflow: hidden;
-        }
+background-position-x:80%;
+}
+
 html {
     height: 100%;
 }
