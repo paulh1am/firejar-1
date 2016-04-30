@@ -30,7 +30,7 @@ html
       test = "test"
 
   body
-  .col-md-4.view_jar
+  .col-md-8.view_jar
     h1 #{(JSON.parse(jar)).title}
     h3 #{(JSON.parse(jar)).dateAdded.slice(0,10)}
     .contents
@@ -77,6 +77,13 @@ html
           .form-group
             .col-sm-offset-2.col-sm-10
               button.btn.btn-default(type='submit') Submit
+    br
+    hr         
+    .col-md-4.notes
+      h3 Notes
+      - each note in (JSON.parse(notes))
+        h4 #{note.title}
+        img.note-image.jar-image(src="#{note.url}")
 
       
         
