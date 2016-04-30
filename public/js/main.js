@@ -272,12 +272,13 @@ function setLocation(e){
 
 
 
-
+var j_marker = "."
 function renderJars(jars){
 
 	// first, make sure the #jar-holder is empty
 	
   jQuery('.jar_clear').remove();
+  map.removeLayer(j_marker);
   
  
  
@@ -397,7 +398,7 @@ function renderJars(jars){
       jQuery('#jar-holder').prepend(htmlToAdd);
    
 
-      $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
+      // $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
     }else if(jar.project.length > 1){
       var proj_id = '#'+jar.project.replace(' ','_');
       var project_url = jar.project_url || ''
@@ -408,6 +409,17 @@ function renderJars(jars){
         jQuery('#project-holder').prepend(htmlToAdd);
       }
     }
+    var orangeIcon = L.icon({
+      iconUrl: '/images/orange.png',
+      
+
+      iconSize:     [20, 20], // size of the icon
+      
+      iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+      
+    
+    });
+    j_marker = L.marker([jar.GPS.lat, jar.GPS.lon], {icon: orangeIcon}).addTo(map);  
     
   }
 }
