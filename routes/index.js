@@ -456,6 +456,78 @@ router.post('/api/createProj', function(req, res){
 
    
 });
+// *** POST TO CREATE NOTE ***
+router.post('/api/createNote', function(req, res){
+
+    console.log('the data we received is --> ');
+
+    console.log(req.body);
+
+    // pull out the information from the req.body
+    var title = req.body.title;
+  
+    var url = req.body.url;
+    var parent = req.body.parent;
+
+    // hold all this data in an object
+    // this object should be structured the same way as your db model
+    var jarObj = {
+      title: title,
+      
+      url: url,
+      parent: parent
+    };
+
+      console.log('received note all gooood');
+     
+      // now, let's add this to our jar object from above
+      
+      // now, let's save it to the database
+      // create a new jar model instance, passing in the object we've created
+
+      var jar = new Jar(jarObj);
+
+      // now, save that jar instance to the database
+      // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
+      jar.save(function(err,data){
+        // if err saving, respond back with error
+        if (err){
+          var error = {status:'ERROR', message: 'Error saving jar'};
+          console.log('shit');
+          console.log(error);
+          return res.json(error);
+
+        }
+        // Jar.find({})
+        //   .populate('owner')
+        //   .exec(function(error, posts) {
+        //         console.log(JSON.stringify(posts, null, "\t"))
+        //   })
+
+
+        console.log('saved a new jar!');
+        console.log(data);
+
+        // now return the json data of the new jar
+        var jsonData = {
+          status: 'OK',
+          jar: data
+        }
+
+        return res.json(jsonData);
+
+      });
+      jar
+      .populate('parent')
+      .exec(function (err, jar) {
+        if (err) return handleError(err);
+        console.log('The parent is %s', jar.parent.title);
+     
+      });
+
+
+   
+});
 
 // /**
 //  * GET '/api/get/:id'
