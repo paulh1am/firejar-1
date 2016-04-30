@@ -14,6 +14,7 @@ background: linear-gradient(135deg, rgba(250,82,82,1) 0%, rgba(32,18,87,1) 41%, 
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa5252', endColorstr='#050505', GradientType=1 );
 background-attachment: fixed;
 background-image: url('/images/light.jpg');
+background-size: cover;
 background-position-x:80%;
 }
 html {

@@ -390,7 +390,7 @@ function renderJars(jars){
       jQuery('#jar-holder').prepend(htmlToAdd);
    
 
-      $(".iframe").colorbox({iframe:true, width:"95%", height:"80%"});
+      $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
     }else if(jar.project.length > 1){
       proj_id = '#'+jar.project.replace(' ','_');
       if ($(proj_id).length==0){
