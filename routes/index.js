@@ -237,50 +237,69 @@ router.get('/adminuser', function(req, res){
 
 });
 
+function retrieveJarJars(id, callback) {
+  Jar.find({"parent": id}, function(err, jars) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, jars);
+      console.log("got babies");
 
+    }
+  });
+}
 router.get('/view_jar/:id', function(req, res){
 
   var requestedId = req.param('id');
 
   // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model.findById
-  Jar.findById(requestedId, function(err,data){
-
-    // if err or no user found, respond with error 
-    if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find that jar'};
-       return res.json(error);
-    }
-
-    // otherwise respond with JSON data of the jar
-    reqJar = JSON.stringify(data);
-
-    //set the Filetype of the Jar URL (dumbly*)
-    console.log("THE URL ***");
-    console.log(data.url);
-    var fileExtension = data.url.replace(/^.*\./, '').toLowerCase();
-    file_type = '';
-    console.log (fileExtension);
-
-    function getExtension(cb){
-      if (fileExtension == 'jpg'|| fileExtension =='jpeg'|| fileExtension =='png'){
-        file_type = 'image';
-      }else if (fileExtension == 'mp3' || fileExtension =='m4a'|| fileExtension == 'wav'){
-        file_type = 'audio';
-      }else if (fileExtension == 'mov' || fileExtension =='ogg'|| fileExtension =='m4a' || fileExtension == '3gp'){
-        file_type = 'video';
+  retrieveJarJars(requestedId, function(err, data1){
+    if (err) {
+        console.log(err);
       }
-      file_type = JSON.stringify(file_type);
-      console.log(file_type);
-      cb();
+    console.log(data1)
 
-    } 
-    //++========+++
-    function sendRes(){
-      res.render('viewjar', {jar : reqJar, filetype : file_type});
-    }
+    Jar.findById(requestedId, function(err,data){
 
-    getExtension(sendRes);
-  
+      // if err or no user found, respond with error 
+      if(err || data == null){
+        var error = {status:'ERROR', message: 'Could not find that jar'};
+         return res.json(error);
+      }
+
+      // otherwise respond with JSON data of the jar
+      reqJar = JSON.stringify(data);
+
+      //set the Filetype of the Jar URL (dumbly*)
+      console.log("THE URL ***");
+      console.log(data.url);
+      var fileExtension = data.url.replace(/^.*\./, '').toLowerCase();
+      file_type = '';
+      console.log (fileExtension);
+
+      noteJars = JSON.stringify(data1);
+
+      function getExtension(cb){
+        if (fileExtension == 'jpg'|| fileExtension =='jpeg'|| fileExtension =='png'){
+          file_type = 'image';
+        }else if (fileExtension == 'mp3' || fileExtension =='m4a'|| fileExtension == 'wav'){
+          file_type = 'audio';
+        }else if (fileExtension == 'mov' || fileExtension =='ogg'|| fileExtension =='m4a' || fileExtension == '3gp'){
+          file_type = 'video';
+        }
+        file_type = JSON.stringify(file_type);
+        console.log(file_type);
+        cb();
+
+      } 
+      //++========+++
+      function sendRes(){
+        res.render('viewjar', {jar : reqJar, filetype : file_type, notes : noteJars});
+      }
+
+      getExtension(sendRes);
+    
+    })
   })
 })
 
