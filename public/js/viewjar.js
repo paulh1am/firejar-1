@@ -1,5 +1,6 @@
 $.getScript("/js/main.js");
 $( document ).ready(function() {
+   loaded = false;
   console.log('has');
   $('.addNote').click(function(e){
     console.log('add Note');
@@ -43,9 +44,13 @@ $( document ).ready(function() {
     } else{
       var url = jQuery("#url").val();
     }
-    
+
+    var text = jQuery("#text").val();
+    var linetext= (text).replace(/\n/g,"<br>");
+
     var htmlToAdd = '<div class="noteJar">'+'<h3>'+title+'</h3>'+
       '<image class="note-image jar-image" src="'+url+ '"></div>'
+      +'<div class="jarText"><p>'+ linetext +'</p></div>'
     console.log(htmlToAdd);
     $('.notes').prepend(htmlToAdd);
     // make sure we have a location
@@ -60,6 +65,7 @@ $( document ).ready(function() {
       // we send the data in a data object (with key/value pairs)
       data : {
         title: title,
+        text: text,
         url: url,
         parent: noteParent
         

@@ -38,16 +38,19 @@ html
       //#{(JSON.parse(jar)).notes[0]}
 
     
-    -if(filetype.indexOf('image')> -1)
+    if(filetype.indexOf('image')> -1)
       
       img.jar-image(src='#{(JSON.parse(jar)).url}')
 
-    -else if(filetype.indexOf('video')> -1)
+    else if(filetype.indexOf('video')> -1)
       video(width='95%', height='auto', src='https://s3.amazonaws.com/jar-1/capturedvideo.MOV', preload='', controls='') Your browser does not support the 
 
 
-    -else if(filetype.indexOf('audio')> -1)
-
+    else if(filetype.indexOf('audio')> -1)
+      p audio
+    else
+      .jarText
+        p #{(JSON.parse(jar)).text[0]}
     ul
       
       li
@@ -72,7 +75,10 @@ html
             label.col-sm-2.control-label(for='url') URL
             .col-sm-10
               input#url.form-control(type='text', placeholder='skip for attachments', name='url')
-
+          .form-group
+            label.col-sm-2.control-label(for='text') Message
+            .col-sm-10
+              textarea#text(name="text", cols="46", rows="5")
 
           input#file_input(type='file')
           p#status Please select a file
@@ -89,6 +95,9 @@ html
           .noteJar
             h4 #{note.title}
             img.note-image.jar-image(src="#{note.url}")
+            .jarText
+              p #{note.text}
+
 
       
         

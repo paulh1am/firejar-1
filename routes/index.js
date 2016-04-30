@@ -325,7 +325,7 @@ router.post('/api/create', function(req, res){
 
     // pull out the information from the req.body
     var title = req.body.title;
-    var text = req.body.text;
+    var text = req.body.text.replace(/\n/g,"<br>");
     
     var tags = req.body.tags.split(',');
     
