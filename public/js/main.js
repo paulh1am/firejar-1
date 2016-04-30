@@ -287,7 +287,7 @@ function renderJars(jars){
       file_type = 'video';
     }
     console.log (file_type);
-    if(jar.project=="Bunnies" || jar.project== null ){
+    if(jar.project=="Bunnies" || jar.project== "" ){
       if(file_type == 'image'){
     		var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
     			
@@ -353,9 +353,12 @@ function renderJars(jars){
 
       $(".iframe").colorbox({iframe:true, width:"95%", height:"80%"});
     }else if(jar.project.length > 1){
-      var htmlToAdd = '<div class="col-md-4 jar project">'+
-        '<h1 class="name">PROJECT'+jar.project+ '</h1></div>'
-      jQuery('#project-holder').prepend(htmlToAdd);
+      proj_id = '#'+jar.project;
+      if ($(proj_id).length<1){
+        var htmlToAdd = '<div class="col-md-4 jar project" id="'+jar.project+'" >'+
+          '<h1 class="name">PROJECT'+jar.project+ '</h1></div>'
+        jQuery('#project-holder').prepend(htmlToAdd);
+      }
     }
     
   }
