@@ -6,7 +6,12 @@
 //      dataType: 'jsonp',
 
 $( document ).ready(function() {
-  
+
+  $('.addNote').click(function(e){
+  console.log('add Note');
+  $('.addNoteForm').show();
+  });
+  console.log('reaaady');
   
 
 
@@ -144,19 +149,19 @@ var geoLoc;
 
 
 //********// THE SOCKET PART //********//
-function fetchJars(location){
-  socket.emit('fetch', location);
-}
+  function fetchJars(location){
+    socket.emit('fetch', location);
+  }
 
-socket.on('connect', function(data) {
+  socket.on('connect', function(data) {
       console.log("connected . . ");
     });
-socket.on('you', function(data) {
+  socket.on('you', function(data) {
       console.log(data);
       socket.emit('fetch', mappzy);
       
     });
-socket.on('Jars', function(data) {
+  socket.on('Jars', function(data) {
       jarr = data;
       console.log(jarr);
       console.log('jars');
@@ -166,30 +171,30 @@ socket.on('Jars', function(data) {
 
   map.on('click', addMarker);
 
-function addMarker(e){
-    // Add marker to map at click location; add popup window
-    console.log('CLLLLLICK??')
-    // var newMarker = new L.marker(e.latlng).addTo(map);
-    form_coords = e.latlng.lat+','+e.latlng.lng;
-    form_coords = form_coords.split(',');
-    console.log(form_coords);
-    $('#where').text(form_coords);
-    map.removeLayer(marker);
-    marker = L.marker([form_coords[0],form_coords[1]]).addTo(map);
+  function addMarker(e){
+      // Add marker to map at click location; add popup window
+      console.log('CLLLLLICK??')
+      // var newMarker = new L.marker(e.latlng).addTo(map);
+      form_coords = e.latlng.lat+','+e.latlng.lng;
+      form_coords = form_coords.split(',');
+      console.log(form_coords);
+      $('#where').text(form_coords);
+      map.removeLayer(marker);
+      marker = L.marker([form_coords[0],form_coords[1]]).addTo(map);
 
-       mappzy = form_coords;
-       map.setView(mappzy, 17);
-    
-    console.log("custom gps");
-    socket.emit('mapmarker', mappzy);
-    console.log("sent custom gps");
-      GPS2 =  [];
-      GPS2.push(mappzy[0]).toString();
-       GPS2.push(mappzy[1]).toString();
+         mappzy = form_coords;
+         map.setView(mappzy, 17);
+      
+      console.log("custom gps");
+      socket.emit('mapmarker', mappzy);
+      console.log("sent custom gps");
+        GPS2 =  [];
+        GPS2.push(mappzy[0]).toString();
+         GPS2.push(mappzy[1]).toString();
 
-}
+  }
 
-jQuery("#current").click(function(e){
+  jQuery("#current").click(function(e){
     console.log('MEEEE');
     var options = {
       enableHighAccuracy: true,
@@ -231,6 +236,9 @@ jQuery("#current").click(function(e){
 
 
   });
+
+
+
 });
 // END DOCUMENT READY
 
