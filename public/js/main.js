@@ -11,7 +11,13 @@ $( document ).ready(function() {
     console.log('add Note');
     
     $('.addNoteForm').show();
-    
+    console.log('WATCH UPLOAD');
+
+      $("#file_input2").change(function(){
+        var prefix = ((Math.random() * 60).toString() + 1) + Date.now().toString();
+        console.log('DO UPLOAD');
+        init_upload(prefix);
+      })
     
 
   });

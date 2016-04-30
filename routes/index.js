@@ -498,10 +498,10 @@ router.post('/api/createNote', function(req, res){
           return res.json(error);
 
         }
-        // Jar.find({})
-        //   .populate('owner')
-        //   .exec(function(error, posts) {
-        //         console.log(JSON.stringify(posts, null, "\t"))
+        // Jar.findOne({id: parent })
+        //   .populate('notes')
+        //   .exec(function(error, notes) {
+        //         console.log(JSON.stringify(notes, null, "\t"))
         //   })
 
 
@@ -517,13 +517,7 @@ router.post('/api/createNote', function(req, res){
         return res.json(jsonData);
 
       });
-      jar
-      .populate('parent')
-      .exec(function (err, jar) {
-        if (err) return handleError(err);
-        console.log('The parent is %s', jar.parent.title);
-     
-      });
+      
 
 
    
