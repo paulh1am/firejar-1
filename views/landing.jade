@@ -3,6 +3,7 @@ extends user_layout
 
 
 block content
+
   #top_ribbon.ribbon
     h2#banner FireJar
     #buttons
@@ -12,27 +13,27 @@ block content
       
       a(href="/register") 
         button.btn.btn-primary(type="button") Join
-
-  h4#where ...
-  #map
-  br
-    
-  .container
-    .row
-      .col-md-8
-      #project-holder.col-md-8
-      #jar-holder.col-md-8
-  br    
-  #add_note_form(style="display:none")
-    form#addForm.form-horizontal
-      .form-group
-        label.col-sm-2.control-label(for='title') Title
-        .col-sm-10
-          input#title.form-control(type='text', placeholder='Title', name='title', required='')
-      
-    
+  .wrapper      
+    h4#where ...
+    #map
+    br
+     
+    .container
+      .row
+        .col-md-8
+        #project-holder.col-md-8
+        #jar-holder.col-md-8
+    br    
+    #add_note_form(style="display:none")
+      form#addForm.form-horizontal
+        .form-group
+          label.col-sm-2.control-label(for='title') Title
+          .col-sm-10
+            input#title.form-control(type='text', placeholder='Title', name='title', required='')
         
-
-  
+      
+          
 
     
+
+      

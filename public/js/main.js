@@ -321,7 +321,7 @@ function renderJars(jars){
             
           '</ul>'+
           '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
+          '<a class= "iframe cboxelement" href="/login"><button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button></a>'+
           
           
     		'</div>';
@@ -404,7 +404,7 @@ function renderJars(jars){
 
       if ($(proj_id).length==0){
         var htmlToAdd = '<a href="/projects/'+ jar.project.replace(' ','_')+'"><div class="col-md-4 jar project" id="'+jar.project.replace(' ','_')+'" style="background-image:url('+ project_url +')" >'+
-          '<h2 class="name">'+jar.project+ '</h1> <p>FireJar project</p></div></a>'
+          '<div class="titling"><h2 class="name">'+jar.project+ '</h2> <p>FireJar project</p></div></div></a>'
         jQuery('#project-holder').prepend(htmlToAdd);
       }
     }

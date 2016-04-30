@@ -1,0 +1,58 @@
+doctype html
+html
+  head
+    title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', rel='stylesheet', media='screen')
+    script(src='https://cdn.socket.io/socket.io-1.0.0.js')
+    link(rel='stylesheet' href='/css/style.css')
+    link(rel='stylesheet' href='/leaflet/leaflet.css')
+    script(src='/leaflet/leaflet.js')
+    script(src='http://code.jquery.com/jquery.js')
+    link(rel='stylesheet' href='/colorbox.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='/jquery.colorbox-min.js')
+    script(src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js')
+
+    script(src='/js/bridge.js')
+    style.
+      body{
+        background-image:url('/images/crossing.png')
+      }
+      
+
+  body#crossing
+    
+    #top_ribbon.ribbon
+
+      a(href="/") 
+        h2#banner FireJar
+      #buttons
+        a(href="/login") 
+          button.btn.btn-primary(type="button") Login
+
+        
+        a(href="/register") 
+          button.btn.btn-primary(type="button") Join
+
+    
+    
+    .wrapper
+      h4#where ...
+      #map
+      br
+        
+      .container
+        .row
+          .col-md-8
+          #project-holder.col-md-8
+          #jar-holder.col-md-8
+      br    
+      #add_note_form(style="display:none")
+        form#addForm.form-horizontal
+          .form-group
+            label.col-sm-2.control-label(for='title') Title
+            .col-sm-10
+              input#title.form-control(type='text', placeholder='Title', name='title', required='')
+          
+        

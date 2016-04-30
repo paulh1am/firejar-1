@@ -30,81 +30,76 @@ html
       test = "test"
 
   body
-  .col-md-8.view_jar
-    h1 #{(JSON.parse(jar)).title}
-    h3 #{(JSON.parse(jar)).dateAdded.slice(0,10)}
-    .contents
+  .wrapper
+    .col-md-8.view_jar
+      h1 #{(JSON.parse(jar)).title}
+      h3 #{(JSON.parse(jar)).dateAdded.slice(0,10)}
+      .contents
 
-      //#{(JSON.parse(jar)).notes[0]}
+        //#{(JSON.parse(jar)).notes[0]}
 
-    
-    if(filetype.indexOf('image')> -1)
       
-      img.jar-image(src='#{(JSON.parse(jar)).url}')
-
-    else if(filetype.indexOf('video')> -1)
-      video(width='95%', height='auto', src='https://s3.amazonaws.com/jar-1/capturedvideo.MOV', preload='', controls='') Your browser does not support the 
-
-
-    else if(filetype.indexOf('audio')> -1)
-      p audio
-    else
-      .jarText
-        p #{(JSON.parse(jar)).text[0]}
-    ul
-      
-      li
-        | Tags: 
-        span.tags
-      li
-        | Tags: 
-        span.owner
-      
-    button.btn-primary.addNote(type='button') Add Note
-    button.btn-primary(type='button') Appreciate
-
-    .col-md-4.addNoteForm(style="display:none")
+      if(filetype.indexOf('image')> -1)
         
-        form#addNoteForm.form-horizontal
-          .form-group
-            label.col-sm-2.control-label(for='title') Name
-            .col-sm-10
-              input#title.form-control(type='text', placeholder='Name', name='title', required='')
-          
-          .form-group
-            label.col-sm-2.control-label(for='url') URL
-            .col-sm-10
-              input#url.form-control(type='text', placeholder='skip for attachments', name='url')
-          .form-group
-            label.col-sm-2.control-label(for='text') Message
-            .col-sm-10
-              textarea#text(name="text", cols="46", rows="5")
+        img.jar-image(src='#{(JSON.parse(jar)).url}')
 
-          input#file_input(type='file')
-          p#status Please select a file
-          img#preview(style='border:1px solid gray;width:200px;', src='/images/default.png')
-          .form-group
-            .col-sm-offset-2.col-sm-10
-              button.btn.btn-default(type='submit') Submit
-    br
-    hr         
-    .col-md-4.notesdiv
-      h3 Notes
-      .notes
-        - each note in (JSON.parse(notes))
-          .noteJar
-            h4 #{note.title}
-            img.note-image.jar-image(src="#{note.url}")
-            .jarText
-              p #{note.text}
+      else if(filetype.indexOf('video')> -1)
+        video(width='95%', height='auto', src='https://s3.amazonaws.com/jar-1/capturedvideo.MOV', preload='', controls='') Your browser does not support the 
 
 
-      
-        
+      else if(filetype.indexOf('audio')> -1)
+        p audio
+      else
+        .jarText
+          p #{(JSON.parse(jar)).text[0]}
      
-
+       
+        
+      button.btn-primary.addNote(type='button') Add a Message
       
 
+      .col-md-4.addNoteForm(style="display:none")
+          
+          form#addNoteForm.form-horizontal
+            .form-group
+              label.col-sm-2.control-label(for='title') Name
+              .col-sm-10
+                input#title.form-control(type='text', placeholder='Name', name='title', required='')
+            
+            .form-group
+              label.col-sm-2.control-label(for='url') URL
+              .col-sm-10
+                input#url.form-control(type='text', placeholder='skip for attachments', name='url')
+            .form-group
+              label.col-sm-2.control-label(for='text') Message
+              .col-sm-10
+                textarea#text(name="text", cols="46", rows="5")
 
-   
-    
+            input#file_input(type='file')
+            p#status Please select a file
+            img#preview(style='border:1px solid gray;width:200px;', src='/images/default.png')
+            .form-group
+              .col-sm-offset-2.col-sm-10
+                button.btn.btn-default(type='submit') Submit
+      br
+      hr         
+      .col-md-4.notesdiv
+        h3 Notes
+        .notes
+          - each note in (JSON.parse(notes))
+            .noteJar
+              h4 #{note.title}
+              img.note-image.jar-image(src="#{note.url}")
+              .jarText
+                p #{note.text}
+
+
+        
+          
+       
+
+        
+
+
+     
+      

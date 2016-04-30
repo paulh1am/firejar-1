@@ -260,13 +260,13 @@ function setLocation(e){
 
 
 
-
+var j_marker = "."
 function renderJars(jars){
 
   // first, make sure the #jar-holder is empty
   
   jQuery('.jar_clear').remove();
-  
+  map.removeLayer(j_marker);
  
  
   // loop through all the jars and add them in the jar-holder div
@@ -309,7 +309,7 @@ function renderJars(jars){
             
           '</ul>'+
           '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
+          
           
           
         '</div>';
@@ -329,10 +329,9 @@ function renderJars(jars){
             '<div class="jarText"><p>'+ linetext +'</p></div>'+
 
             '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-            '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
 
             '<li class="hide id">'+jar.id+'</li>'+
-          '</ul>'+
+          '</ul><br/>'+
           '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
           '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
         '</div>';
@@ -396,8 +395,9 @@ function renderJars(jars){
         jQuery('#project-holder').prepend(htmlToAdd);
       }
     }
-    
-  }
+  
+  j_marker = L.marker([jar.GPS.lat, jar.GPS.lon]).addTo(map);  
+  }// Jars for each
 }
 
 
