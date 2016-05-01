@@ -310,7 +310,7 @@ function renderJars(jars){
 
 	// first, make sure the #jar-holder is empty
 	
-  jQuery('.jar_clear').remove();
+  // jQuery('.jar_clear').remove();
  
   
  
@@ -339,12 +339,23 @@ function renderJars(jars){
        if (jar.text.length >= 1){
         linetext= (jar.text[0]).replace(/\n/g,"<br>");
         }
+    var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
+      '<h1 class="name">'+jar.title+ '</h1>';
+
+
+
       if(file_type == 'image'){
-    		var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
-    			
-    			'<h1 class="name">'+jar.title+ '</h1>'+
-          '<img class="jar-image" src="'+jar.url+'">'+
-    			'<ul>'+
+    		htmlToAdd += 
+          '<img class="jar-image" src="'+jar.url+'">';
+      }else if(file_type == 'audio'){
+        htmlToAdd += '<audio src="'+jar.url+'" controls >'+
+        'Your browser does not support the </audio>'
+      }else if(file_type == 'video'){
+        htmlToAdd += '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
+        'Your browser does not support the </video>'
+      }
+
+      htmlToAdd += '<ul>'+
     				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
             '<div class="jarText"><p>'+ linetext +'</p></div>'+
 
@@ -360,74 +371,8 @@ function renderJars(jars){
           
     		'</div>';
 
-    		
-      }else if(file_type == 'audio'){
-        linetext="";
-       if (jar.text.length >= 1){
-        linetext= (jar.text[0]).replace(/\n/g,"<br>");
-        }
-        var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
-        '<h1 class="name">'+jar.title+ '</h1>'+
-        '<audio src="'+jar.url+'" controls >'+
-        'Your browser does not support the </audio>'+
-        
-            '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
-            '<div class="jarText"><p>'+ linetext +'</p></div>'+
-
-            '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-            '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
-
-            '<li class="hide id">'+jar.id+'</li>'+
-          '</ul>'+
-          '<a class= "iframe cboxelement" target="_blank" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
-        '</div>';
 
 
-  	  }else if(file_type == 'video'){
-        linetext="";
-        if (jar.text.length >= 1){
-        linetext= (jar.text[0]).replace(/\n/g,"<br>");
-        }
-        var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
-        '<h1 class="name">'+jar.title+ '</h1>'+
-        '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
-        'Your browser does not support the </video>'+
-        
-            '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
-            '<div class="jarText"><p>'+ linetext +'</p></div>'+
-
-            '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-            '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
-
-            '<li class="hide id">'+jar.id+'</li>'+
-          '</ul>'+ 
-          '<a class= "iframe cboxelement" target="_blank" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
-        '</div>';
-
-
-      }else{
-        linetext="";
-       if (jar.text.length >= 1){
-        linetext= (jar.text[0]).replace(/\n/g,"<br>");
-        }
-        console.log('NO FILE TYPE');
-        var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
-        '<h1 class="name">'+jar.title+ '</h1>'+
-            '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
-            '<div class="jarText"><p>'+ linetext +'</p></div>'+
-            '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-            '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
-
-            '<li class="hide id">'+jar.id+'</li>'+
-          '</ul>'+
-          '<a class= "iframe cboxelement"  href="/view_jar/'+jar._id+'"target="_blank"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
-        '</div>';
-
-
-      }
       jQuery('#jar-holder').prepend(htmlToAdd);
    
 
