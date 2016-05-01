@@ -99,7 +99,7 @@ var geoLoc;
     if(navigator.geolocation){
       console.log('got GEO and trying');
        // timeout at 60000 milliseconds (60 seconds)
-       var options2 = {timeout:5000};
+       var options2 = {timeout:25000};
        geoLoc = navigator.geolocation;
        watchID = geoLoc.watchPosition(showLocation, errorHandler, options2);
        console.log('assigned watchID');
@@ -398,7 +398,7 @@ function renderJars(jars){
       jQuery('#jar-holder').prepend(htmlToAdd);
    
 
-      // $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
+      $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
     }else if(jar.project.length > 1){
       var proj_id = '#'+jar.project.replace(' ','_');
       var project_url = jar.project_url || ''

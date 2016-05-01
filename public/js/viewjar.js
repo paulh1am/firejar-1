@@ -91,7 +91,8 @@ $( document ).ready(function() {
         console.error(err);
       }
     }); 
-
+    $("#addNoteForm input").val('');
+    $('.addNote').hide();
     // prevents the form from submitting normally
     loaded = false;
     return false;
