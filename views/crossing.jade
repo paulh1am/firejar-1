@@ -13,11 +13,22 @@ html
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='/jquery.colorbox-min.js')
     script(src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js')
+    link(href="/bootstrap-switch.min.css" rel="stylesheet")
+    script(src="/bootstrap-switch.min.js")
 
     script(src='/js/bridge.js')
     style.
       body{
         background-image:url('/images/crossing.png')
+      }
+      .autoplay{
+        margin:15px;
+        margin-left:25px;
+      }
+      .bootstrap-switch{
+        margin-left:10px;
+      }.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary, .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary{
+        background: orange!important;
       }
       
 
@@ -38,7 +49,7 @@ html
     
     
     .wrapper
-      h4#where ...
+      p#where ...
       #map
       br
         
@@ -46,6 +57,13 @@ html
         .row
           .col-md-8
           #project-holder.col-md-8
+          
+          p.autoplay Autoplay:
+            form#boxform
+              input.autoplay#switch-size(type='checkbox', data-size='mini', name='bs1-switch')
+
+          
+          br
           #jar-holder.col-md-8
       br    
       #add_note_form(style="display:none")
@@ -54,5 +72,7 @@ html
             label.col-sm-2.control-label(for='title') Title
             .col-sm-10
               input#title.form-control(type='text', placeholder='Title', name='title', required='')
-          
-        
+script.
+
+  $("[name='bs1-switch']").bootstrapSwitch();
+

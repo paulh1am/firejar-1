@@ -228,7 +228,7 @@ var geoLoc;
 
   });
 
-
+  
 
 });
 // END DOCUMENT READY
@@ -255,6 +255,7 @@ function setLocation(e){
       GPS2.push(mappzy[0]).toString();
        GPS2.push(mappzy[1]).toString();
 }
+
 
 
 
@@ -306,9 +307,11 @@ function renderJars(jars){
         if(file_type == 'image'){
           htmlToAdd += 
             '<img class="jar-image" src="'+jar.url+'">';
+        
         }else if(file_type == 'audio'){
-          htmlToAdd += '<audio src="'+jar.url+'" controls >'+
+          htmlToAdd += '<audio id="'+i+'"src="'+jar.url+'" controls >'+
           'Your browser does not support the </audio>'
+        
         }else if(file_type == 'video'){
           htmlToAdd += '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
           'Your browser does not support the </video>'
@@ -331,9 +334,12 @@ function renderJars(jars){
           '</div>';
       
       jQuery('#jar-holder').prepend(htmlToAdd);
-   
+      
+      
+
 
       $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
+     
     }
 
       // }else if(jar.project.length > 1){
@@ -346,6 +352,7 @@ function renderJars(jars){
       //     jQuery('#project-holder').prepend(htmlToAdd);
       //   }
     }
+
   
     var orangeIcon = L.icon({
       iconUrl: '/images/orange.png',
@@ -358,10 +365,40 @@ function renderJars(jars){
     
     });
     j_marker = L.marker([jar.GPS.lat, jar.GPS.lon], {icon: orangeIcon}).addTo(map);  
-    
+   
   }// Jars for each
-}
 
+
+
+
+  autoplay = false;
+  
+  $('input[name="bs1-switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
+    
+    autoplay= (state); // true | false
+    console.log(autoplay);
+      if (autoplay){
+        var playcount = 0;
+        var playing = play[playcount];
+        play[playcount].play();
+        $('audio').on('ended',function(){
+          playcount+= 1;
+          play[playcount].play();
+        })
+      }
+  });
+
+  var audio= $('audio');
+  play = []
+  for (var i = 0; i < audio.length; i++) {
+     
+      track = $('#'+i);
+      nmbr = ""
+      play.push(track[0]);
+    
+  };
+
+}
 
 
 

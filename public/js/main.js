@@ -380,6 +380,7 @@ function renderJars(jars){
 
 
         jQuery('#jar-holder').prepend(htmlToAdd);
+        
         $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
       }
 
@@ -396,6 +397,7 @@ function renderJars(jars){
         //if another jar in this proj has not created it on screen
         var htmlToAdd = '<a href="/projects/'+ jar.project.replace(' ','_')+'"><div class="col-md-4 jar project" id="'+jar.project.replace(' ','_')+'" style="background-image:url('+ project_url +')" >'+
           '<div class="titling"><h2 class="name">'+project_name+ '</h2> <p>FireJar project</p></div></div></a>'
+        
         jQuery('#project-holder').prepend(htmlToAdd);
       }
     }
