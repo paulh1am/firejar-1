@@ -99,7 +99,7 @@ var geoLoc;
     if(navigator.geolocation){
       console.log('got GEO and trying');
        // timeout at 60000 milliseconds (60 seconds)
-       var options2 = {timeout:25000};
+       var options2 = {timeout:5000};
        geoLoc = navigator.geolocation;
        watchID = geoLoc.watchPosition(showLocation, errorHandler, options2);
        console.log('assigned watchID');
@@ -334,56 +334,68 @@ function renderJars(jars){
       filt_type = 'none';
     }
     console.log (file_type);
+    //if it's not in a project or is in the vid test one- show it
     if(jar.project=="Bunnies" || jar.project== "" ){
       linetext="";
+
        if (jar.text.length >= 1){
+        //add line breaks to text in jar message
         linetext= (jar.text[0]).replace(/\n/g,"<br>");
         }
-    var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
-      '<h1 class="name">'+jar.title+ '</h1>';
+      var jar_id = '#'+jar._id;
+      //only render the jar div if it's new
+      if ($(jar_id).length<1){
+        var htmlToAdd = '<div class="col-md-4 jar jar_clear" id="'+jar.id+'">'+
+        '<h1 class="name">'+jar.title+ '</h1>';
 
 
 
-      if(file_type == 'image'){
-    		htmlToAdd += 
-          '<img class="jar-image" src="'+jar.url+'">';
-      }else if(file_type == 'audio'){
-        htmlToAdd += '<audio src="'+jar.url+'" controls >'+
-        'Your browser does not support the </audio>'
-      }else if(file_type == 'video'){
-        htmlToAdd += '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
-        'Your browser does not support the </video>'
+        if(file_type == 'image'){
+      		htmlToAdd += 
+            '<img class="jar-image" src="'+jar.url+'">';
+        }else if(file_type == 'audio'){
+          htmlToAdd += '<audio src="'+jar.url+'" controls >'+
+          'Your browser does not support the </audio>'
+        }else if(file_type == 'video'){
+          htmlToAdd += '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
+          'Your browser does not support the </video>'
+        }
+
+        htmlToAdd += '<ul>'+
+      				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
+              '<div class="jarText"><p>'+ linetext +'</p></div>'+
+
+      				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
+              
+
+              '<li class="hide id">'+jar.id+'</li>'+
+              
+            '</ul>'+
+            '<a class= "iframe cboxelement" target="_blank" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
+            '<a class= "iframe cboxelement" href="/login"><button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button></a>'+
+            
+            
+      		'</div>';
+
+
+
+        jQuery('#jar-holder').prepend(htmlToAdd);
+        $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
       }
 
-      htmlToAdd += '<ul>'+
-    				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
-            '<div class="jarText"><p>'+ linetext +'</p></div>'+
-
-    				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-            
-
-            '<li class="hide id">'+jar.id+'</li>'+
-            
-          '</ul>'+
-          '<a class= "iframe cboxelement" target="_blank" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-          '<a class= "iframe cboxelement" href="/login"><button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button></a>'+
-          
-          
-    		'</div>';
-
-
-
-      jQuery('#jar-holder').prepend(htmlToAdd);
-   
-
-      $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
+      
     }else if(jar.project.length > 1){
+      // if the jar is in a project
       var proj_id = '#'+jar.project.replace(' ','_');
       var project_url = jar.project_url || ''
 
       if ($(proj_id).length==0){
+        var project_name = jar.project;
+        if (project_name = "bridge"){project_name = "Crossing Brooklyn Ferry"};
+
+        //if another jar in this proj has not created it on screen
         var htmlToAdd = '<a href="/projects/'+ jar.project.replace(' ','_')+'"><div class="col-md-4 jar project" id="'+jar.project.replace(' ','_')+'" style="background-image:url('+ project_url +')" >'+
-          '<div class="titling"><h2 class="name">'+jar.project+ '</h2> <p>FireJar project</p></div></div></a>'
+          '<div class="titling"><h2 class="name">'+project_name+ '</h2> <p>FireJar project</p></div></div></a>'
         jQuery('#project-holder').prepend(htmlToAdd);
       }
     }

@@ -141,7 +141,7 @@ io.sockets.on('connection',
         // console.log('sending fetch');
         // sendJars(jarz);
         console.log('sending fetchNEAR');
-        sendNearJars(jarz,fetch_lat,fetch_long,1);
+        sendNearJars(jarz,fetch_lat,fetch_long,10);
         console.log('sending fetchMap');
         sendMapJars(jarz,fetch_lat,fetch_long,15);
 

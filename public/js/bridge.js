@@ -287,116 +287,67 @@ function renderJars(jars){
     }else if (fileExtension == ''){
       filt_type = 'none';
     }
+
     console.log (file_type);
-    if(jar.project=="bridge" || jar.project== "" ){
+
+    if(jar.project=="bridge"){
       linetext="";
-       if (jar.text.length >= 1){
+      if (jar.text.length >= 1){
         linetext= (jar.text[0]).replace(/\n/g,"<br>");
-        }
-      if(file_type == 'image'){
-        var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
-          
-          '<h1 class="name">'+jar.title+ '</h1>'+
-          '<img class="jar-image" src="'+jar.url+'">'+
-          '<ul>'+
-            '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
-            '<div class="jarText"><p>'+ linetext +'</p></div>'+
-
-            '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-            '<li>Tags: <span class="owner">'+jar.owner[0]+'</span></li>'+
-
-            '<li class="hide id">'+jar.id+'</li>'+
-            
-          '</ul>'+
-          '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-          
-          
-          
-        '</div>';
-
-        
-      }else if(file_type == 'audio'){
-        linetext="";
-       if (jar.text.length >= 1){
-        linetext= (jar.text[0]).replace(/\n/g,"<br>");
-        }
-        var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
-        '<h1 class="name">'+jar.title+ '</h1>'+
-        '<audio src="'+jar.url+'" controls >'+
-        'Your browser does not support the </audio>'+
-        
-            '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
-            '<div class="jarText"><p>'+ linetext +'</p></div>'+
-
-            '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-
-            '<li class="hide id">'+jar.id+'</li>'+
-          '</ul><br/>'+
-          '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
-        '</div>';
-
-
-      }else if(file_type == 'video'){
-        linetext="";
-        if (jar.text.length >= 1){
-        linetext= (jar.text[0]).replace(/\n/g,"<br>");
-        }
-        var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
-        '<h1 class="name">'+jar.title+ '</h1>'+
-        '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
-        'Your browser does not support the </video>'+
-        
-            '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
-            '<div class="jarText"><p>'+ linetext +'</p></div>'+
-
-            '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-            '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
-
-            '<li class="hide id">'+jar.id+'</li>'+
-          '</ul>'+ 
-          '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
-        '</div>';
-
-
-      }else{
-        linetext="";
-       if (jar.text.length >= 1){
-        linetext= (jar.text[0]).replace(/\n/g,"<br>");
-        }
-        console.log('NO FILE TYPE');
-        var htmlToAdd = '<div class="col-md-4 jar jar_clear">'+
-        '<h1 class="name">'+jar.title+ '</h1>'+
-            '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
-            '<div class="jarText"><p>'+ linetext +'</p></div>'+
-            '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-            '<li>Tags: <span class="owner">'+jar.owner+'</span></li>'+
-
-            '<li class="hide id">'+jar.id+'</li>'+
-          '</ul>'+
-          '<a class= "iframe cboxelement" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-          '<button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button>'+
-        '</div>';
-
-
       }
+      var jar_id = '#'+jar._id;
+      //only render the jar div if it's new
+      if ($(jar_id).length<1){
+      var htmlToAdd = '<div class="col-md-4 jar jar_clear" id="'+jar.id+'">'+
+      '<h1 class="name">'+jar.title+ '</h1>';
+
+
+
+        if(file_type == 'image'){
+          htmlToAdd += 
+            '<img class="jar-image" src="'+jar.url+'">';
+        }else if(file_type == 'audio'){
+          htmlToAdd += '<audio src="'+jar.url+'" controls >'+
+          'Your browser does not support the </audio>'
+        }else if(file_type == 'video'){
+          htmlToAdd += '<video width="320" height="240" src="'+jar.url+'"preload controls >'+
+          'Your browser does not support the </video>'
+        }
+
+        htmlToAdd += '<ul>'+
+              '<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
+              '<div class="jarText"><p>'+ linetext +'</p></div>'+
+
+              '<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
+              
+
+              '<li class="hide id">'+jar.id+'</li>'+
+              
+            '</ul>'+
+            '<a class= "iframe cboxelement" target="_blank" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
+            '<a class= "iframe cboxelement" href="/login"><button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button></a>'+
+            
+            
+          '</div>';
+      
       jQuery('#jar-holder').prepend(htmlToAdd);
    
 
-      // $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
-    }else if(jar.project.length > 1){
-      var proj_id = '#'+jar.project.replace(' ','_');
-      var project_url = jar.project_url || ''
+      $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
+    }
 
-      if ($(proj_id).length==0){
-        var htmlToAdd = '<a href="/projects/'+ jar.project.replace(' ','_')+'"><div class="col-md-4 jar project" id="'+jar.project.replace(' ','_')+'" style="background-image:url('+ project_url +')" >'+
-          '<h2 class="name">'+jar.project+ '</h1> <p>FireJar project</p></div></a>'
-        jQuery('#project-holder').prepend(htmlToAdd);
-      }
+      // }else if(jar.project.length > 1){
+      //   var proj_id = '#'+jar.project.replace(' ','_');
+      //   var project_url = jar.project_url || ''
+
+      //   if ($(proj_id).length==0){
+      //     var htmlToAdd = '<a href="/projects/'+ jar.project.replace(' ','_')+'"><div class="col-md-4 jar project" id="'+jar.project.replace(' ','_')+'" style="background-image:url('+ project_url +')" >'+
+      //       '<h2 class="name">'+jar.project+ '</h1> <p>FireJar project</p></div></a>'
+      //     jQuery('#project-holder').prepend(htmlToAdd);
+      //   }
     }
   
-  var orangeIcon = L.icon({
+    var orangeIcon = L.icon({
       iconUrl: '/images/orange.png',
       
 
