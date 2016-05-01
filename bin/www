@@ -141,7 +141,9 @@ io.sockets.on('connection',
         // console.log('sending fetch');
         // sendJars(jarz);
         console.log('sending fetchNEAR');
-        sendNearJars(jarz,fetch_lat,fetch_long,0.15);
+        sendNearJars(jarz,fetch_lat,fetch_long,1);
+        console.log('sending fetchMap');
+        sendMapJars(jarz,fetch_lat,fetch_long,15);
 
       });
       
@@ -158,7 +160,14 @@ io.sockets.on('connection',
         io.sockets.connected[socky].emit('Jars',jars);
 
         console.log('sent?');
-        console.log(jars);
+        console.log(jars.length);
+      }
+
+      function sendMap(jars){
+        io.sockets.connected[socky].emit('nearJars',jars);
+
+        console.log('sent map?');
+        console.log(jars.length);
       }
 
       function sendNearJars(arr,lat,lon,dist){
@@ -182,7 +191,30 @@ io.sockets.on('connection',
         sendJars(jars);
       }
 
+    
+      function sendMapJars(arr,lat,lon,dist){
+        jars = []
+        for (var i = 0; i < arr.length; i++) {
+          var dbJar = arr[i];
+          
+          var jlat = dbJar.GPS.lat;
+          var jlon = dbJar.GPS.lon;
+
+         if(distance(jlat,jlon,lat,lon) < dist){
+          jars.push(dbJar);
+          console.log(dbJar);
+         }
+        }
+
+        
+
+        console.log('sent near?');
+        console.log(jars);
+        sendMap(jars);
+      }
+
     });
+
     
     socket.on('fetchBridge', function(data) {
 
@@ -206,7 +238,7 @@ io.sockets.on('connection',
         // console.log('sending fetch');
         // sendJars(jarz);
         console.log('sending fetchNEAR');
-        sendNearJars(jarz,fetch_lat,fetch_long,0.15);
+        sendNearJars(jarz,fetch_lat,fetch_long,15);
 
       });
       

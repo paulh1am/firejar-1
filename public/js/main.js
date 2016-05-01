@@ -154,6 +154,9 @@ var geoLoc;
 //********// THE SOCKET PART //********//
   function fetchJars(location){
     socket.emit('fetch', location);
+  
+
+  socket.emit('nearby', location);
   }
 
   socket.on('connect', function(data) {
@@ -169,6 +172,13 @@ var geoLoc;
       console.log(jarr);
       console.log('jars');
       renderJars(jarr);
+      
+    });
+  socket.on('nearJars', function(data) {
+      nearjars = data;
+      console.log(nearjars);
+      console.log('jars');
+      renderMapJars(nearjars);
       
     });
 
@@ -273,12 +283,35 @@ function setLocation(e){
 
 
 var j_marker = "."
+function renderMapJars(jars){
+  
+  map.removeLayer(j_marker);
+  for(var i=0;i<jars.length;i++){
+    var jar = jars[i];
+
+
+    var orangeIcon = L.icon({
+      iconUrl: '/images/orange.png',
+      
+
+      iconSize:     [20, 20], // size of the icon
+      
+      iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+      
+    
+    });
+    j_marker = L.marker([jar.GPS.lat, jar.GPS.lon], {icon: orangeIcon}).addTo(map); 
+  } 
+}
+
+
+
 function renderJars(jars){
 
 	// first, make sure the #jar-holder is empty
 	
   jQuery('.jar_clear').remove();
-  map.removeLayer(j_marker);
+ 
   
  
  
@@ -316,7 +349,7 @@ function renderJars(jars){
             '<div class="jarText"><p>'+ linetext +'</p></div>'+
 
     				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
-            '<li>Tags: <span class="owner">'+jar.owner[0]+'</span></li>'+
+            
 
             '<li class="hide id">'+jar.id+'</li>'+
             
@@ -409,17 +442,7 @@ function renderJars(jars){
         jQuery('#project-holder').prepend(htmlToAdd);
       }
     }
-    var orangeIcon = L.icon({
-      iconUrl: '/images/orange.png',
-      
-
-      iconSize:     [20, 20], // size of the icon
-      
-      iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
-      
     
-    });
-    j_marker = L.marker([jar.GPS.lat, jar.GPS.lon], {icon: orangeIcon}).addTo(map);  
     
   }
 }

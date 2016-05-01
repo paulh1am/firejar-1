@@ -16,12 +16,20 @@ html {
 body {
     height: 100%;
     margin: 0;
-    background-attachment: fixed;
+    background-color: black;
+    /*background-attachment: fixed;*/
     background-position-x:20%;
-background-image: url('/images/light.jpg');
+
+/*background-image: url('/images/light.jpg');*/
 background-size: cover;
     color: lightgray;
  
+}
+.map-contain{
+      height: 400px;
+    background-image: url('/images/light.jpg');
+    background-size: 160%;
+    background-position-y: -12%;
 }
 
 h1 {
