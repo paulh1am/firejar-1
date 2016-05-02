@@ -4,6 +4,9 @@ extends user_layout
 
 block content
   style.
+    body{
+      background-image:url("/images/light.jpg")
+    }
     .create{
       display:none;
     }
@@ -45,7 +48,7 @@ block content
     //p PROJECTS
     //- each project in JSON.parse(user_projects)
       p #{project.title}
-  h2#where ...
+  p#where ...
   #map
   hr
   .addButtons
