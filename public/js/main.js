@@ -32,7 +32,7 @@ $( document ).ready(function() {
 
   var options = {
     enableHighAccuracy: true,
-    timeout: 5000,
+    timeout: 55000,
     maximumAge: 0
   };
 
