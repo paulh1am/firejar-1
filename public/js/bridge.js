@@ -116,7 +116,7 @@ var geoLoc;
     if(navigator.geolocation){
       console.log('got GEO and trying');
        // timeout at 60000 milliseconds (60 seconds)
-       var options2 = {timeout:5000};
+       var options2 = {timeout:55000};
        geoLoc = navigator.geolocation;
        watchID = geoLoc.watchPosition(showLocation, errorHandler, options2);
        console.log('assigned watchID');
