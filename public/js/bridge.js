@@ -1,7 +1,16 @@
 
 
 $( document ).ready(function() {
-
+  ion.sound({
+      sounds: [
+          {
+              name: "water_droplet"
+          }
+      ],
+      volume: 0.5,
+      path: "/sounds/",
+      preload: true
+  });
    
 
 
@@ -17,7 +26,7 @@ $( document ).ready(function() {
 
   var options = {
     enableHighAccuracy: true,
-    timeout: 50000,
+    timeout: 5000,
     maximumAge: 0
   };
 
@@ -148,6 +157,7 @@ var geoLoc;
   socket.on('you', function(data) {
         console.log(data);
         socket.emit('fetchBridge', mappzy);
+        // socket.emit('nearby', location);
         
       });
   socket.on('Jars', function(data) {
@@ -160,7 +170,7 @@ var geoLoc;
 
  
 
-  //map.on('click', addMarker);
+  map.on('click', addMarker);
 
   function addMarker(e){
       // Add marker to map at click location; add popup window
@@ -266,7 +276,7 @@ function renderJars(jars){
 
   // first, make sure the #jar-holder is empty
   
-  jQuery('.jar_clear').remove();
+  // jQuery('.jar_clear').remove();
   map.removeLayer(j_marker);
  
  
@@ -299,8 +309,9 @@ function renderJars(jars){
       var jar_id = '#'+jar._id;
       //only render the jar div if it's new
       if ($(jar_id).length<1){
-      var htmlToAdd = '<div class="col-md-4 jar jar_clear" id="'+jar.id+'">'+
-      '<h1 class="name">'+jar.title+ '</h1>';
+
+      var htmlToAdd = '<div class="col-md-4 jar jar_clear" id="'+jar._id+'">'+
+      '<h1 class="name" id="'+jar.id+'">'+jar.title+ '</h1>';
 
 
 
@@ -334,7 +345,8 @@ function renderJars(jars){
           '</div>';
       
       jQuery('#jar-holder').prepend(htmlToAdd);
-      
+      ion.sound.play("water_droplet");
+
       
 
 
@@ -372,12 +384,15 @@ function renderJars(jars){
 
 
   autoplay = false;
+  playing = false;
 
   $('input[name="bs1-switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
     
-    autoplay= (state); // true | false
+    autoplay= (state);
+     // true | false
+    $('audio').stop();
     console.log(autoplay);
-      if (autoplay){
+      if (autoplay == true){
         var playcount = 0;
         var playing = play[playcount];
         play[playcount].play();
@@ -385,7 +400,14 @@ function renderJars(jars){
           playcount+= 1;
           play[playcount].play();
         })
+      } else{
+        
+        console.log('something');
+        for (var i = 0; i < play.length; i++) {
+          $('audio')[i].pause();
+        };
       }
+
   });
 
   var audio= $('audio');

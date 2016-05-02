@@ -182,7 +182,7 @@ var geoLoc;
       
     });
 
-  //map.on('click', addMarker);
+  map.on('click', addMarker);
 
   function addMarker(e){
       // Add marker to map at click location; add popup window
@@ -345,7 +345,7 @@ function renderJars(jars){
       var jar_id = '#'+jar._id;
       //only render the jar div if it's new
       if ($(jar_id).length<1){
-        var htmlToAdd = '<div class="col-md-4 jar jar_clear" id="'+jar.id+'">'+
+        var htmlToAdd = '<div class="col-md-4 jar jar_clear" id="'+jar._id+'">'+
         '<h1 class="name">'+jar.title+ '</h1>';
 
 
