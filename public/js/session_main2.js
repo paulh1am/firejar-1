@@ -243,8 +243,9 @@ var geoLoc;
     		alert("something went wrong");
     		console.error(err);
     	}
-    }); 
 
+    }); 
+     $('.create').hide();
   	// prevents the form from submitting normally
     loaded = false;
     return false;
@@ -551,7 +552,7 @@ function deleteJar(event){
 		success : function(response) {
 			// now, let's re-render the jars
 
-			socket.emit('fetch', mappzy);
+			getLocationUpdate();
 
 		}
 	})
