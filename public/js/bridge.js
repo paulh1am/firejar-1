@@ -27,7 +27,7 @@ $( document ).ready(function() {
   var options = {
     enableHighAccuracy: true,
     timeout: 55000,
-    maximumAge: 0
+    maximumAge: 100
   };
 
   //get location
@@ -231,7 +231,7 @@ var geoLoc;
     var options = {
       enableHighAccuracy: true,
       timeout: 55000,
-      maximumAge: 0
+      maximumAge: 100
     };
       
 
