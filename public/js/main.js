@@ -203,7 +203,7 @@ var geoLoc;
       
     });
 
-  //map.on('click', addMarker);
+  map.on('click', addMarker);
 
   function addMarker(e){
       // Add marker to map at click location; add popup window
@@ -423,10 +423,7 @@ function renderJars(jars){
         jQuery('#project-holder').prepend(htmlToAdd);
       }
     }
-    
-    
-  }
-  var orangeIcon = L.icon({
+    var orangeIcon = L.icon({
       iconUrl: '/images/orange.png',
       
 
@@ -437,6 +434,9 @@ function renderJars(jars){
     
     });
     j_marker = L.marker([jar.GPS.lat, jar.GPS.lon], {icon: orangeIcon}).addTo(map);
+    
+  }
+  
 }
 
 

@@ -183,13 +183,14 @@ var geoLoc;
     console.log('submitted');
   	// first, let's pull out all the values
   	// the name form field value
-  	var title = jQuery("#title").val();
-  	var tags = jQuery("#tags").val();
-    var project = jQuery("#project").val();
-    var GPS3 = GPS2.join();
-  	var SSID = "";//GRAB THE LOCATION Var
-    var UDID = "";//GRAB THE LOCATION Var
-    var owner = current_user._id;
+  	 title = jQuery("#title").val();
+  	 tags = jQuery("#tags").val();
+    text = jQuery("#text").val();
+     project = jQuery("#project").val();
+     GPS3 = GPS2.join();
+  	 SSID = "";//GRAB THE LOCATION Var
+     UDID = "";//GRAB THE LOCATION Var
+     owner = current_user._id;
 
     if (loaded){
     
@@ -212,6 +213,7 @@ var geoLoc;
     	data : {
     		title: title,
     		tags: tags,
+        text: text,
         GPS: GPS3,
         SSID: SSID,
         UDID: UDID,
@@ -305,7 +307,7 @@ jQuery("#addProjectForm").submit(function(e){
     return false;
   });
 
-
+map.on('click', addMarker);
 
 //********// THE SOCKET PART //********//
 function fetchJars(location){
@@ -328,7 +330,7 @@ socket.on('Jars', function(data) {
       
     });
 
-  map.on('click', addMarker);
+  
 
 function addMarker(e){
     // Add marker to map at click location; add popup window

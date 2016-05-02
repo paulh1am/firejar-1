@@ -22,6 +22,9 @@ block content
     h1.name{
       color:orange;
     }
+    #text{
+      color:black;
+    }
 
   #top_ribbon.ribbon
     h2#banner FireJar
@@ -88,34 +91,15 @@ block content
 
           input#file_input(type='file')
           p#status Please select a file
-          
+          img#preview(style='border:1px solid gray;width:200px;', src='')
+          br
           .form-group
             .col-sm-offset-2.col-sm-10
               button.btn.btn-primary(type='submit') Submit
           hr
           br
 
-      .col-md-4.create
-        hr
-        h1 New Project
-        
-        form#addProjectForm.form-horizontal
-          .form-group
-            label.col-sm-2.control-label(for='title') Title
-            .col-sm-10
-              input#proj_title.form-control(type='text', placeholder='Title', name='title', required='')
-          .form-group
-            label.col-sm-2.control-label(for='tags') Tags
-            .col-sm-10
-              input#proj_tags.form-control(type='text', placeholder='Tags (separated by comma)', name='tags')
-
-          input#p_file_input(type='file')
-          p#status Please select a file
-          img#preview(style='border:1px solid gray;width:200px;', src='/images/default.png')
-
-          .form-group
-            .col-sm-offset-2.col-sm-10
-              button.btn.btn-primary(type='submit') Submit
+      
 
       #finds
         hr
