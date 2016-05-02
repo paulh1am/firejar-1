@@ -3,6 +3,26 @@ extends user_layout
 
 
 block content
+  style.
+    .create{
+      display:none;
+    }
+
+    .container{
+      margin-top:0;
+    }
+    #createbtn{
+      margin-left: 10px;
+      width: 9em;
+      height: 3em;
+    }
+    .addButtons{
+      height: 25px;
+    }
+    h1.name{
+      color:orange;
+    }
+
   #top_ribbon.ribbon
     h2#banner FireJar
     
@@ -24,12 +44,18 @@ block content
       p #{project.title}
   h2#where ...
   #map
-  br
   hr
+  .addButtons
+    button.btn.btn-primary#createbtn Create
+
+
+  br
+
   
   .container
     .row
-      .col-md-4
+      .col-md-4.create
+        button.btn.btn-primary#hideCreate Cancel
         h1 Create
         form#addForm.form-horizontal
           .form-group
@@ -65,11 +91,12 @@ block content
           
           .form-group
             .col-sm-offset-2.col-sm-10
-              button.btn.btn-default(type='submit') Submit
-      #project-holder.col-md-8
-      #jar-holder.col-md-8
-    
-      .col-md-4
+              button.btn.btn-primary(type='submit') Submit
+          hr
+          br
+
+      .col-md-4.create
+        hr
         h1 New Project
         
         form#addProjectForm.form-horizontal
@@ -88,7 +115,14 @@ block content
 
           .form-group
             .col-sm-offset-2.col-sm-10
-              button.btn.btn-default(type='submit') Submit
-script(type='text/javascript')
+              button.btn.btn-primary(type='submit') Submit
+
+      #finds
+        hr
+
+        #project-holder.col-md-8
+        #jar-holder.col-md-8
+    
+
 
     
