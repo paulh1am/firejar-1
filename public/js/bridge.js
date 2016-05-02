@@ -17,7 +17,7 @@ $( document ).ready(function() {
 
   var options = {
     enableHighAccuracy: true,
-    timeout: 5000,
+    timeout: 50000,
     maximumAge: 0
   };
 
@@ -372,7 +372,7 @@ function renderJars(jars){
 
 
   autoplay = false;
-  
+
   $('input[name="bs1-switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
     
     autoplay= (state); // true | false

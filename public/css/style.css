@@ -80,7 +80,7 @@ h2#banner{
   width: 100%;
   /*min-height: 300px;*/
   /* max-height: 400px; */
-  background-color: rgba(0,0,0,0.5);
+  background-color: #222222;
   margin: 2em auto;
   border-radius: 5px;
   padding: 1em;
