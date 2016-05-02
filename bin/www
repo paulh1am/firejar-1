@@ -140,10 +140,11 @@ io.sockets.on('connection',
         jarz = data;
         // console.log('sending fetch');
         // sendJars(jarz);
-        console.log('sending fetchNEAR');
-        sendNearJars(jarz,fetch_lat,fetch_long,20);
         console.log('sending fetchMap');
-        sendMapJars(jarz,fetch_lat,fetch_long,25);
+        sendMapJars(jarz,fetch_lat,fetch_long,1);
+        console.log('sending fetchNEAR');
+        sendNearJars(jarz,fetch_lat,fetch_long,0.2);
+        
 
       });
       
@@ -237,8 +238,11 @@ io.sockets.on('connection',
         jarz = data;
         // console.log('sending fetch');
         // sendJars(jarz);
+        console.log('sending fetchMap');
+        sendMapJars(jarz,fetch_lat,fetch_long, 1);
         console.log('sending fetchNEAR');
-        sendNearJars(jarz,fetch_lat,fetch_long,0.2);
+        sendNearJars(jarz,fetch_lat,fetch_long,0.17);
+        
 
       });
       
@@ -256,6 +260,12 @@ io.sockets.on('connection',
 
         console.log('sent?');
         console.log(jars);
+      }
+      function sendMap(jars){
+        io.sockets.connected[socky].emit('nearJars',jars);
+
+        console.log('sent map?');
+        console.log(jars.length);
       }
 
       function sendNearJars(arr,lat,lon,dist){
@@ -277,6 +287,29 @@ io.sockets.on('connection',
         console.log('sent near?');
         console.log(jars);
         sendJars(jars);
+      }
+
+
+    
+      function sendMapJars(arr,lat,lon,dist){
+        jars = []
+        for (var i = 0; i < arr.length; i++) {
+          var dbJar = arr[i];
+          
+          var jlat = dbJar.GPS.lat;
+          var jlon = dbJar.GPS.lon;
+
+         if(distance(jlat,jlon,lat,lon) < dist){
+          jars.push(dbJar);
+          console.log(dbJar);
+         }
+        }
+
+        
+
+        console.log('sent near?');
+        console.log(jars);
+        sendMap(jars);
       }
 
     });

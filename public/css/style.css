@@ -75,6 +75,11 @@ h2#banner{
 .leaflet-bottom{
   display: none;
 }
+
+.container{
+  margin-top: -75px;
+}
+
 .jar{
   font-family: serif;
   width: 100%;
@@ -84,7 +89,15 @@ h2#banner{
   margin: 2em auto;
   border-radius: 5px;
   padding: 1em;
+  margin-top: 15px;
 
+
+}
+.jar ul{
+      margin-bottom: 10px;
+    padding-top: 12px;
+    list-style: none;
+    padding-left: 10px;
 }
 .project{
   background-image: url("/images/brooklyn2.jpg") !important;
@@ -106,6 +119,14 @@ h2#banner{
 }
 button.view_jar{
   margin-right: 1em;
+}
+.jarbtn {
+  margin-top: 10px;
+    width: 8em;
+    height: 3em;
+    background-color: black;
+    border-radius: 5px;
+
 }
 
 #top_ribbon{

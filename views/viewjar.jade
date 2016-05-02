@@ -25,6 +25,10 @@ html
       h3{
       color:whitesmoke;
       }
+      #text{
+      color:black;
+      }
+
 
     
     script(type='text/javascript').
@@ -79,11 +83,13 @@ html
             .form-group
               label.col-sm-2.control-label(for='text') Message
               .col-sm-10
-                textarea#text(name="text", cols="30", rows="5")
+                textarea#text(name="text", cols="30", rows="5", form="addNoteForm")
 
             input#file_input(type='file')
+
             p#status Please select a file
-            img#p_preview(style='border:1px solid gray;width:200px;', src='')
+
+            img#preview(style='border:1px solid gray;width:200px;', src='')
             br
             .form-group
               .col-sm-offset-2.col-sm-10

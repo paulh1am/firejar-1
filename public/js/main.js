@@ -6,6 +6,16 @@
 //      dataType: 'jsonp',
 
 $( document ).ready(function() {
+  ion.sound({
+      sounds: [
+          {
+              name: "water_droplet"
+          }
+      ],
+      volume: 0.5,
+      path: "/sounds/",
+      preload: true
+  });
 
    
 
@@ -45,8 +55,19 @@ $( document ).ready(function() {
     console.log('Longitude: ' + crd.longitude);
     console.log('More or less ' + crd.accuracy + ' meters.');
     map.removeLayer(marker);
-     marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
-    //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
+    var meIcon = L.icon({
+      iconUrl: '/images/icon1.png',
+      
+
+      iconSize:     [60, 60], // size of the icon
+      
+      iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
+      
+    
+    });
+    
+
+     marker = L.marker([crd.latitude, crd.longitude], {icon: meIcon}).addTo(map);
 
     mappzy = [crd.latitude,crd.longitude];
     map.setView(mappzy, 17);
@@ -182,7 +203,7 @@ var geoLoc;
       
     });
 
-  map.on('click', addMarker);
+  //map.on('click', addMarker);
 
   function addMarker(e){
       // Add marker to map at click location; add popup window
@@ -283,15 +304,16 @@ function setLocation(e){
 
 
 var j_marker = "."
+var k_marker = "."
 function renderMapJars(jars){
   
-  map.removeLayer(j_marker);
+  map.removeLayer(k_marker);
   for(var i=0;i<jars.length;i++){
     var jar = jars[i];
 
 
-    var orangeIcon = L.icon({
-      iconUrl: '/images/orange.png',
+    var whiteIcon = L.icon({
+      iconUrl: '/images/white.png',
       
 
       iconSize:     [20, 20], // size of the icon
@@ -300,7 +322,7 @@ function renderMapJars(jars){
       
     
     });
-    j_marker = L.marker([jar.GPS.lat, jar.GPS.lon], {icon: orangeIcon}).addTo(map); 
+    k_marker = L.marker([jar.GPS.lat, jar.GPS.lon], {icon: whiteIcon}).addTo(map); 
   } 
 }
 
@@ -311,7 +333,7 @@ function renderJars(jars){
 	// first, make sure the #jar-holder is empty
 	
   // jQuery('.jar_clear').remove();
- 
+ map.removeLayer(j_marker);
   
  
  
@@ -362,7 +384,7 @@ function renderJars(jars){
         }
 
         htmlToAdd += '<ul>'+
-      				'<li>Location: <span class="location">'+jar.GPS.lat+','+jar.GPS.lon+'</span></li>'+
+      				'<li>Date: <span class="location">'+jar.dateAdded.split('T')[0]+'</span></li>'+
               '<div class="jarText"><p>'+ linetext +'</p></div>'+
 
       				'<li>Tags: <span class="tags">'+jar.tags+'</span></li>'+
@@ -371,8 +393,8 @@ function renderJars(jars){
               '<li class="hide id">'+jar.id+'</li>'+
               
             '</ul>'+
-            '<a class= "iframe cboxelement" target="_blank" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-            '<a class= "iframe cboxelement" href="/login"><button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button></a>'+
+            '<a class= "iframe cboxelement" target="_blank" href="/view_jar/'+jar._id+'"><button type="button" class="jarbtn btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
+            '<a class= "iframe cboxelement" href="/login"><button type="button" class="jarbtn btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button></a>'+
             
             
       		'</div>';
@@ -380,7 +402,7 @@ function renderJars(jars){
 
 
         jQuery('#jar-holder').prepend(htmlToAdd);
-        
+        ion.sound.play("water_droplet");
         $(".iframe").colorbox({iframe:true, width:"95%", height:"100%"});
       }
 
@@ -404,6 +426,17 @@ function renderJars(jars){
     
     
   }
+  var orangeIcon = L.icon({
+      iconUrl: '/images/orange.png',
+      
+
+      iconSize:     [20, 20], // size of the icon
+      
+      iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+      
+    
+    });
+    j_marker = L.marker([jar.GPS.lat, jar.GPS.lon], {icon: orangeIcon}).addTo(map);
 }
 
 

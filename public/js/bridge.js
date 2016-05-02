@@ -49,7 +49,20 @@ $( document ).ready(function() {
     console.log('Longitude: ' + crd.longitude);
     console.log('More or less ' + crd.accuracy + ' meters.');
     map.removeLayer(marker);
-     marker = L.marker([crd.latitude, crd.longitude]).addTo(map);
+
+    var meIcon = L.icon({
+      iconUrl: '/images/icon1.png',
+      
+
+      iconSize:     [60, 60], // size of the icon
+      
+      iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
+      
+    
+    });
+    
+
+     marker = L.marker([crd.latitude, crd.longitude], {icon: meIcon}).addTo(map);
     //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
 
     mappzy = [crd.latitude,crd.longitude];
@@ -168,9 +181,17 @@ var geoLoc;
         
       });
 
+  socket.on('nearJars', function(data) {
+      nearjars = data;
+      console.log(nearjars);
+      console.log('jars');
+      renderMapJars(nearjars);
+      
+    });
+
  
 
-  map.on('click', addMarker);
+  //map.on('click', addMarker);
 
   function addMarker(e){
       // Add marker to map at click location; add popup window
@@ -272,6 +293,30 @@ function setLocation(e){
 
 
 var j_marker = "."
+var k_marker = "."
+
+function renderMapJars(jars){
+  
+  map.removeLayer(k_marker);
+  for(var i=0;i<jars.length;i++){
+    var jar = jars[i];
+
+
+    var whiteIcon = L.icon({
+      iconUrl: '/images/white.png',
+      
+
+      iconSize:     [20, 20], // size of the icon
+      
+      iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+      
+    
+    });
+    k_marker = L.marker([jar.GPS.lat, jar.GPS.lon], {icon: whiteIcon}).addTo(map); 
+  } 
+}
+
+
 function renderJars(jars){
 
   // first, make sure the #jar-holder is empty
@@ -338,8 +383,8 @@ function renderJars(jars){
               '<li class="hide id">'+jar.id+'</li>'+
               
             '</ul>'+
-            '<a class= "iframe cboxelement" target="_blank" href="/view_jar/'+jar._id+'"><button type="button" class="btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
-            '<a class= "iframe cboxelement" href="/login"><button type="button" class="btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button></a>'+
+            '<a class= "iframe cboxelement" target="_blank" href="/view_jar/'+jar._id+'"><button type="button" class="jarbtn btn-primary  view_jar" id="'+jar._id+'">Open</button></a>'+
+            '<a class= "iframe cboxelement" href="/login"><button type="button" class="jarbtn btn-primary collect_jar" id="'+'keep_'+jar._id+'">Pick Up</button></a>'+
             
             
           '</div>';
