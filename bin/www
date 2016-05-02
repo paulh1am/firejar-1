@@ -143,7 +143,7 @@ io.sockets.on('connection',
         console.log('sending fetchMap');
         sendMapJars(jarz,fetch_lat,fetch_long,0.5);
         console.log('sending fetchNEAR');
-        sendNearJars(jarz,fetch_lat,fetch_long,0.2);
+        sendNearJars(jarz,fetch_lat,fetch_long,0.17);
         
 
       });
@@ -241,7 +241,7 @@ io.sockets.on('connection',
         console.log('sending fetchMap');
         sendMapJars(jarz,fetch_lat,fetch_long, 0.5);
         console.log('sending fetchNEAR');
-        sendNearJars(jarz,fetch_lat,fetch_long,0.17);
+        sendNearJars(jarz,fetch_lat,fetch_long,0.12);
         
 
       });

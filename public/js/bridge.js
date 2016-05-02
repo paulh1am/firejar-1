@@ -66,7 +66,7 @@ $( document ).ready(function() {
     //marker.bindPopup("<div id='containerz'>...</div>")//.openPopup();
 
     mappzy = [crd.latitude,crd.longitude];
-    map.setView(mappzy, 17);
+    map.setView(mappzy, 13);
     console.log("DoMarker")
     socket.emit('mapmarker', mappzy);
     console.log("sentMarker")
@@ -202,10 +202,20 @@ var geoLoc;
       console.log(form_coords);
       $('#where').text(form_coords);
       map.removeLayer(marker);
-      marker = L.marker([form_coords[0],form_coords[1]]).addTo(map);
+      var meIcon = L.icon({
+        iconUrl: '/images/icon1.png',
+        
+
+        iconSize:     [60, 60], // size of the icon
+        
+        iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
+        
+    
+      });
+      marker = L.marker([form_coords[0],form_coords[1]], {icon: meIcon}).addTo(map);
 
          mappzy = form_coords;
-         map.setView(mappzy, 17);
+         map.setView(mappzy, 13);
       
       console.log("custom gps");
       socket.emit('mapmarker', mappzy);
@@ -277,7 +287,7 @@ function setLocation(e){
     marker = L.marker([form_coords[0],form_coords[1]]).addTo(map);
 
        mappzy = form_coords;
-       map.setView(mappzy, 17);
+       map.setView(mappzy, 13);
     
     console.log("custom gps");
     socket.emit('mapmarker', mappzy);
