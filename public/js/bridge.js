@@ -215,7 +215,7 @@ var geoLoc;
       marker = L.marker([form_coords[0],form_coords[1]], {icon: meIcon}).addTo(map);
 
          mappzy = form_coords;
-         map.setView(mappzy, 13);
+         //map.setView(mappzy, 13);
       
       console.log("custom gps");
       socket.emit('mapmarker', mappzy);

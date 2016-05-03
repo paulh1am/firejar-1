@@ -52,12 +52,13 @@ html
         img.jar-image(src='#{(JSON.parse(jar)).url}')
 
       else if(filetype.indexOf('video')> -1)
-        video(width='95%', height='auto', src='https://s3.amazonaws.com/jar-1/capturedvideo.MOV', preload='', controls='') Your browser does not support the 
+
+        video(width='95%', height='auto', src='#{(JSON.parse(jar)).url}', preload='true', controls='') Your browser does not support the 
 
 
       else if(filetype.indexOf('audio')> -1)
-        audio(src='#{(JSON.parse(jar)).url}')
-        audio(src='#{(JSON.parse(jar)).url}', controls='') Your browser does not support the element
+        
+        audio(src='#{(JSON.parse(jar)).url}', controls='', preload='true') Your browser does not support the element
       else
         .jarText
           p #{(JSON.parse(jar)).text[0]}
